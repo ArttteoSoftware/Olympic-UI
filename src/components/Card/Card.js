@@ -10,6 +10,10 @@ function Card() {
 	const genderValues = [
 		{ label: "Girls", value: 0 },
 		{ label: "Boys", value: 1 },
+		{ label: "Girls", value: 2 },
+		{ label: "Boys", value: 3 },
+		{ label: "Girls", value: 4 },
+		{ label: "Boys", value: 5 },
 	];
 	return (
 		<div className={styles.mainContainer}>

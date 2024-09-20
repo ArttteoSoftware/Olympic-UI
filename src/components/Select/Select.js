@@ -32,7 +32,7 @@ export default function Select(props) {
 	);
 
 	return (
-		<div className={styles.dropdown}>
+		<div className={`${isOpen ? styles.dropdownOpen : styles.dropdown}`}>
 			<div
 				className={`${isOpen ? styles.openHeader : styles.header}`}
 				onClick={toggleDropdown}
