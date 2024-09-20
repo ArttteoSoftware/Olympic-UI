@@ -17,7 +17,7 @@ export default function Select(props) {
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (modalRef.current && !modalRef.current.contains(event.target)) {
-				props.onClose();
+				setIsOpen(false);
 			}
 		};
 
@@ -32,7 +32,10 @@ export default function Select(props) {
 	);
 
 	return (
-		<div className={`${isOpen ? styles.dropdownOpen : styles.dropdown}`}>
+		<div
+			ref={modalRef}
+			className={`${isOpen ? styles.dropdownOpen : styles.dropdown}`}
+		>
 			<div
 				className={`${isOpen ? styles.openHeader : styles.header}`}
 				onClick={toggleDropdown}
@@ -41,7 +44,7 @@ export default function Select(props) {
 					<div className={styles.selectedOption}>{selected?.label}</div>
 				</div>
 				<span className={styles.arrow}>
-					{isOpen ? <DropdownClosedIcon /> : <DropdownOpenedIcon />}
+					{isOpen ? <DropdownOpenedIcon /> : <DropdownClosedIcon />}
 				</span>
 			</div>
 			{isOpen && (

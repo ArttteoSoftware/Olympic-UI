@@ -1,0 +1,45 @@
+table {
+	border-spacing: 0 10px;
+	width: 100%;
+}
+tr {
+	border: 1px solid #f5f7f7;
+	padding: 10px;
+}
+
+th {
+	color: #2a3342;
+	opacity: 60%;
+	background-color: #f5f7f766;
+	font-size: 14px;
+	color: #2a3342;
+	padding: 14px;
+	/* border-right: 1px solid yellow; */
+	border-spacing: 0px;
+	font-weight: 400;
+}
+
+.thead {
+	border-spacing: 0;
+}
+
+thead > tr > th {
+	border: 1px solid #f5f7f7;
+}
+
+thead > tr > th:last-child {
+	border-right: 1px solid #f5f7f7;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+thead > tr > th:first-child {
+	border-left: 1px solid #f5f7f7;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+thead > tr > th {
+	border-right: 0;
+	border-left: 0;
+}
