@@ -1,0 +1,10 @@
+.breadCrumb {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.innerBreadcrumb {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}

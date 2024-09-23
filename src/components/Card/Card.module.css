@@ -61,10 +61,6 @@
 	gap: 10px;
 }
 
-.dataContainer {
-	padding-top: 20px;
-}
-
 .ranking {
 	background-color: #7d94a533;
 	color: #7d94a5;
@@ -91,4 +87,31 @@
 .nameContainer {
 	display: flex;
 	gap: 9px;
+}
+
+.cardSubtitleInnerContainer {
+	display: flex;
+	align-items: center;
+	padding: 20px 0px;
+	width: 70%;
+}
+
+.cardSubtitleContainer {
+	display: flex;
+	justify-content: center;
+}
+
+.dashedLine {
+	display: flex;
+	flex: 1;
+	height: 1px;
+	border-top: 1px dashed #7d94a5;
+	opacity: 40%;
+}
+
+.subtitle {
+	margin: 0 16px;
+	white-space: nowrap;
+	color: #7d94a5;
+	font-size: 16px;
 }
