@@ -1,0 +1,33 @@
+.container {
+	display: grid;
+	justify-items: center;
+	align-items: center;
+}
+
+.ranking {
+	background-color: #7d94a533;
+	color: #7d94a5;
+	border-radius: 6px;
+	width: 60px;
+	padding: 3px;
+	height: 32px;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	font-size: 16px;
+}
+
+.rankingContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.country {
+	color: #7d94a5;
+}
+
+.nameContainer {
+	display: flex;
+	gap: 9px;
+}

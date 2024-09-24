@@ -1,6 +1,7 @@
 import "./App.css";
 import Card from "./components/Card/Card";
 import Header from "./components/Header/Header";
+import { AppRoutes } from "./routes/AppRoutes";
 
 function App() {
 	return (
@@ -11,9 +12,7 @@ function App() {
 				src="assets/background/background.png"
 			/>
 			<Header />
-			<div className="container">
-				<Card />
-			</div>
+			<AppRoutes />
 		</div>
 	);
 }
