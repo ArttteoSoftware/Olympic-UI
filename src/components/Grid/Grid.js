@@ -17,14 +17,14 @@ function Grid({ columns, data, rowKey, onRowClick }) {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((record) => (
-						<tr key={record._id} onClick={() => onRowClick(record)}>
+					{data.map((record, rowIndex) => (
+						<tr key={record[rowKey]} onClick={() => onRowClick(record)}>
 							{columns.map((column, index) => (
 								<td
 									key={[record[rowKey], index].join(",")}
 									style={{ width: column.width, textAlign: column.textAlign }}
 								>
-									{column.render && column.render(record)}
+									{column.render && column.render(record, rowIndex)}
 								</td>
 							))}
 						</tr>

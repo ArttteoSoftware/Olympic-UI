@@ -22,11 +22,11 @@ function Card() {
 			title: "#",
 			width: 100,
 			textAlign: "center",
-			render: (record) => {
+			render: (record, index) => {
 				return (
 					<div className={styles.rankingContainer}>
 						<div className={styles.ranking}>
-							<div className={styles.index}>{1}.</div>
+							<div className={styles.index}>{index + 1}.</div>
 							<div className={styles.flag}>{record.flag}</div>
 						</div>
 					</div>
@@ -38,7 +38,7 @@ function Card() {
 			title: "Name",
 			width: 800,
 			textAlign: "start",
-			render: (record) => {
+			render: (record, index) => {
 				return (
 					<>
 						<div className={styles.nameContainer}>
