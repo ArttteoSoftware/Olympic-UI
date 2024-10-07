@@ -1,85 +1,239 @@
-import { useState } from "react";
-import { Divider } from "../../UI/Icons";
-import Select from "../Select/Select";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styles from "./Card.module.css";
-import Grid from "../Grid/Grid";
-import Modal from "../Modal/Modal";
+import { motion, useAnimation, Reorder } from "framer-motion";
+import axios from "axios";
+import { UpRanking, DownRanking, Divider } from "../../UI/Icons";
+import { useNavigate } from "react-router-dom";
 
-function Card({ columns, data }) {
-	const [gender, setGender] = useState({ label: "Girls", value: 0 });
-	const [isOpen, setIsOpen] = useState(false);
-	const [openInfo, setOpenInfo] = useState(false);
-	const [playerInfo, setPlayerInfo] = useState({});
+const PlayerRow = React.memo(({ player, index }) => {
+	const controls = useAnimation();
 
-	const genderValues = [
-		{ label: "Girls", value: 0 },
-		{ label: "Boys", value: 1 },
-	];
+	useEffect(() => {
+		controls.start({
+			opacity: [1, 0.5, 1],
+			y: player.rankChange ? -40 * player.rankChange : 0,
+			x: 0,
+			scale: 1,
+			rotate: 0,
+			transition: {
+				duration: 2,
+				opacity: { times: [0, 0.5, 1], duration: 2 },
+			},
+		});
+	}, [player.rankChange, controls]);
 
-	const handleRowClick = (record) => {
-		setPlayerInfo(record); // set the clicked player's info
-		setOpenInfo(true); // open modal
-	};
 	return (
-		<>
-			<div className={styles.mainContainer}>
-				<div className={styles.cardTitle}>BIATHLON (Individual)</div>
-
-				<div className={styles.divider}>
-					<Divider />
+		<Reorder.Item
+			className={styles.row}
+			key={player.id}
+			value={player}
+			transition={{ duration: 2 }}
+			animate={controls}
+			initial={{ opacity: 1 }}
+		>
+			<div className={styles.playerInfo}>
+				<div
+					className={`${styles.ranking} ${index === 0 && styles.first} ${
+						index === 1 && styles.second
+					} ${index === 2 && styles.third}`}
+				>
+					<div className={styles.index}>{index + 1}.</div>
+					<div className={styles.flag}>
+						<img
+							className="flag"
+							alt="country-flag"
+							src={`flags/${player.flag}.png`}
+						/>
+					</div>
 				</div>
-				<div className={styles.container}>
-					<div className={styles.filterContainer}>
-						<div className={styles.filterInnerContainer}>
-							<div className={styles.filterTitle}>
-								<div>Distance: 4x6 KM</div>
-								<div className={styles.dateAndTime}>
-									<div className={styles.date}>08.02.2024</div>
-									<div className={styles.time}>
-										<div>•</div>
-										<div>12:30 </div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<Select
-							value={gender}
-							onSelect={setGender}
-							onClose={() => setIsOpen(false)}
-							onClick={() => setIsOpen(!isOpen)}
-							state={isOpen}
-							options={genderValues}
-							defaultValue={{ label: "Girls", value: 0 }}
-						/>
-					</div>
-
-					<div className={styles.cardSubtitleContainer}>
-						<div className={styles.cardSubtitleInnerContainer}>
-							<div className={styles.dashedLine}></div>
-							<div className={styles.subtitle}>GIRLS</div>
-							<div className={styles.dashedLine}></div>
-						</div>
-					</div>
-					<div className={styles.dataContainer}>
-						<Grid
-							columns={columns}
-							data={data}
-							openInfo={openInfo}
-							rowKey={"name"}
-							onRowClick={handleRowClick}
-						/>
-					</div>
+				<div className={styles.country}>({player.country})</div>
+				<div className={styles.name}>{player.name}</div>
+				<div className={styles.name}>
+					{player.rankChange > 0 && <UpRanking />}
+					{player.rankChange < 0 && <DownRanking />}
 				</div>
 			</div>
-			{openInfo && (
-				<Modal
-					visible={openInfo}
-					title={playerInfo.name}
-					onClose={() => setOpenInfo(false)}
-				/>
-			)}
-		</>
+			<div className={styles.result}>{player.time}</div>
+		</Reorder.Item>
+	);
+});
+
+function Card({ hockey }) {
+	const navigate = useNavigate();
+
+	const [data, setData] = useState([]);
+	const [updatedData, setUpdatedData] = useState([]);
+	const [isFlipped, setIsFlipped] = useState(false);
+
+	const loadData = useCallback(async () => {
+		try {
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/players`
+			);
+			if (response.status === 200) {
+				setData(response.data);
+			}
+		} catch (error) {
+			console.error("Error loading initial data:", error);
+		}
+	}, []);
+
+	const loadUpdatedData = useCallback(async () => {
+		try {
+			const response = await axios.get(
+				`${process.env.REACT_APP_API_URL}/updatedPlayers`
+			);
+			if (response.status === 200) {
+				setUpdatedData(response.data);
+				setTimeout(() => {
+					setData(response.data);
+				}, 3000);
+			}
+		} catch (error) {
+			console.error("Error loading updated data:", error);
+		}
+	}, []);
+
+	// useEffect(() => {
+	// 	loadData();
+	// 	loadUpdatedData();
+
+	// 	const intervalId = setInterval(loadUpdatedData, 3000); // Update every 30 seconds
+
+	// 	return () => clearInterval(intervalId);
+	// }, [loadData, loadUpdatedData]);
+
+	const commonStyles = useMemo(
+		() => ({
+			padding: "0px",
+			position: "absolute",
+			display: "flex",
+			alignItems: "center",
+			justifyContent: "center",
+			flexDirection: "column",
+			backfaceVisibility: "hidden",
+		}),
+		[]
+	);
+
+	const flickerAnimation = {
+		flickering: {
+			backgroundColor: ["#ffffff", "#8fd5a5", "#ffffff", "#8fd5a5"],
+			transition: {
+				duration: 1,
+				repeat: Infinity,
+				repeatType: "reverse",
+				ease: "easeInOut",
+			},
+		},
+	};
+	const playerList = useMemo(() => {
+		return data.map((player, index) => {
+			const updatedIndex = updatedData.findIndex((p) => p.id === player.id);
+			const rankChange = updatedIndex !== -1 ? index - updatedIndex : 0;
+			return { ...player, rankChange };
+		});
+	}, [data, updatedData]);
+
+	return (
+		<div onClick={() => navigate("/sports")} className={styles.mainContainer}>
+			<Reorder.Group
+				style={commonStyles}
+				animate={{ rotateY: isFlipped ? 180 : 0 }}
+				transition={{ duration: 0.6 }}
+				values={playerList}
+				onReorder={setData}
+				className={styles.container}
+			>
+				<div className={styles.title}>ALPINE SKIING</div>
+				<div className={styles.tableContainer}>
+					<Divider />
+					<div className={styles.innerContainer}>
+						<div className={styles.table}>
+							<div className={styles.subtitleContainer}>
+								<div className={styles.subtitleInnerContainer}>
+									<div className={styles.dashedLine}></div>
+									<div className={styles.subtitle}>
+										10 km Individual start free (boys)
+									</div>
+									<div className={styles.dashedLine}></div>
+								</div>
+							</div>
+
+							{hockey ? (
+								<div className={styles.list_girl}>
+									{playerList.map((match, matchIndex) => {
+										return (
+											<div className={styles.innerHockayContainer}>
+												{match.map((country, countryIndex) => {
+													return (
+														<motion.div
+															key={`${matchIndex}-${countryIndex}`}
+															className={styles.countryInfo}
+															variants={flickerAnimation}
+															layout
+															initial={{ backgroundColor: "#ffffff" }}
+															// animate={
+															// 	matchIndex === matchRandomIndexGirls &&
+															// 	countryRandomIndexGirls === countryIndex
+															// 		? "flickering"
+															// 		: "initial"
+															// }
+														>
+															<div className={styles.innerCountryInfo}>
+																<div>{country.flag}</div>
+																<div>{country.country}</div>
+															</div>
+															<div className={styles.score}>
+																{country.scores.map((score, index) => {
+																	const firstPositiveIndex =
+																		country.scores.findIndex(
+																			(score) => score > 0
+																		);
+																	return (
+																		<div
+																			key={index}
+																			className={
+																				index === firstPositiveIndex
+																					? styles.boldedScore
+																					: ""
+																			}
+																		>
+																			{score}
+																		</div>
+																	);
+																})}
+															</div>
+														</motion.div>
+													);
+												})}
+											</div>
+										);
+									})}
+								</div>
+							) : (
+								<div className={styles.list}>
+									{playerList.map((player, index) => (
+										<PlayerRow key={player.id} player={player} index={index} />
+									))}
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+			</Reorder.Group>
+
+			<motion.div
+				style={commonStyles}
+				initial={{ rotateY: 180 }}
+				animate={{ rotateY: isFlipped ? 0 : 180 }}
+				transition={{ duration: 0.6 }}
+			>
+				<video autoPlay loop muted playsInline className={styles.video}>
+					<source src="/assets/video.mp4" type="video/mp4" />
+				</video>
+			</motion.div>
+		</div>
 	);
 }
 

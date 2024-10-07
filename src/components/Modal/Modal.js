@@ -4,7 +4,7 @@ import Grid from "../Grid/Grid";
 import { CloseModalIcon } from "../../UI/Icons";
 import Bread from "../Bread/Bread";
 
-export default function Modal({ visible, onClose }) {
+export default function Modal({ visible, onClose, ref }) {
 	const playerColumns = [
 		{
 			key: "_id",
@@ -38,6 +38,7 @@ export default function Modal({ visible, onClose }) {
 				);
 			},
 		},
+
 		{
 			key: "shooting",
 			title: "Shooting",
@@ -81,7 +82,7 @@ export default function Modal({ visible, onClose }) {
 		<div className={styles.modalOverlay}>
 			{visible && (
 				<div>
-					<div className={styles.modal}>
+					<div className={styles.modal} ref={ref}>
 						<div className={styles.modalHeader}>
 							<div className={styles.modalBreadcrumbs}>
 								<Bread
@@ -112,7 +113,7 @@ export default function Modal({ visible, onClose }) {
 								</div>
 								<div>
 									<div className={styles.fullName}>
-										Fillon Maillet Quentin{" "}
+										Fillon Maillet Quentin
 										<span className={styles.country}>(FRA)</span>
 									</div>
 									<div className={styles.dob}>

@@ -1,69 +1,7 @@
-import Card from "../../components/Card/Card";
+import Card from "../../components/DetailsCard/DetailsCard";
 import styles from "./SportDetail.module.css";
 
-function SportDetail() {
-	const playerColumns = [
-		{
-			key: "_id",
-			title: "#",
-			width: 100,
-			textAlign: "center",
-			render: (record, index) => {
-				return (
-					<div className={styles.rankingContainer}>
-						<div className={styles.ranking}>
-							<div className={styles.index}>{index + 1}.</div>
-							<div className={styles.flag}>{record.flag}</div>
-						</div>
-					</div>
-				);
-			},
-		},
-		{
-			key: "name",
-			title: "Name",
-			width: 800,
-			textAlign: "start",
-			render: (record, index) => {
-				return (
-					<>
-						<div className={styles.nameContainer}>
-							<div className={styles.country}>({record.country})</div>
-							<div className={styles.name}>{record.name}</div>
-						</div>
-					</>
-				);
-			},
-		},
-		{
-			key: "shooting",
-			title: "Shooting",
-			textAlign: "center",
-
-			render: (record) => {
-				return <>-</>;
-			},
-		},
-		{
-			key: "time",
-			title: "Time",
-			textAlign: "center",
-
-			render: (record) => {
-				return <>-</>;
-			},
-		},
-		{
-			key: "difference",
-			title: "Diff.",
-			textAlign: "center",
-
-			render: (record) => {
-				return <>-</>;
-			},
-		},
-	];
-
+function SportDetail({ columns, title, filter, color }) {
 	const alpineSkiingBoys = [
 		{
 			country: "FIN",
@@ -120,7 +58,13 @@ function SportDetail() {
 
 	return (
 		<div className={styles.container}>
-			<Card data={alpineSkiingBoys} columns={playerColumns} />
+			<Card
+				data={alpineSkiingBoys}
+				columns={columns}
+				title={title}
+				filter={filter}
+				color={color}
+			/>
 		</div>
 	);
 }

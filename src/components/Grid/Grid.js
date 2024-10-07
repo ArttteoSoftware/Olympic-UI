@@ -1,12 +1,13 @@
 import styles from "./Grid.module.css";
 
 function Grid({ columns, data, rowKey, onRowClick }) {
+	console.log("c", columns);
 	return (
 		<>
 			<table className={styles.table}>
 				<thead className={styles.thead}>
 					<tr>
-						{columns.map((column) => (
+						{columns?.map((column) => (
 							<th
 								key={column.key}
 								style={{ width: column.width, textAlign: column.textAlign }}
@@ -19,7 +20,7 @@ function Grid({ columns, data, rowKey, onRowClick }) {
 				<tbody>
 					{data.map((record, rowIndex) => (
 						<tr key={record[rowKey]} onClick={() => onRowClick(record)}>
-							{columns.map((column, index) => (
+							{columns?.map((column, index) => (
 								<td
 									key={[record[rowKey], index].join(",")}
 									style={{ width: column.width, textAlign: column.textAlign }}
