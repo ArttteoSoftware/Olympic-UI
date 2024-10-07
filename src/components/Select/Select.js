@@ -2,22 +2,28 @@ import { DropdownClosedIcon, DropdownOpenedIcon } from "../../UI/Icons";
 import styles from "./Select.module.css";
 import { useEffect, useRef, useState } from "react";
 
-export default function Select(props) {
+export default function Select({
+	onSelect,
+	state,
+	defaultValue,
+	options,
+	onClick,
+	onClose,
+}) {
 	const modalRef = useRef(null);
-	const [isOpen, setIsOpen] = useState(false);
-	const [selected, setSelected] = useState(props.defaultValue);
-
-	const toggleDropdown = () => setIsOpen(!isOpen);
+	const [selected, setSelected] = useState(defaultValue);
 
 	const handleSelect = (option) => {
 		setSelected(option);
-		setIsOpen(false);
+		onClose();
+		console.log("**");
+		onSelect(option);
 	};
 
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (modalRef.current && !modalRef.current.contains(event.target)) {
-				setIsOpen(false);
+				onClose();
 			}
 		};
 
@@ -25,29 +31,31 @@ export default function Select(props) {
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, [props]);
+	}, []);
 
-	const filteredOptions = props.options.filter(
+	const filteredOptions = options.filter(
 		(option) => option.value !== selected?.value
 	);
+
+	console.log(state);
 
 	return (
 		<div
 			ref={modalRef}
-			className={`${isOpen ? styles.dropdownOpen : styles.dropdown}`}
+			className={`${state ? styles.dropdownOpen : styles.dropdown}`}
 		>
 			<div
-				className={`${isOpen ? styles.openHeader : styles.header}`}
-				onClick={toggleDropdown}
+				className={`${state ? styles.openHeader : styles.header}`}
+				onClick={() => onClick()}
 			>
 				<div className={styles.selectedOptionContainer}>
 					<div className={styles.selectedOption}>{selected?.label}</div>
 				</div>
 				<span className={styles.arrow}>
-					{isOpen ? <DropdownOpenedIcon /> : <DropdownClosedIcon />}
+					{state ? <DropdownOpenedIcon /> : <DropdownClosedIcon />}
 				</span>
 			</div>
-			{isOpen && (
+			{state && (
 				<ul className={styles.optionList}>
 					{filteredOptions.map((option) => (
 						<li

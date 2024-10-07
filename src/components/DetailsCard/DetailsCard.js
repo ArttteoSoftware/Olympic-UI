@@ -4,12 +4,19 @@ import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
-
-function DetailsCard({ columns, data, title, color, filter }) {
+import Loading from "../../UI/Loader/Loading";
+function DetailsCard({
+	columns,
+	data,
+	title,
+	color,
+	filter,
+	setFilterValue,
+	loading,
+}) {
 	const ref = useRef(null);
 
 	console.log(filter);
-	const [filterValue, setFilterValue] = useState(filter[0]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
@@ -45,8 +52,7 @@ function DetailsCard({ columns, data, title, color, filter }) {
 						</div>
 
 						<Select
-							value={filterValue}
-							onSelect={setFilterValue}
+							onSelect={(e) => setFilterValue(e)}
 							onClose={() => setIsOpen(false)}
 							onClick={() => setIsOpen(!isOpen)}
 							state={isOpen}
@@ -69,6 +75,7 @@ function DetailsCard({ columns, data, title, color, filter }) {
 							openInfo={openInfo}
 							rowKey={"name"}
 							onRowClick={handleRowClick}
+							loading={loading}
 						/>
 					</div>
 				</div>

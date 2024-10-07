@@ -58,7 +58,7 @@ const PlayerRow = React.memo(({ player, index }) => {
 	);
 });
 
-function Card({ hockey }) {
+function Card() {
 	const navigate = useNavigate();
 
 	const [data, setData] = useState([]);
@@ -160,7 +160,7 @@ function Card({ hockey }) {
 								</div>
 							</div>
 
-							{hockey ? (
+							{/* {hockey ? (
 								<div className={styles.list_girl}>
 									{playerList.map((match, matchIndex) => {
 										return (
@@ -217,7 +217,7 @@ function Card({ hockey }) {
 										<PlayerRow key={player.id} player={player} index={index} />
 									))}
 								</div>
-							)}
+							)} */}
 						</div>
 					</div>
 				</div>
