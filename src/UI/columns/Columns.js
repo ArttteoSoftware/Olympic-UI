@@ -4,7 +4,6 @@ export const SnowboardCol = [
 	{
 		key: "_id",
 		title: "#",
-		width: 100,
 		textAlign: "center",
 		render: (record, index) => {
 			return (
@@ -20,7 +19,6 @@ export const SnowboardCol = [
 	{
 		key: "athlete",
 		title: "Athlete",
-		width: 800,
 		textAlign: "start",
 		render: (record) => {
 			return (
