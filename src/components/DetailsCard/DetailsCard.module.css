@@ -1,5 +1,6 @@
 .mainContainer {
-	width: 836px;
+	width: 100%;
+	max-width: 836px;
 	background-color: #f5f7f7;
 	height: 100%;
 	border-radius: 20px;
@@ -24,7 +25,8 @@
 }
 
 .container {
-	width: 788px;
+	width: 100%;
+	max-width: 788px;
 	border-radius: 16px;
 	background-color: #ffffff;
 	padding: 20px;
@@ -91,4 +93,23 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+@media (max-width: 768px) {
+	.mainContainer {
+		border-radius: 10px;
+	}
+
+	.container {
+		width: min-content;
+		padding: 0px;
+	}
+
+	.filterContainer {
+		flex-direction: column;
+	}
+
+	.cardSubtitleInnerContainer {
+		width: 100%;
+	}
 }

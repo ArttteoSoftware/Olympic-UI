@@ -4,7 +4,7 @@ import Loading from "../../UI/Loader/Loading";
 function Grid({ columns, data, rowKey, onRowClick, loading }) {
 	console.log("loading", loading);
 	return (
-		<>
+		<div className={styles.container}>
 			{loading ? (
 				<div className={styles.loaderContainer}>
 					<Loading />
@@ -39,7 +39,7 @@ function Grid({ columns, data, rowKey, onRowClick, loading }) {
 					</tbody>
 				</table>
 			)}
-		</>
+		</div>
 	);
 }
 

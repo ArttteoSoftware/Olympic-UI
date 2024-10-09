@@ -3,6 +3,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 56px 60px 21px 60px;
+	flex-wrap: wrap;
 }
 
 .calendarContainer {
@@ -37,4 +38,21 @@
 
 .logoContainer {
 	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	.container {
+		padding: 20px;
+		flex-direction: column;
+		align-items: center;
+		gap: 20px;
+	}
+
+	.logo {
+		width: 150px;
+	}
+
+	.dateContainer {
+		text-align: center;
+	}
 }

@@ -74,7 +74,6 @@ export const BiathlonCol = [
 	{
 		key: "_id",
 		title: "#",
-		width: 100,
 		textAlign: "center",
 		render: (record, index) => {
 			return (
@@ -93,10 +92,10 @@ export const BiathlonCol = [
 			);
 		},
 	},
+
 	{
 		key: "description",
 		title: "Description",
-		width: 800,
 		textAlign: "start",
 		render: (record) => {
 			return (
