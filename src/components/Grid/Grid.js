@@ -1,8 +1,10 @@
 import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
+import useSocketStore from "../../store/socketStore";
 
 function Grid({ columns, data, rowKey, onRowClick, loading }) {
-	console.log("loading", loading);
+	const { data: socketData } = useSocketStore();
+	console.log("333", socketData);
 	return (
 		<div className={styles.container}>
 			{loading ? (
@@ -24,18 +26,22 @@ function Grid({ columns, data, rowKey, onRowClick, loading }) {
 						</tr>
 					</thead>
 					<tbody>
-						{data?.map((record, rowIndex) => (
-							<tr key={record[rowKey]} onClick={() => onRowClick(record)}>
-								{columns?.map((column, index) => (
-									<td
-										key={[record[rowKey], index].join(",")}
-										style={{ width: column.width, textAlign: column.textAlign }}
-									>
-										{column.render && column.render(record, rowIndex)}
-									</td>
-								))}
-							</tr>
-						))}
+						{data?.length > 0 &&
+							data.map((record, rowIndex) => (
+								<tr key={record[rowKey]} onClick={() => onRowClick(record)}>
+									{columns?.map((column, index) => (
+										<td
+											key={[record[rowKey], index].join(",")}
+											style={{
+												width: column.width,
+												textAlign: column.textAlign,
+											}}
+										>
+											{column.render && column.render(record, rowIndex)}
+										</td>
+									))}
+								</tr>
+							))}
 					</tbody>
 				</table>
 			)}

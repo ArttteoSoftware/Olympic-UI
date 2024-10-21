@@ -1,6 +1,9 @@
 import Card from "../../components/Card/Card";
 import styles from "./MainPageSportsGrid.module.css";
+import useSocketStore from "../../store/socketStore";
 function MainPageSportsGrid() {
+	const { data } = useSocketStore();
+	console.log(data);
 	return (
 		<div className={styles.container}>
 			<Card />

@@ -1,38 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import DetailsCard from "../../components/DetailsCard/DetailsCard";
 import { getAthletesBySports } from "../../services/SportsDetailService";
 import styles from "./SportDetail.module.css";
+import useSocketStore from "../../store/socketStore";
 
 function SportDetail({ columns, title, filter, color, sportKey }) {
-	const [data, setData] = useState();
 	const [filterValue, setFilterValue] = useState(filter[0]);
 	const [loading, setLoading] = useState(false);
-
-	const loadData = async () => {
+	const [data, setData] = useState([]);
+	const loadData = useCallback(async () => {
+		console.log("loadData function called");
 		setLoading(true);
 		try {
-			const { data } = await getAthletesBySports({
-				sport: sportKey,
-				gender: filterValue.value,
-			});
+			console.log("Attempting to fetch athletes data");
+			const data = await getAthletesBySports();
+			console.log("Received data:", data);
 
 			setData(data);
-			setLoading(false);
 		} catch (err) {
-			console.log("Error while loading Data", err);
+			console.error("Error while loading Data", err);
+		} finally {
 			setLoading(false);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
+		console.log("useEffect running");
 		loadData();
-	}, [filterValue]);
+	}, [loadData]);
 
+	console.log("Rendering SportDetail component");
 	return (
 		<div className={styles.container}>
 			<DetailsCard
 				loading={loading}
-				data={data}
+				initialData={data}
 				columns={columns}
 				title={title}
 				filter={filter}

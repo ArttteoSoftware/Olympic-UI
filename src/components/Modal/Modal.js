@@ -4,7 +4,7 @@ import Grid from "../Grid/Grid";
 import { CloseModalIcon } from "../../UI/Icons";
 import Bread from "../Bread/Bread";
 
-export default function Modal({ visible, onClose, ref }) {
+export default function Modal({ visible, onClose, ref, record }) {
 	const playerColumns = [
 		{
 			key: "_id",
@@ -113,12 +113,14 @@ export default function Modal({ visible, onClose, ref }) {
 								</div>
 								<div>
 									<div className={styles.fullName}>
-										Fillon Maillet Quentin
-										<span className={styles.country}>(FRA)</span>
+										{`${record.given_name} ${record.family_name}`}
+										<span className={styles.country}>
+											({record.organisation})
+										</span>
 									</div>
 									<div className={styles.dob}>
 										<span className={styles.label}>Date of birth:</span>{" "}
-										16.08.1992
+										{record.birth_date}
 									</div>
 								</div>
 							</div>

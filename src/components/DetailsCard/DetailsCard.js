@@ -4,10 +4,10 @@ import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
-import Loading from "../../UI/Loader/Loading";
+import useSocketStore from "../../store/socketStore";
 function DetailsCard({
 	columns,
-	data,
+	initialData,
 	title,
 	color,
 	filter,
@@ -20,11 +20,12 @@ function DetailsCard({
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
-
+	const { data } = useSocketStore();
 	const handleRowClick = (record) => {
 		setPlayerInfo(record);
 		setOpenInfo(true);
 	};
+
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -71,9 +72,9 @@ function DetailsCard({
 					<div className={styles.dataContainer}>
 						<Grid
 							columns={columns}
-							data={data}
+							data={initialData}
 							openInfo={openInfo}
-							rowKey={"name"}
+							rowKey={(record) => record._id}
 							onRowClick={handleRowClick}
 							loading={loading}
 						/>
@@ -82,8 +83,9 @@ function DetailsCard({
 			</div>
 			{openInfo && (
 				<Modal
+					record={playerInfo}
 					ref={ref}
-					visible={openInfo}
+					visible={Boolean(openInfo)}
 					title={playerInfo.name}
 					onClose={() => setOpenInfo(false)}
 				/>

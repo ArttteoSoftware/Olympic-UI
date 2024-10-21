@@ -3,6 +3,7 @@ import SportsGrid from "../pages/MainPage/MainPageSportsGrid";
 import SportDetail from "../pages/SportDetailPage/SportDetail";
 import { BiathlonCol, SnowboardCol } from "../UI/columns/Columns";
 import { Gender, SnowboardStyles } from "../UI/FilterOptions/FilterOptions";
+import { ColumnsWithSocketData } from "../UI/columns/Columns";
 
 export const AppRoutes = () => {
 	return (

@@ -1,4 +1,5 @@
 import styles from "./Columns.module.css";
+import useSocketStore from "../../store/socketStore";
 
 export const SnowboardCol = [
 	{
@@ -10,7 +11,13 @@ export const SnowboardCol = [
 				<div className={styles.rankingContainer}>
 					<div className={styles.ranking}>
 						<div className={styles.index}>{index + 1}.</div>
-						<div className={styles.flag}>{record.flag}</div>
+						<div className={styles.flag}>
+							<img
+								className="flag"
+								alt="country-flag"
+								src={`flags/${record.organization}.png`}
+							/>
+						</div>
 					</div>
 				</div>
 			);
@@ -20,15 +27,8 @@ export const SnowboardCol = [
 		key: "athlete",
 		title: "Athlete",
 		textAlign: "start",
-		render: (record) => {
-			return (
-				<>
-					<div className={styles.nameContainer}>
-						<div className={styles.country}>({record.country})</div>
-						<div className={styles.name}>{record.name}</div>
-					</div>
-				</>
-			);
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} />;
 		},
 	},
 
@@ -82,7 +82,7 @@ export const BiathlonCol = [
 							<img
 								className="flag"
 								alt="country-flag"
-								src="flags/Finland.png"
+								src={`flags/${record.organisation}.png`}
 							/>
 						</div>
 					</div>
@@ -95,15 +95,8 @@ export const BiathlonCol = [
 		key: "description",
 		title: "Description",
 		textAlign: "start",
-		render: (record) => {
-			return (
-				<>
-					<div className={styles.nameContainer}>
-						<div className={styles.country}>({record.nationality})</div>
-						<div className={styles.name}>{record.tv_initial_name}</div>
-					</div>
-				</>
-			);
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} />;
 		},
 	},
 
@@ -135,3 +128,19 @@ export const BiathlonCol = [
 		},
 	},
 ];
+
+const AthleteCell = ({ record, index }) => {
+	const { data } = useSocketStore();
+	const athleteIndex = data?.indexOf({ code: record.code });
+	console.log("athleteIndex ****888", athleteIndex, index);
+
+	return (
+		<>
+			<div className={styles.nameContainer}>
+				<div className={styles.country}>({record.country})</div>
+				<div className={styles.name}>{record.name}</div>
+				<div> + </div>
+			</div>
+		</>
+	);
+};
