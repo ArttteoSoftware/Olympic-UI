@@ -128,7 +128,7 @@ export default function Modal({ visible, onClose, ref, record }) {
 						<div className={styles.modalFooter}>
 							<span className={styles.modalFooterTitle}>Results</span>
 							<div className={styles.tableContainer}>
-								<Grid columns={playerColumns} data={alpineSkiingBoys} />
+								<Grid columns={playerColumns} data={[]} isModal={true} />
 							</div>
 						</div>
 					</div>

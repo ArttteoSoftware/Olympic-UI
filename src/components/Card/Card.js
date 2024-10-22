@@ -2,61 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styles from "./Card.module.css";
 import { motion, useAnimation, Reorder } from "framer-motion";
 import axios from "axios";
-import { UpRanking, DownRanking, Divider } from "../../UI/Icons";
+import { RankingUp, RankingDown, Divider } from "../../UI/Icons";
 import { useNavigate } from "react-router-dom";
-
-const PlayerRow = React.memo(({ player, index }) => {
-	const controls = useAnimation();
-
-	useEffect(() => {
-		controls.start({
-			opacity: [1, 0.5, 1],
-			y: player.rankChange ? -40 * player.rankChange : 0,
-			x: 0,
-			scale: 1,
-			rotate: 0,
-			transition: {
-				duration: 2,
-				opacity: { times: [0, 0.5, 1], duration: 2 },
-			},
-		});
-	}, [player.rankChange, controls]);
-
-	return (
-		<Reorder.Item
-			className={styles.row}
-			key={player.id}
-			value={player}
-			transition={{ duration: 2 }}
-			animate={controls}
-			initial={{ opacity: 1 }}
-		>
-			<div className={styles.playerInfo}>
-				<div
-					className={`${styles.ranking} ${index === 0 && styles.first} ${
-						index === 1 && styles.second
-					} ${index === 2 && styles.third}`}
-				>
-					<div className={styles.index}>{index + 1}.</div>
-					<div className={styles.flag}>
-						<img
-							className="flag"
-							alt="country-flag"
-							src={`flags/${player.flag}.png`}
-						/>
-					</div>
-				</div>
-				<div className={styles.country}>({player.country})</div>
-				<div className={styles.name}>{player.name}</div>
-				<div className={styles.name}>
-					{player.rankChange > 0 && <UpRanking />}
-					{player.rankChange < 0 && <DownRanking />}
-				</div>
-			</div>
-			<div className={styles.result}>{player.time}</div>
-		</Reorder.Item>
-	);
-});
 
 function Card() {
 	const navigate = useNavigate();

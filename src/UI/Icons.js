@@ -194,7 +194,7 @@ export const GoldMedal = () => {
 	);
 };
 
-export const DownRanking = () => {
+export const RankingDown = () => {
 	return (
 		<svg
 			width="14"
@@ -215,7 +215,7 @@ export const DownRanking = () => {
 	);
 };
 
-export const UpRanking = () => {
+export const RankingUp = () => {
 	return (
 		<svg
 			width="14"

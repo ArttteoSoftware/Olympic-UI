@@ -5,6 +5,7 @@ import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
 import useSocketStore from "../../store/socketStore";
+import { Reorder } from "framer-motion";
 function DetailsCard({
 	columns,
 	initialData,
@@ -16,7 +17,6 @@ function DetailsCard({
 }) {
 	const ref = useRef(null);
 
-	console.log(filter);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
@@ -72,7 +72,7 @@ function DetailsCard({
 					<div className={styles.dataContainer}>
 						<Grid
 							columns={columns}
-							data={initialData}
+							data={data || []}
 							openInfo={openInfo}
 							rowKey={(record) => record._id}
 							onRowClick={handleRowClick}

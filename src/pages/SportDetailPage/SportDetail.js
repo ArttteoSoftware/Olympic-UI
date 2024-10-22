@@ -9,14 +9,11 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
 	const loadData = useCallback(async () => {
-		console.log("loadData function called");
 		setLoading(true);
 		try {
-			console.log("Attempting to fetch athletes data");
 			const data = await getAthletesBySports();
-			console.log("Received data:", data);
 
-			setData(data);
+			setData(data.data.units[1].units[0]);
 		} catch (err) {
 			console.error("Error while loading Data", err);
 		} finally {
@@ -25,11 +22,9 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 	}, []);
 
 	useEffect(() => {
-		console.log("useEffect running");
 		loadData();
 	}, [loadData]);
 
-	console.log("Rendering SportDetail component");
 	return (
 		<div className={styles.container}>
 			<DetailsCard

@@ -1,5 +1,6 @@
 import styles from "./Columns.module.css";
 import useSocketStore from "../../store/socketStore";
+import { RankingUp, RankingDown } from "../Icons";
 
 export const SnowboardCol = [
 	{
@@ -15,7 +16,7 @@ export const SnowboardCol = [
 							<img
 								className="flag"
 								alt="country-flag"
-								src={`flags/${record.organization}.png`}
+								src={`flags/${record.athlete.organisation}.png`}
 							/>
 						</div>
 					</div>
@@ -82,7 +83,7 @@ export const BiathlonCol = [
 							<img
 								className="flag"
 								alt="country-flag"
-								src={`flags/${record.organisation}.png`}
+								src={`flags/${record.athlete.organisation}.png`}
 							/>
 						</div>
 					</div>
@@ -106,7 +107,7 @@ export const BiathlonCol = [
 		textAlign: "center",
 
 		render: (record) => {
-			return <>-</>;
+			return <>{record?.shootingResults?.value || "-"}</>;
 		},
 	},
 	{
@@ -115,7 +116,7 @@ export const BiathlonCol = [
 		textAlign: "center",
 
 		render: (record) => {
-			return <>-</>;
+			return <>{record?.intermediates?.value ?? "-"}</>;
 		},
 	},
 	{
@@ -124,22 +125,23 @@ export const BiathlonCol = [
 		textAlign: "center",
 
 		render: (record) => {
-			return <>-</>;
+			return <>{record?.intermediates?.diff ?? "-"}</>;
 		},
 	},
 ];
 
 const AthleteCell = ({ record, index }) => {
 	const { data } = useSocketStore();
-	const athleteIndex = data?.indexOf({ code: record.code });
-	console.log("athleteIndex ****888", athleteIndex, index);
 
 	return (
 		<>
 			<div className={styles.nameContainer}>
-				<div className={styles.country}>({record.country})</div>
-				<div className={styles.name}>{record.name}</div>
-				<div> + </div>
+				<div className={styles.country}>({record.athlete.organisation})</div>
+				<div className={styles.name}>{record.athlete.name}</div>
+				<div>
+					{record.intermediates.lastIntermediateDiff > 0 && <RankingUp />}
+					{record.intermediates.lastIntermediateDiff < 0 && <RankingDown />}
+				</div>
 			</div>
 		</>
 	);

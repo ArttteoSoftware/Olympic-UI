@@ -16,7 +16,6 @@ export default function Select({
 	const handleSelect = (option) => {
 		setSelected(option);
 		onClose();
-		console.log("**");
 		onSelect(option);
 	};
 
@@ -36,8 +35,6 @@ export default function Select({
 	const filteredOptions = options.filter(
 		(option) => option.value !== selected?.value
 	);
-
-	console.log(state);
 
 	return (
 		<div

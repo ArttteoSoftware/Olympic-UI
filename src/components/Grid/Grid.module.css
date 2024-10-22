@@ -27,13 +27,26 @@ th {
 	font-weight: 400;
 }
 
-tr {
-	background-color: #ffffff;
+tr,
+.tr {
+	/* background-color: #ffffff; */
 	cursor: pointer;
+	margin: 0;
+}
+ul {
+	margin: 0;
 }
 
-tbody tr:hover {
-	background-color: #f5f7f7;
+tbody tr:hover,
+.tr:hover {
+	/* background-color: #f5f7f7; */
+}
+
+.tr {
+	display: table-row;
+	vertical-align: inherit;
+	unicode-bidi: isolate;
+	border-color: inherit;
 }
 
 .loaderContainer {
