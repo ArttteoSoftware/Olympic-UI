@@ -1,11 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Divider } from "../../UI/Icons";
 import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
 import useSocketStore from "../../store/socketStore";
-import { Reorder } from "framer-motion";
 function DetailsCard({
 	columns,
 	initialData,
@@ -20,11 +19,16 @@ function DetailsCard({
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
+	const [gridData, setGridData] = useState([]);
 	const { data } = useSocketStore();
 	const handleRowClick = (record) => {
 		setPlayerInfo(record);
 		setOpenInfo(true);
 	};
+
+	useEffect(() => {
+		setGridData(data || initialData?.start_list);
+	}, [data, initialData]);
 
 	return (
 		<>
@@ -72,11 +76,11 @@ function DetailsCard({
 					<div className={styles.dataContainer}>
 						<Grid
 							columns={columns}
-							data={data || []}
-							openInfo={openInfo}
+							data={gridData}
 							rowKey={(record) => record._id}
 							onRowClick={handleRowClick}
 							loading={loading}
+							isModal={false}
 						/>
 					</div>
 				</div>

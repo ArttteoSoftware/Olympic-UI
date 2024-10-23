@@ -1,8 +1,8 @@
-import { motion, AnimatePresence, Reorder } from "framer-motion";
+import { AnimatePresence, Reorder } from "framer-motion";
 import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
-import { useEffect, useState, memo, useCallback } from "react";
+import { useEffect, useState, memo } from "react";
 
 const PlayerRow = memo(({ record, columns, rowKey, onRowClick }) => {
 	return (
@@ -37,12 +37,9 @@ function Grid({ columns, data, rowKey, onRowClick, loading, isModal }) {
 
 	useEffect(() => {
 		if (!isModal) {
-			const newData = socketData?.length > 0 ? socketData : data;
-			if (JSON.stringify(newData) !== JSON.stringify(animatedData)) {
-				setAnimatedData(newData);
-			}
+			setAnimatedData(socketData || data);
 		}
-	}, [socketData, data, isModal, animatedData]);
+	}, [socketData, data, isModal]);
 
 	return (
 		<div className={styles.container}>
@@ -67,7 +64,7 @@ function Grid({ columns, data, rowKey, onRowClick, loading, isModal }) {
 					<Reorder.Group
 						as="tbody"
 						axis="y"
-						values={animatedData}
+						values={animatedData || []}
 						onReorder={setAnimatedData}
 					>
 						<AnimatePresence>

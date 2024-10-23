@@ -1,6 +1,7 @@
 export const Gender = [
-	{ label: "Girls", value: "F" },
+	{ label: "Girls", value: "W" },
 	{ label: "Boys", value: "M" },
+	{ label: "Mix", value: "X" },
 ];
 
 export const SnowboardStyles = [

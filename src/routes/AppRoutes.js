@@ -17,7 +17,7 @@ export const AppRoutes = () => {
 						title={"Snowboard"}
 						filter={SnowboardStyles}
 						color={"#3F78A3"}
-						sportKey={"SNB-------------------------------"}
+						sportKey={"SNB"}
 					/>
 				}
 			/>
@@ -29,7 +29,7 @@ export const AppRoutes = () => {
 						title={"Biathlon"}
 						filter={Gender}
 						color={"#D64540"}
-						sportKey={"BTH-------------------------------"}
+						sportKey={"BTH"}
 					/>
 				}
 			/>

@@ -7,11 +7,13 @@ export const SnowboardCol = [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
-		render: (record, index) => {
+		render: (record) => {
 			return (
 				<div className={styles.rankingContainer}>
 					<div className={styles.ranking}>
-						<div className={styles.index}>{index + 1}.</div>
+						<div className={styles.index}>
+							{record.result.intermediates.rank}.
+						</div>
 						<div className={styles.flag}>
 							<img
 								className="flag"
@@ -75,20 +77,7 @@ export const BiathlonCol = [
 		title: "#",
 		textAlign: "center",
 		render: (record, index) => {
-			return (
-				<div className={styles.rankingContainer}>
-					<div className={styles.ranking}>
-						<div className={styles.index}> {index + 1}.</div>
-						<div className={styles.flag}>
-							<img
-								className="flag"
-								alt="country-flag"
-								src={`flags/${record.athlete.organisation}.png`}
-							/>
-						</div>
-					</div>
-				</div>
-			);
+			return <AthleteRanking record={record} index={index} />;
 		},
 	},
 
@@ -132,6 +121,10 @@ export const BiathlonCol = [
 
 const AthleteCell = ({ record, index }) => {
 	const { data } = useSocketStore();
+	const socketDataIndex = data?.findIndex(
+		(item) => item.athlete.code === record.athlete.code
+	);
+	const indx = socketDataIndex - index;
 
 	return (
 		<>
@@ -139,10 +132,33 @@ const AthleteCell = ({ record, index }) => {
 				<div className={styles.country}>({record.athlete.organisation})</div>
 				<div className={styles.name}>{record.athlete.name}</div>
 				<div>
-					{record.intermediates.lastIntermediateDiff > 0 && <RankingUp />}
-					{record.intermediates.lastIntermediateDiff < 0 && <RankingDown />}
+					{indx > 0 && <RankingUp />}
+					{indx < 0 && <RankingDown />}
 				</div>
 			</div>
 		</>
+	);
+};
+
+const AthleteRanking = ({ record, index }) => {
+	// const { data } = useSocketStore();
+	// const socketDataIndex = data?.findIndex(
+	// 	(item) => item.athlete.code === record.athlete.code
+	// );
+
+	// const indx = socketDataIndex + 1;
+	return (
+		<div className={styles.rankingContainer}>
+			<div className={styles.ranking}>
+				<div className={styles.index}>{1}.</div>
+				<div className={styles.flag}>
+					<img
+						className="flag"
+						alt="country-flag"
+						src={`flags/${record.athlete.organisation}.png`}
+					/>
+				</div>
+			</div>
+		</div>
 	);
 };
