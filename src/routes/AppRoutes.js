@@ -22,7 +22,7 @@ export const AppRoutes = () => {
 				}
 			/>
 			<Route
-				path="/biathlon"
+				path="/BTH"
 				element={
 					<SportDetail
 						columns={BiathlonCol}

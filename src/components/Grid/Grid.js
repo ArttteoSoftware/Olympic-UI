@@ -22,6 +22,8 @@ const PlayerRow = memo(({ record, columns, rowKey, onRowClick, index }) => {
 					key={`${record[rowKey]}-${column.key}`}
 					style={{
 						width: column.width,
+						minWidth: column.minWidth,
+						maxWidth: column.maxWidth,
 						textAlign: column.textAlign,
 					}}
 				>
@@ -32,7 +34,15 @@ const PlayerRow = memo(({ record, columns, rowKey, onRowClick, index }) => {
 	);
 });
 
-function Grid({ columns, data, rowKey, onRowClick, loading, isModal }) {
+function Grid({
+	columns,
+	data,
+	rowKey,
+	onRowClick,
+	loading,
+	isModal,
+	forCard,
+}) {
 	const { dataState } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 
@@ -49,13 +59,18 @@ function Grid({ columns, data, rowKey, onRowClick, loading, isModal }) {
 					<Loading />
 				</div>
 			) : (
-				<table className={styles.table}>
-					<thead className={styles.thead}>
+				<table className={forCard ? styles.table_forCard : styles.table}>
+					<thead className={forCard ? styles.thead_forCard : styles.thead}>
 						<tr>
 							{columns?.map((column) => (
 								<th
 									key={column.key}
-									style={{ width: column.width, textAlign: column.textAlign }}
+									style={{
+										width: column.width,
+										minWidth: column.minWidth,
+										maxWidth: column.maxWidth,
+										textAlign: column.textAlign,
+									}}
 								>
 									{column.title}
 								</th>

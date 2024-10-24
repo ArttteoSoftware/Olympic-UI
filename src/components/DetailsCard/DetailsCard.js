@@ -5,7 +5,7 @@ import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
 import useSocketStore from "../../store/socketStore";
-import { convertGender } from "../../util/GenderEnum";
+import { convertGender } from "../../enum/Gender";
 import FormatData from "../../util/FormatData";
 function DetailsCard({
 	columns,

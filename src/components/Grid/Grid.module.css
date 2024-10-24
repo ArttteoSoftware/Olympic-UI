@@ -1,29 +1,42 @@
-.tableWrapper {
+.container {
 	width: 100%;
-	overflow-x: auto;
+	overflow-x: auto; /* Changed from hidden to auto */
 }
 
 .table {
 	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0 10px;
+	table-layout: auto; /* Changed from fixed to auto */
+	min-width: 600px; /* Ensures minimum width for smaller screens */
+}
+
+.table_forCard {
+	composes: table;
+	min-width: auto; /* Allows table to shrink more for cards */
+	font-size: 12px; /* Smaller font size for cards */
 }
 
 .thead {
 	background-color: #f5f7f766;
 }
 
+.thead_forCard {
+	composes: thead;
+}
+
 th,
 td {
-	padding: 14px;
+	padding: 8px 4px;
 	text-align: left;
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* Added to handle text overflow */
 }
 
 th {
 	color: #2a3342;
 	opacity: 60%;
-	font-size: 14px;
 	font-weight: 400;
 }
 
@@ -57,9 +70,23 @@ tbody tr:hover,
 }
 
 @media (max-width: 768px) {
+	.table {
+		font-size: 12px;
+	}
+
 	th,
 	td {
-		padding: 0;
-		font-size: 12px;
+		padding: 6px 2px;
+	}
+}
+
+@media (max-width: 480px) {
+	.table {
+		font-size: 10px;
+	}
+
+	th,
+	td {
+		padding: 4px 1px;
 	}
 }

@@ -4,10 +4,11 @@ import { motion, Reorder } from "framer-motion";
 import axios from "axios";
 import { Divider } from "../../UI/Icons";
 import { useNavigate } from "react-router-dom";
+import { convertSportTitle } from "../../enum/Sport";
+import { BiathlonCol } from "../../UI/columns/Columns";
 
-function Card() {
-	const navigate = useNavigate();
-
+import Grid from "../Grid/Grid";
+function Card({ title, units }) {
 	const [data, setData] = useState([]);
 	const [updatedData, setUpdatedData] = useState([]);
 	const [isFlipped, setIsFlipped] = useState(false);
@@ -83,7 +84,7 @@ function Card() {
 	}, [data, updatedData]);
 
 	return (
-		<div onClick={() => navigate("/sports")} className={styles.mainContainer}>
+		<div className={styles.mainContainer}>
 			<Reorder.Group
 				style={commonStyles}
 				animate={{ rotateY: isFlipped ? 180 : 0 }}
@@ -92,7 +93,7 @@ function Card() {
 				onReorder={setData}
 				className={styles.container}
 			>
-				<div className={styles.title}>ALPINE SKIING</div>
+				<div className={styles.title}>{convertSportTitle(title)}</div>
 				<div className={styles.tableContainer}>
 					<Divider />
 					<div className={styles.innerContainer}>
@@ -107,64 +108,17 @@ function Card() {
 								</div>
 							</div>
 
-							{/* {hockey ? (
-								<div className={styles.list_girl}>
-									{playerList.map((match, matchIndex) => {
-										return (
-											<div className={styles.innerHockayContainer}>
-												{match.map((country, countryIndex) => {
-													return (
-														<motion.div
-															key={`${matchIndex}-${countryIndex}`}
-															className={styles.countryInfo}
-															variants={flickerAnimation}
-															layout
-															initial={{ backgroundColor: "#ffffff" }}
-															// animate={
-															// 	matchIndex === matchRandomIndexGirls &&
-															// 	countryRandomIndexGirls === countryIndex
-															// 		? "flickering"
-															// 		: "initial"
-															// }
-														>
-															<div className={styles.innerCountryInfo}>
-																<div>{country.flag}</div>
-																<div>{country.country}</div>
-															</div>
-															<div className={styles.score}>
-																{country.scores.map((score, index) => {
-																	const firstPositiveIndex =
-																		country.scores.findIndex(
-																			(score) => score > 0
-																		);
-																	return (
-																		<div
-																			key={index}
-																			className={
-																				index === firstPositiveIndex
-																					? styles.boldedScore
-																					: ""
-																			}
-																		>
-																			{score}
-																		</div>
-																	);
-																})}
-															</div>
-														</motion.div>
-													);
-												})}
-											</div>
-										);
-									})}
-								</div>
-							) : (
-								<div className={styles.list}>
-									{playerList.map((player, index) => (
-										<PlayerRow key={player.id} player={player} index={index} />
-									))}
-								</div>
-							)} */}
+							<div className={styles.gridWrapper}>
+								{units.map((unit) => (
+									<div>
+										<Grid
+											columns={BiathlonCol}
+											data={unit.start_list}
+											className={styles.cardGrid}
+										/>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>
