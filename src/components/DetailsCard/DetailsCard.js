@@ -6,6 +6,7 @@ import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
 import useSocketStore from "../../store/socketStore";
 import { convertGender } from "../../util/GenderEnum";
+import FormatData from "../../util/FormatData";
 function DetailsCard({
 	columns,
 	initialData,
@@ -32,7 +33,6 @@ function DetailsCard({
 		setGridData(data || initialData?.start_list);
 	}, [data, initialData]);
 
-	console.log(filter);
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -48,12 +48,17 @@ function DetailsCard({
 							style={{ backgroundColor: color }}
 						>
 							<div className={styles.filterTitle}>
-								<div>Distance: 4x6 KM</div>
+								<div>
+									Distance: {FormatData.formatDistance(initialData?.unit_code)}
+									KM
+								</div>
 								<div className={styles.dateAndTime}>
-									<div className={styles.date}>08.02.2024</div>
+									<div className={styles.date}>
+										{FormatData.formatDate(initialData?.start_date)}
+									</div>
 									<div className={styles.time}>
 										<div>•</div>
-										<div>12:30 </div>
+										<div>{FormatData.formatTime(initialData?.start_date)}</div>
 									</div>
 								</div>
 							</div>
