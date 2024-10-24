@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import DetailsCard from "../../components/DetailsCard/DetailsCard";
 import { getSportDataBySportKey } from "../../services/SportsDetailService";
 import styles from "./SportDetail.module.css";
-import useSocketStore from "../../store/socketStore";
 
 function SportDetail({ columns, title, filter, color, sportKey }) {
 	const [selectedFilter, setSelectedFilter] = useState(filter[0]);
@@ -26,7 +25,7 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 		} finally {
 			setLoading(false);
 		}
-	}, [selectedFilter]);
+	}, [selectedFilter, sportKey]);
 
 	useEffect(() => {
 		loadData();

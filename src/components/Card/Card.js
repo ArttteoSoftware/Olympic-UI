@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import styles from "./Card.module.css";
-import { motion, useAnimation, Reorder } from "framer-motion";
+import { motion, Reorder } from "framer-motion";
 import axios from "axios";
-import { RankingUp, RankingDown, Divider } from "../../UI/Icons";
+import { Divider } from "../../UI/Icons";
 import { useNavigate } from "react-router-dom";
 
 function Card() {

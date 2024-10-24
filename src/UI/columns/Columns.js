@@ -120,12 +120,16 @@ export const BiathlonCol = [
 ];
 
 const AthleteCell = ({ record, index }) => {
-	const { data } = useSocketStore();
-	const socketDataIndex = data?.findIndex(
+	const { dataState } = useSocketStore();
+	const oldIndex = dataState.previous?.findIndex(
 		(item) => item.athlete.code === record.athlete.code
 	);
-	const indx = socketDataIndex - index;
 
+	const newIndex = dataState.current?.findIndex(
+		(item) => item.athlete.code === record.athlete.code
+	);
+
+	const indx = oldIndex - newIndex;
 	return (
 		<>
 			<div className={styles.nameContainer}>
@@ -141,16 +145,10 @@ const AthleteCell = ({ record, index }) => {
 };
 
 const AthleteRanking = ({ record, index }) => {
-	// const { data } = useSocketStore();
-	// const socketDataIndex = data?.findIndex(
-	// 	(item) => item.athlete.code === record.athlete.code
-	// );
-
-	// const indx = socketDataIndex + 1;
 	return (
 		<div className={styles.rankingContainer}>
 			<div className={styles.ranking}>
-				<div className={styles.index}>{1}.</div>
+				<div className={styles.index}>{index + 1}.</div>
 				<div className={styles.flag}>
 					<img
 						className="flag"

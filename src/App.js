@@ -5,7 +5,7 @@ import { AppRoutes } from "./routes/AppRoutes";
 import io from "socket.io-client";
 import useSocketStore from "./store/socketStore";
 function App() {
-	const { setData, setStatus, data } = useSocketStore();
+	const { setData, setStatus } = useSocketStore();
 
 	useEffect(() => {
 		// Connect to the server
@@ -15,7 +15,7 @@ function App() {
 
 		// Listen for specific events from the server
 		socket.on("DT_RESULT", (newData) => {
-			setData(newData.results);
+			setData({ data: newData.results });
 		});
 
 		// Handle server connection error

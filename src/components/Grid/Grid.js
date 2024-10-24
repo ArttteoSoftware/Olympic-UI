@@ -4,7 +4,7 @@ import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
 import { useEffect, useState, memo } from "react";
 
-const PlayerRow = memo(({ record, columns, rowKey, onRowClick }) => {
+const PlayerRow = memo(({ record, columns, rowKey, onRowClick, index }) => {
 	return (
 		<Reorder.Item
 			value={record}
@@ -16,7 +16,7 @@ const PlayerRow = memo(({ record, columns, rowKey, onRowClick }) => {
 			transition={{ duration: 0.3 }}
 			onClick={() => onRowClick(record)}
 		>
-			{columns?.map((column, index) => (
+			{columns?.map((column) => (
 				<td
 					key={`${record[rowKey]}-${column.key}`}
 					style={{
@@ -32,14 +32,14 @@ const PlayerRow = memo(({ record, columns, rowKey, onRowClick }) => {
 });
 
 function Grid({ columns, data, rowKey, onRowClick, loading, isModal }) {
-	const { data: socketData } = useSocketStore();
+	const { dataState } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 
 	useEffect(() => {
 		if (!isModal) {
-			setAnimatedData(socketData || data);
+			setAnimatedData(dataState.current || data);
 		}
-	}, [socketData, data, isModal]);
+	}, [dataState, data, isModal]);
 
 	return (
 		<div className={styles.container}>
@@ -66,17 +66,21 @@ function Grid({ columns, data, rowKey, onRowClick, loading, isModal }) {
 						axis="y"
 						values={animatedData || []}
 						onReorder={setAnimatedData}
+						drag={false}
 					>
 						<AnimatePresence>
-							{animatedData?.map((record) => (
-								<PlayerRow
-									key={record.athlete.code}
-									record={record}
-									columns={columns}
-									rowKey={rowKey}
-									onRowClick={onRowClick}
-								/>
-							))}
+							{Array.isArray(animatedData) &&
+								animatedData?.map((record, index) => (
+									<PlayerRow
+										key={record.athlete.code}
+										record={record}
+										columns={columns}
+										rowKey={rowKey}
+										onRowClick={onRowClick}
+										animatedData={animatedData}
+										index={index}
+									/>
+								))}
 						</AnimatePresence>
 					</Reorder.Group>
 				</table>
