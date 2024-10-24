@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 function MainPageSportsGrid() {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
+	const { data: socketData } = useSocketStore();
 	const [data, setData] = useState([]);
 	const loadData = useCallback(async () => {
 		setLoading(true);
 		try {
 			const { data } = await getAllMatches();
 
-			console.log("data", data.units[0]);
 			setData(data.units);
 		} catch (err) {
 			console.error("Error while loading Data", err);
@@ -26,7 +26,7 @@ function MainPageSportsGrid() {
 		loadData();
 	}, [loadData]);
 
-	console.log(data);
+	console.log("socket", socketData);
 	return (
 		<div className={styles.container}>
 			{data.map(

@@ -2,11 +2,6 @@
 	width: 100%;
 }
 
-.container_forCard {
-	max-width: 100%;
-	overflow-x: auto;
-}
-
 .tableWrapper {
 	overflow-x: auto;
 	width: 100%;
@@ -18,11 +13,6 @@
 	border-spacing: 0 10px;
 	table-layout: fixed;
 	min-width: 100%; /* Ensures the table takes up at least full width */
-}
-
-.table_forCard {
-	composes: table;
-	font-size: 12px; /* Smaller font size for cards */
 }
 
 .thead {

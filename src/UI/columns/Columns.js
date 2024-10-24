@@ -86,16 +86,16 @@ export const BiathlonCol = [
 		key: "description",
 		title: "Description",
 		textAlign: "start",
-		width: 220,
+		width: 150,
 		render: (record, index) => {
-			return <AthleteCell record={record} index={index} />;
+			return <AthleteCell record={record} index={index} showCou />;
 		},
 	},
 
 	{
 		key: "shooting",
 		title: "Shooting",
-		textAlign: "center",
+		textAlign: "end",
 		windth: 50,
 
 		render: (record) => {
@@ -105,7 +105,7 @@ export const BiathlonCol = [
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "center",
+		textAlign: "end",
 		windth: 50,
 
 		render: (record) => {
@@ -115,7 +115,7 @@ export const BiathlonCol = [
 	{
 		key: "difference",
 		title: "Diff.",
-		textAlign: "center",
+		textAlign: "end",
 
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;
@@ -123,7 +123,7 @@ export const BiathlonCol = [
 	},
 ];
 
-const AthleteCell = ({ record, index }) => {
+const AthleteCell = ({ record, showCountry }) => {
 	const { dataState } = useSocketStore();
 	const oldIndex = dataState.previous?.findIndex(
 		(item) => item.athlete.code === record.athlete.code
@@ -137,7 +137,9 @@ const AthleteCell = ({ record, index }) => {
 	return (
 		<>
 			<div className={styles.nameContainer}>
-				<div className={styles.country}>({record.athlete.organisation})</div>
+				{showCountry && (
+					<div className={styles.country}>({record.athlete.organisation})</div>
+				)}
 				<div className={styles.name}>{record.athlete.name}</div>
 				<div>
 					{indx > 0 && <RankingUp />}

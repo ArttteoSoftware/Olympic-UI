@@ -59,8 +59,8 @@ function Grid({
 					<Loading />
 				</div>
 			) : (
-				<table className={forCard ? styles.table_forCard : styles.table}>
-					<thead className={forCard ? styles.thead_forCard : styles.thead}>
+				<table className={styles.table}>
+					<thead className={styles.thead}>
 						<tr>
 							{columns?.map((column) => (
 								<th

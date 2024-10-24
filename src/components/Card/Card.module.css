@@ -18,6 +18,7 @@
 	margin: 0px 4px 4px 4px;
 	border-radius: 16px;
 	box-shadow: 0 -10px 20px 0 #0c0f300d;
+	overflow-y: auto;
 }
 
 .table {
