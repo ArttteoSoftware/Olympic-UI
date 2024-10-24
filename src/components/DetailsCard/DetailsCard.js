@@ -5,6 +5,7 @@ import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import Modal from "../Modal/Modal";
 import useSocketStore from "../../store/socketStore";
+import { convertGender } from "../../util/GenderEnum";
 function DetailsCard({
 	columns,
 	initialData,
@@ -16,6 +17,7 @@ function DetailsCard({
 }) {
 	const ref = useRef(null);
 
+	const [selectedFilter, setSelectedFilter] = useState(filter[0]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
@@ -30,6 +32,7 @@ function DetailsCard({
 		setGridData(data || initialData?.start_list);
 	}, [data, initialData]);
 
+	console.log(filter);
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -57,7 +60,11 @@ function DetailsCard({
 						</div>
 
 						<Select
-							onSelect={(e) => setFilterValue(e)}
+							onSelect={(e) => {
+								setSelectedFilter(e);
+								setFilterValue(e);
+								console.log("ee", e);
+							}}
 							onClose={() => setIsOpen(false)}
 							onClick={() => setIsOpen(!isOpen)}
 							state={isOpen}
@@ -69,7 +76,9 @@ function DetailsCard({
 					<div className={styles.cardSubtitleContainer}>
 						<div className={styles.cardSubtitleInnerContainer}>
 							<div className={styles.dashedLine}></div>
-							<div className={styles.subtitle}>GIRLS</div>
+							<div className={styles.subtitle}>
+								{convertGender(selectedFilter.value)}
+							</div>
 							<div className={styles.dashedLine}></div>
 						</div>
 					</div>
