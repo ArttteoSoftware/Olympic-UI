@@ -7,6 +7,7 @@ import { useEffect, useState, memo } from "react";
 const PlayerRow = memo(({ record, columns, rowKey, onRowClick, index }) => {
 	return (
 		<Reorder.Item
+			as="tr"
 			value={record}
 			id={record.athlete.code}
 			className={styles.tr}
