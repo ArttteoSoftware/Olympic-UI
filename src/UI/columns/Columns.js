@@ -76,6 +76,7 @@ export const BiathlonCol = [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
+		width: 50,
 		render: (record, index) => {
 			return <AthleteRanking record={record} index={index} />;
 		},
@@ -85,6 +86,7 @@ export const BiathlonCol = [
 		key: "description",
 		title: "Description",
 		textAlign: "start",
+		width: 220,
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} />;
 		},
@@ -94,6 +96,7 @@ export const BiathlonCol = [
 		key: "shooting",
 		title: "Shooting",
 		textAlign: "center",
+		windth: 50,
 
 		render: (record) => {
 			return <>{record?.shootingResults?.value || "-"}</>;
@@ -103,6 +106,7 @@ export const BiathlonCol = [
 		key: "time",
 		title: "Time",
 		textAlign: "center",
+		windth: 50,
 
 		render: (record) => {
 			return <>{record?.intermediates?.value ?? "-"}</>;
@@ -149,13 +153,11 @@ const AthleteRanking = ({ record, index }) => {
 		<div className={styles.rankingContainer}>
 			<div className={styles.ranking}>
 				<div className={styles.index}>{index + 1}.</div>
-				<div className={styles.flag}>
-					<img
-						className="flag"
-						alt="country-flag"
-						src={`flags/${record.athlete.organisation}.png`}
-					/>
-				</div>
+				<img
+					className="flag"
+					alt="country-flag"
+					src={`flags/${record.athlete.organisation}.png`}
+				/>
 			</div>
 		</div>
 	);

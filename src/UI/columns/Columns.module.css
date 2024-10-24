@@ -12,9 +12,8 @@
 }
 
 .rankingContainer {
-	width: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: start;
 }
 
 .country {
@@ -23,5 +22,6 @@
 
 .nameContainer {
 	display: flex;
-	gap: 9px;
+	text-align: center;
+	gap: 3px;
 }

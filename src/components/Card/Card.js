@@ -97,7 +97,7 @@ function Card({ title, units }) {
 				<div className={styles.tableContainer}>
 					<Divider />
 					<div className={styles.innerContainer}>
-						<div className={styles.table}>
+						{/* <div className={styles.table}>
 							<div className={styles.subtitleContainer}>
 								<div className={styles.subtitleInnerContainer}>
 									<div className={styles.dashedLine}></div>
@@ -106,20 +106,20 @@ function Card({ title, units }) {
 									</div>
 									<div className={styles.dashedLine}></div>
 								</div>
-							</div>
+							</div> */}
 
-							<div className={styles.gridWrapper}>
-								{units.map((unit) => (
-									<div>
-										<Grid
-											columns={BiathlonCol}
-											data={unit.start_list}
-											className={styles.cardGrid}
-										/>
-									</div>
-								))}
+						{/* <div className={styles.gridWrapper}> */}
+						{units.map((unit) => (
+							<div>
+								<Grid
+									columns={BiathlonCol}
+									data={unit.start_list}
+									className={styles.cardGrid}
+								/>
 							</div>
-						</div>
+						))}
+						{/* </div> */}
+						{/* </div> */}
 					</div>
 				</div>
 			</Reorder.Group>

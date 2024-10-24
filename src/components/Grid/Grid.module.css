@@ -1,28 +1,32 @@
 .container {
 	width: 100%;
-	overflow-x: auto; /* Changed from hidden to auto */
+}
+
+.container_forCard {
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.tableWrapper {
+	overflow-x: auto;
+	width: 100%;
 }
 
 .table {
 	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0 10px;
-	table-layout: auto; /* Changed from fixed to auto */
-	min-width: 600px; /* Ensures minimum width for smaller screens */
+	table-layout: fixed;
+	min-width: 100%; /* Ensures the table takes up at least full width */
 }
 
 .table_forCard {
 	composes: table;
-	min-width: auto; /* Allows table to shrink more for cards */
 	font-size: 12px; /* Smaller font size for cards */
 }
 
 .thead {
 	background-color: #f5f7f766;
-}
-
-.thead_forCard {
-	composes: thead;
 }
 
 th,
@@ -70,13 +74,8 @@ tbody tr:hover,
 }
 
 @media (max-width: 768px) {
-	.table {
-		font-size: 12px;
-	}
-
-	th,
-	td {
-		padding: 6px 2px;
+	.container_forCard {
+		max-width: calc(100vw - 40px); /* Adjust based on your card's padding */
 	}
 }
 
