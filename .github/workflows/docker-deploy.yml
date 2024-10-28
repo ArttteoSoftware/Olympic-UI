@@ -1,0 +1,55 @@
+name: Build and Deploy Docker
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+  workflow_dispatch:  # Allow manual triggering from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}  # Your private SSH key
+
+      - name: SSH to Server, Clean Up, and Build Docker Image
+        env:
+          PULL_TOKEN: ${{ secrets.PULL_TOKEN }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+            cd /home/ubuntu/Olympic-UI  # Change this to your application directory
+
+            # Ensure the current user has ownership of all files
+            sudo chown -R ubuntu:ubuntu /home/ubuntu/Olympic-UI
+
+            # Mark this directory as safe for Git
+            git config --global --add safe.directory /home/ubuntu/Olympic-UI
+
+             # Update Git remote URL to use token for authentication
+            git remote set-url origin https://${PULL_TOKEN}@github.com/ArttteoSoftware/Olympic-UI.git
+
+            # Pull the latest code
+            git pull origin main
+
+            # Stop and remove the existing container if it exists
+            if sudo docker ps -a --format '{{.Names}}' | grep -Eq "^olympic-ui\$"; then
+              sudo docker stop olympic-ui
+              sudo docker rm olympic-ui
+            fi
+
+            # Remove exited containers
+            sudo docker container prune -f
+
+            # Build the Docker image
+            sudo docker build -t olympic-ui .
+
+            # Run the new container
+            sudo docker run -d -p 3000:5000 --name olympic-ui --restart unless-stopped olympic-ui
+          EOF
