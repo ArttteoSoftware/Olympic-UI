@@ -30,7 +30,7 @@ export default function Select({
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
-	}, []);
+	}, [onClose]);
 
 	const filteredOptions = options.filter(
 		(option) => option.value !== selected?.value

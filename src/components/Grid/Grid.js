@@ -43,14 +43,16 @@ function Grid({
 	isModal,
 	forCard,
 }) {
-	const { dataState } = useSocketStore();
+	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 
 	useEffect(() => {
 		if (!isModal) {
-			setAnimatedData(dataState.current || data);
+			if (unitCode === data.unit_code) {
+				setAnimatedData(dataState.current || data);
+			}
 		}
-	}, [dataState, data, isModal]);
+	}, [dataState, data, isModal, unitCode]);
 
 	return (
 		<div className={styles.container}>

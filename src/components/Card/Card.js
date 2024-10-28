@@ -6,12 +6,14 @@ import { Divider } from "../../UI/Icons";
 import { useNavigate } from "react-router-dom";
 import { convertSportTitle } from "../../enum/Sport";
 import { BiathlonCol } from "../../UI/columns/Columns";
+import useSocketStore from "../../store/socketStore";
 
 import Grid from "../Grid/Grid";
 function Card({ title, units }) {
 	const [data, setData] = useState([]);
 	const [updatedData, setUpdatedData] = useState([]);
 	const [isFlipped, setIsFlipped] = useState(false);
+	const { dataState, unitCode } = useSocketStore();
 
 	const loadData = useCallback(async () => {
 		try {
@@ -109,15 +111,19 @@ function Card({ title, units }) {
 							</div> */}
 
 						{/* <div className={styles.gridWrapper}> */}
-						{units.map((unit) => (
-							<div>
-								<Grid
-									columns={BiathlonCol}
-									data={unit.start_list}
-									className={styles.cardGrid}
-								/>
-							</div>
-						))}
+						{units.map((unit) => {
+							console.log("*****SOCKET_UNIT_CODE*****");
+							return (
+								<div>
+									<Grid
+										columns={BiathlonCol}
+										data={unit.start_list}
+										className={styles.cardGrid}
+									/>
+								</div>
+							);
+						})}
+
 						{/* </div> */}
 						{/* </div> */}
 					</div>
