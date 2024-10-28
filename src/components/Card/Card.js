@@ -112,7 +112,7 @@ function Card({ title, units }) {
 
 						{/* <div className={styles.gridWrapper}> */}
 						{units.map((unit) => {
-							console.log("*****SOCKET_UNIT_CODE*****");
+							console.log("*****SOCKET_UNIT_CODE*****", unit);
 							return (
 								<div>
 									<Grid

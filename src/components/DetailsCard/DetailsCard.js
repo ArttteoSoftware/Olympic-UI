@@ -30,7 +30,12 @@ function DetailsCard({
 	};
 
 	useEffect(() => {
-		setGridData(data || initialData?.start_list);
+		console.log("data", data);
+		if (data && data.length > 0) {
+			setGridData(data);
+		} else {
+			setGridData(initialData?.start_list);
+		}
 	}, [data, initialData]);
 
 	return (

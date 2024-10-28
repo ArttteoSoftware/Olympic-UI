@@ -48,12 +48,18 @@ function Grid({
 
 	useEffect(() => {
 		if (!isModal) {
-			if (unitCode === data.unit_code) {
-				setAnimatedData(dataState.current || data);
+			if (unitCode === data?.unit_code) {
+				setAnimatedData(dataState.current);
+			} else {
+				setAnimatedData(data);
 			}
 		}
 	}, [dataState, data, isModal, unitCode]);
 
+	console.log("unitCode", unitCode);
+
+	console.log("data", data?.unitCode);
+	console.log("socket", dataState.current);
 	return (
 		<div className={styles.container}>
 			{loading ? (
