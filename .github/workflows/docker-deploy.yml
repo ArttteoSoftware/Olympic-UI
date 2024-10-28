@@ -51,5 +51,5 @@ jobs:
             sudo docker build -t olympic-ui .
 
             # Run the new container
-            sudo docker run -d -p 4000:5000 --name olympic-ui --restart unless-stopped olympic-ui
+            sudo docker run -d -p 4000:4000 --name olympic-ui --restart unless-stopped olympic-ui
           EOF
