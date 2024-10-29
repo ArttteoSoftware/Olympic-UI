@@ -99,23 +99,21 @@ function Card({ title, units }) {
 				<div className={styles.tableContainer}>
 					<Divider />
 					<div className={styles.innerContainer}>
-						{/* <div className={styles.table}>
-							<div className={styles.subtitleContainer}>
-								<div className={styles.subtitleInnerContainer}>
-									<div className={styles.dashedLine}></div>
-									<div className={styles.subtitle}>
-										10 km Individual start free (boys)
-									</div>
-									<div className={styles.dashedLine}></div>
-								</div>
-							</div> */}
-
-						{/* <div className={styles.gridWrapper}> */}
 						{units.map((unit) => {
-							console.log("*****SOCKET_UNIT_CODE*****", unit);
 							return (
 								<div>
+									<div className={styles.subtitleContainer}>
+										<div className={styles.subtitleInnerContainer}>
+											<div className={styles.dashedLine}></div>
+											<div className={styles.subtitle}>
+												10 km Individual start free (boys)
+											</div>
+											<div className={styles.dashedLine}></div>
+										</div>
+									</div>
+
 									<Grid
+										details={false}
 										columns={BiathlonCol}
 										data={unit.start_list}
 										className={styles.cardGrid}
@@ -123,9 +121,6 @@ function Card({ title, units }) {
 								</div>
 							);
 						})}
-
-						{/* </div> */}
-						{/* </div> */}
 					</div>
 				</div>
 			</Reorder.Group>

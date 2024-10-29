@@ -1,27 +1,45 @@
-.container {
+.container,
+.container_details {
 	width: 100%;
 }
 
-.tableWrapper {
+.tableWrapper,
+.tableWrapper_details {
 	overflow-x: auto;
 	width: 100%;
 }
 
-.table {
+.table_details {
 	width: 100%;
 	border-collapse: separate;
 	border-spacing: 0 10px;
 	table-layout: fixed;
-	min-width: 100%; /* Ensures the table takes up at least full width */
+	min-width: 100%;
 }
 
-.thead {
+.table {
+	border-spacing: 0 0;
+	border-collapse: collapse;
+	width: 100%;
+	table-layout: fixed;
+	min-width: 100%;
+}
+
+.thead,
+.thead_details {
 	background-color: #f5f7f766;
 }
 
 th,
-td {
+.td_details {
 	padding: 8px 4px;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis; /* Added to handle text overflow */
+}
+
+.td {
 	text-align: left;
 	white-space: nowrap;
 	overflow: hidden;
@@ -75,7 +93,7 @@ tbody tr:hover,
 	}
 
 	th,
-	td {
+	.td_details {
 		padding: 4px 1px;
 	}
 }

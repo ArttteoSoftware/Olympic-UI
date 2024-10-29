@@ -94,6 +94,7 @@ function DetailsCard({
 					</div>
 					<div className={styles.dataContainer}>
 						<Grid
+							details={true}
 							columns={columns}
 							data={gridData}
 							rowKey={(record) => record._id}
