@@ -105,9 +105,7 @@ function Card({ title, units }) {
 									<div className={styles.subtitleContainer}>
 										<div className={styles.subtitleInnerContainer}>
 											<div className={styles.dashedLine}></div>
-											<div className={styles.subtitle}>
-												10 km Individual start free (boys)
-											</div>
+											<div className={styles.subtitle}>{unit.unit_code}</div>
 											<div className={styles.dashedLine}></div>
 										</div>
 									</div>
@@ -115,7 +113,7 @@ function Card({ title, units }) {
 									<Grid
 										details={false}
 										columns={BiathlonCol}
-										data={unit.start_list}
+										data={unit.start_list || dataState.current}
 										className={styles.cardGrid}
 									/>
 								</div>

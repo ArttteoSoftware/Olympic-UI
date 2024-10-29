@@ -18,7 +18,7 @@ export const SnowboardCol = [
 							<img
 								className="flag"
 								alt="country-flag"
-								src={`flags/${record.athlete.organisation}.png`}
+								src={`flags/${record.athlete?.organisation}.png`}
 							/>
 						</div>
 					</div>
@@ -126,11 +126,11 @@ export const BiathlonCol = [
 const AthleteCell = ({ record, showCountry }) => {
 	const { dataState } = useSocketStore();
 	const oldIndex = dataState.previous?.findIndex(
-		(item) => item.athlete.code === record.athlete.code
+		(item) => item.athlete.code === record.athlete?.code
 	);
 
 	const newIndex = dataState.current?.findIndex(
-		(item) => item.athlete.code === record.athlete.code
+		(item) => item.athlete.code === record.athlete?.code
 	);
 
 	const indx = oldIndex - newIndex;
@@ -138,9 +138,9 @@ const AthleteCell = ({ record, showCountry }) => {
 		<>
 			<div className={styles.nameContainer}>
 				{showCountry && (
-					<div className={styles.country}>({record.athlete.organisation})</div>
+					<div className={styles.country}>({record.athlete?.organisation})</div>
 				)}
-				<div className={styles.name}>{record.athlete.name}</div>
+				<div className={styles.name}>{record.athlete?.name}</div>
 				<div>
 					{indx > 0 && <RankingUp />}
 					{indx < 0 && <RankingDown />}
@@ -158,7 +158,7 @@ const AthleteRanking = ({ record, index }) => {
 				<img
 					className="flag"
 					alt="country-flag"
-					src={`flags/${record.athlete.organisation}.png`}
+					src={`flags/${record.athlete?.organisation}.png`}
 				/>
 			</div>
 		</div>

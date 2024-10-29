@@ -16,7 +16,7 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 			);
 
 			if (data.units.length > 0) {
-				setData(data.units[0].units[0]);
+				setData(data.units[0].units);
 			} else {
 				setData([]);
 			}

@@ -10,7 +10,7 @@ const PlayerRow = memo(
 			<Reorder.Item
 				as="tr"
 				value={record}
-				id={record.athlete.code}
+				id={record.athlete?.code}
 				className={details ? styles.tr_details : styles.tr}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
@@ -52,18 +52,17 @@ function Grid({
 
 	useEffect(() => {
 		if (!isModal) {
-			if (unitCode === data?.unit_code) {
+			if (!details && unitCode === data?.unit_code) {
+				console.log("dataState.current", dataState.current);
 				setAnimatedData(dataState.current);
+			} else if (details) {
+				setAnimatedData(dataState.current || data);
 			} else {
 				setAnimatedData(data);
 			}
 		}
 	}, [dataState, data, isModal, unitCode]);
 
-	console.log("unitCode", unitCode);
-
-	console.log("data", data?.unitCode);
-	console.log("socket", dataState.current);
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading ? (
@@ -104,7 +103,7 @@ function Grid({
 							{Array.isArray(animatedData) &&
 								animatedData?.map((record, index) => (
 									<PlayerRow
-										key={record.athlete.code}
+										key={record.athlete?.code}
 										record={record}
 										columns={columns}
 										rowKey={rowKey}

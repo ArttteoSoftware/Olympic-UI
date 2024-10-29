@@ -23,21 +23,23 @@ function DetailsCard({
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
 	const [gridData, setGridData] = useState([]);
-	const { data } = useSocketStore();
+	const { dataState } = useSocketStore();
 	const handleRowClick = (record) => {
 		setPlayerInfo(record);
 		setOpenInfo(true);
 	};
 
 	useEffect(() => {
-		console.log("data", data);
-		if (data && data.length > 0) {
-			setGridData(data);
+		if (dataState && dataState.length > 0) {
+			// console.log("data", dataState);
+			setGridData(dataState);
 		} else {
-			setGridData(initialData?.start_list);
+			// console.log("initialData", initialData);
+			setGridData(initialData);
 		}
-	}, [data, initialData]);
+	}, [dataState, initialData]);
 
+	console.log("initialData", initialData);
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -73,7 +75,6 @@ function DetailsCard({
 							onSelect={(e) => {
 								setSelectedFilter(e);
 								setFilterValue(e);
-								console.log("ee", e);
 							}}
 							onClose={() => setIsOpen(false)}
 							onClick={() => setIsOpen(!isOpen)}
@@ -83,26 +84,31 @@ function DetailsCard({
 						/>
 					</div>
 
-					<div className={styles.cardSubtitleContainer}>
-						<div className={styles.cardSubtitleInnerContainer}>
-							<div className={styles.dashedLine}></div>
-							<div className={styles.subtitle}>
-								{convertGender(selectedFilter.value)}
-							</div>
-							<div className={styles.dashedLine}></div>
-						</div>
-					</div>
-					<div className={styles.dataContainer}>
-						<Grid
-							details={true}
-							columns={columns}
-							data={gridData}
-							rowKey={(record) => record._id}
-							onRowClick={handleRowClick}
-							loading={loading}
-							isModal={false}
-						/>
-					</div>
+					{gridData.map((item) => {
+						console.log("item", item);
+						return (
+							<>
+								<div className={styles.cardSubtitleContainer}>
+									<div className={styles.cardSubtitleInnerContainer}>
+										<div className={styles.dashedLine}></div>
+										<div className={styles.subtitle}>{item.unit_code}</div>
+										<div className={styles.dashedLine}></div>
+									</div>
+								</div>
+								<div className={styles.dataContainer}>
+									<Grid
+										details={true}
+										columns={columns}
+										data={item.start_list}
+										rowKey={(record) => record._id}
+										onRowClick={handleRowClick}
+										loading={loading}
+										isModal={false}
+									/>
+								</div>
+							</>
+						);
+					})}
 				</div>
 			</div>
 			{openInfo && (
