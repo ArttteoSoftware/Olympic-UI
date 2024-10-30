@@ -15,7 +15,7 @@ const useSocketStore = create((set) => ({
 			},
 		})),
 	setStatus: (newStatus) => set({ status: newStatus }),
-	setUnitCode: (newUnitCode) => set({ unitCode: newUnitCode }),
+	setUnitCode: (newUnitCode) => set({ unitCode: newUnitCode.unitCode }),
 }));
 
 export default useSocketStore;

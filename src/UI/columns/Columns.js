@@ -95,17 +95,18 @@ export const BiathlonCol = [
 	{
 		key: "shooting",
 		title: "Shooting",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 50,
 
 		render: (record) => {
+			console.log(record);
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
 	},
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 50,
 
 		render: (record) => {
@@ -115,7 +116,7 @@ export const BiathlonCol = [
 	{
 		key: "difference",
 		title: "Diff.",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;

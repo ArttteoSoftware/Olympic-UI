@@ -16,7 +16,7 @@ const PlayerRow = memo(
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
-				onClick={() => onRowClick(record)}
+				// onClick={() => onRowClick(record)}
 			>
 				{columns?.map((column) => (
 					<td
@@ -41,7 +41,7 @@ function Grid({
 	columns,
 	data,
 	rowKey,
-	onRowClick,
+	// onRowClick,
 	loading,
 	isModal,
 	forCard,
@@ -53,7 +53,6 @@ function Grid({
 	useEffect(() => {
 		if (!isModal) {
 			if (!details && unitCode === data?.unit_code) {
-				console.log("dataState.current", dataState.current);
 				setAnimatedData(dataState.current);
 			} else if (details) {
 				setAnimatedData(dataState.current || data);
@@ -107,7 +106,7 @@ function Grid({
 										record={record}
 										columns={columns}
 										rowKey={rowKey}
-										onRowClick={onRowClick}
+										// onRowClick={onRowClick}
 										animatedData={animatedData}
 										index={index}
 										details={details}
