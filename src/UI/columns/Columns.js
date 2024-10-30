@@ -95,21 +95,92 @@ export const BiathlonCol = [
 	{
 		key: "shooting",
 		title: "Shooting",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 50,
 
 		render: (record) => {
+			console.log(record);
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
 	},
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 50,
 
 		render: (record) => {
 			return <>{record?.intermediates?.value ?? "-"}</>;
+		},
+	},
+	{
+		key: "difference",
+		title: "Diff.",
+		textAlign: "center",
+
+		render: (record) => {
+			return <>{record?.intermediates?.diff ?? "-"}</>;
+		},
+	},
+];
+
+export const AlpineCol = [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <AthleteRanking record={record} index={index} />;
+		},
+	},
+
+	{
+		key: "bib",
+		title: "Bib",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <>{record?.athlete?.bib}</>;
+		},
+	},
+
+	{
+		key: "name",
+		title: "Name",
+		textAlign: "start",
+		width: 150,
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} showCou />;
+		},
+	},
+
+	{
+		key: "run1",
+		title: "Run1",
+		textAlign: "center",
+		windth: 50,
+		render: (record) => {
+			return <>{record?.shootingResults?.value || "-"}</>;
+		},
+	},
+	{
+		key: "run2",
+		title: "Run2",
+		textAlign: "center",
+		windth: 50,
+
+		render: (record) => {
+			return <>{record?.intermediates?.value ?? "-"}</>;
+		},
+	},
+	{
+		key: "total",
+		title: "Total",
+		textAlign: "end",
+
+		render: (record) => {
+			return <>{record?.intermediates?.diff ?? "-"}</>;
 		},
 	},
 	{
