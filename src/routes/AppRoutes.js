@@ -4,6 +4,7 @@ import SportDetail from "../pages/SportDetailPage/SportDetail";
 import { BiathlonCol, SnowboardCol } from "../UI/columns/Columns";
 import { Gender, SnowboardStyles } from "../UI/FilterOptions/FilterOptions";
 import { ColumnsWithSocketData } from "../UI/columns/Columns";
+import { AlpineCol } from "../UI/columns/Columns";
 
 export const AppRoutes = () => {
 	return (
@@ -30,6 +31,19 @@ export const AppRoutes = () => {
 						filter={Gender}
 						color={"#D64540"}
 						sportKey={"BTH"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/ALP"
+				element={
+					<SportDetail
+						columns={AlpineCol}
+						title={"Alpine"}
+						filter={Gender}
+						color={"#D64540"}
+						sportKey={"ALP"}
 					/>
 				}
 			/>
