@@ -15,7 +15,11 @@ function Card({ title, units }) {
 	const { dataState } = useSocketStore();
 
 	useEffect(() => {
-		setData(dataState.current);
+		if (dataState?.current?.length > 0) {
+			setData(dataState.current);
+		} else {
+			setData(units);
+		}
 	}, [dataState]);
 
 	const commonStyles = useMemo(
@@ -37,7 +41,7 @@ function Card({ title, units }) {
 				style={commonStyles}
 				animate={{ rotateY: isFlipped ? 180 : 0 }}
 				transition={{ duration: 0.6 }}
-				values={data || []}
+				values={data}
 				onReorder={setData}
 				className={styles.container}
 			>
@@ -45,7 +49,7 @@ function Card({ title, units }) {
 				<div className={styles.tableContainer}>
 					<Divider />
 					<div className={styles.innerContainer}>
-						{units.map((unit) => {
+						{data.map((unit) => {
 							return (
 								<div>
 									<div className={styles.subtitleContainer}>
@@ -59,7 +63,7 @@ function Card({ title, units }) {
 									<Grid
 										details={false}
 										columns={BiathlonCol}
-										data={data || dataState.current}
+										data={unit.start_list}
 										className={styles.cardGrid}
 									/>
 								</div>

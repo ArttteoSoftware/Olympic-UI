@@ -61,7 +61,7 @@ function Grid({
 				setAnimatedData(data);
 			}
 		}
-	}, [dataState, data, isModal, unitCode]);
+	}, [dataState, data, isModal, unitCode, details]);
 
 	return (
 		<div className={details ? styles.container_details : styles.container}>
