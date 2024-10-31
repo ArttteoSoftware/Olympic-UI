@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import DetailsCard from "../../components/DetailsCard/DetailsCard";
 import { getSportDataBySportKey } from "../../services/SportsDetailService";
 import styles from "./SportDetail.module.css";
-import { u } from "framer-motion/client";
 
 function SportDetail({ columns, title, filter, color, sportKey }) {
 	const [selectedFilter, setSelectedFilter] = useState({
@@ -31,9 +30,7 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 		} finally {
 			setLoading(false);
 		}
-	}, [selectedFilter, sportKey]);
-
-	console.log("unitNames", unitNames);
+	}, [selectedFilter, sportKey, unitNames.length]);
 
 	useEffect(() => {
 		loadData();

@@ -218,7 +218,7 @@ export const ShortTrackCol = [
 		key: "name",
 		title: "Name",
 		textAlign: "start",
-		width: 100,
+		// width: 100,
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} showCou />;
 		},
@@ -230,7 +230,7 @@ export const ShortTrackCol = [
 		textAlign: "center",
 		windth: 50,
 		render: (record) => {
-			return <>{record?.shootingResults?.value || "-"}</>;
+			return <>{record?.intermediates?.pos || "-"}</>;
 		},
 	},
 	{
@@ -240,7 +240,7 @@ export const ShortTrackCol = [
 		windth: 50,
 
 		render: (record) => {
-			return <>{record?.intermediates?.value ?? "-"}</>;
+			return <>{record?.intermediates?.value2 ?? "-"}</>;
 		},
 	},
 	{
@@ -249,7 +249,7 @@ export const ShortTrackCol = [
 		textAlign: "end",
 
 		render: (record) => {
-			return <>{record?.intermediates?.diff ?? "-"}</>;
+			return <>{record?.intermediates?.value ?? "-"}</>;
 		},
 	},
 ];
@@ -405,7 +405,7 @@ export const returnSportColumn = (sportKey) => {
 		case "IHO":
 			return AlpineCol;
 		case "STK":
-			return AlpineCol;
+			return ShortTrackCol;
 		default:
 			return [];
 	}

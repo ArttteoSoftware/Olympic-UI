@@ -36,9 +36,6 @@ export default function Select({
 		(option) => option.item_name !== selected?.unit_code
 	);
 
-	console.log("selected", filteredOptions);
-	// console.log("selected", filteredOptions);
-
 	return (
 		<div
 			ref={modalRef}

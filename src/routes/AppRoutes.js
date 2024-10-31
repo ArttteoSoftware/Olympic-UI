@@ -1,10 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import SportsGrid from "../pages/MainPage/MainPageSportsGrid";
 import SportDetail from "../pages/SportDetailPage/SportDetail";
-import { BiathlonCol, SnowboardCol } from "../UI/columns/Columns";
+import {
+	BiathlonCol,
+	CrossCountryCol,
+	SnowboardCol,
+} from "../UI/columns/Columns";
 import { Gender, SnowboardStyles } from "../UI/FilterOptions/FilterOptions";
-import { ColumnsWithSocketData } from "../UI/columns/Columns";
-import { AlpineCol } from "../UI/columns/Columns";
+import { AlpineCol, ShortTrackCol } from "../UI/columns/Columns";
 
 export const AppRoutes = () => {
 	return (
@@ -52,7 +55,7 @@ export const AppRoutes = () => {
 				path="/CCS"
 				element={
 					<SportDetail
-						columns={AlpineCol}
+						columns={CrossCountryCol}
 						title={"CROSS COUNTRY SKIING"}
 						filter={Gender}
 						color={"#D64540"}
@@ -104,7 +107,7 @@ export const AppRoutes = () => {
 				path="/STK"
 				element={
 					<SportDetail
-						columns={AlpineCol}
+						columns={ShortTrackCol}
 						title={"Short Track"}
 						filter={Gender}
 						color={"#D64540"}

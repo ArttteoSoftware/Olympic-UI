@@ -3,13 +3,9 @@ import styles from "./MainPageSportsGrid.module.css";
 import { getAllMatches } from "../../services/MainPageService";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useSocketStore from "../../store/socketStore";
 function MainPageSportsGrid() {
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
-	const { dataState, unitCode } = useSocketStore();
-	const [listData, setListData] = useState([]);
-	const [sportKey, setSportKey] = useState("");
 
 	const loadData = useCallback(async () => {
 		try {
