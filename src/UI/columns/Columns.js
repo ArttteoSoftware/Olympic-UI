@@ -12,7 +12,7 @@ export const SnowboardCol = [
 				<div className={styles.rankingContainer}>
 					<div className={styles.ranking}>
 						<div className={styles.index}>
-							{record.result.intermediates.rank}.
+							{record.result?.intermediates.rank}.
 						</div>
 						<div className={styles.flag}>
 							<img
@@ -99,7 +99,6 @@ export const BiathlonCol = [
 		windth: 50,
 
 		render: (record) => {
-			console.log(record);
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
 	},
@@ -149,7 +148,7 @@ export const AlpineCol = [
 		key: "name",
 		title: "Name",
 		textAlign: "start",
-		width: 150,
+		width: 100,
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} showCou />;
 		},
@@ -197,11 +196,11 @@ export const AlpineCol = [
 const AthleteCell = ({ record, showCountry }) => {
 	const { dataState } = useSocketStore();
 	const oldIndex = dataState.previous?.findIndex(
-		(item) => item.athlete.code === record.athlete?.code
+		(item) => item.athlete?.code === record.athlete?.code
 	);
 
 	const newIndex = dataState.current?.findIndex(
-		(item) => item.athlete.code === record.athlete?.code
+		(item) => item.athlete?.code === record.athlete?.code
 	);
 
 	const indx = oldIndex - newIndex;
@@ -234,4 +233,25 @@ const AthleteRanking = ({ record, index }) => {
 			</div>
 		</div>
 	);
+};
+
+export const returnSportColumn = (sportKey) => {
+	switch (sportKey) {
+		case "SBD":
+			return SnowboardCol;
+		case "ALP":
+			return AlpineCol;
+		case "BTH":
+			return BiathlonCol;
+		case "CCS":
+			return AlpineCol;
+		case "FRS":
+			return AlpineCol;
+		case "IHO":
+			return AlpineCol;
+		case "STK":
+			return AlpineCol;
+		default:
+			return [];
+	}
 };

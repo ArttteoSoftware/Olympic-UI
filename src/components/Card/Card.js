@@ -6,6 +6,7 @@ import { convertSportTitle } from "../../enum/Sport";
 import { BiathlonCol } from "../../UI/columns/Columns";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
+import { returnSportColumn } from "../../UI/columns/Columns";
 
 const Card = ({ title, units }) => {
 	const [data, setData] = useState([]);
@@ -28,27 +29,22 @@ const Card = ({ title, units }) => {
 		}),
 		[]
 	);
-
 	const getListData = (unit) => {
 		if (unit.unit_code === unitCode) {
-			console.log("dataState.current", dataState.current);
-
 			return dataState.current;
 		} else {
-			console.log("unit.startList", unit.start_list);
 			return unit.start_list;
 		}
 	};
 
 	const renderUnit = (unit) => {
 		const listData = getListData(unit);
-
 		return (
 			<div key={unit.unit_code}>
 				<UnitHeader item={unit} />
 				<Grid
 					details={false}
-					columns={BiathlonCol}
+					columns={returnSportColumn(title)}
 					data={listData}
 					className={styles.cardGrid}
 				/>

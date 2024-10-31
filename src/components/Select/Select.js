@@ -32,9 +32,12 @@ export default function Select({
 		};
 	}, [onClose]);
 
-	const filteredOptions = options.filter(
-		(option) => option.value !== selected?.value
+	const filteredOptions = [defaultValue, ...options].filter(
+		(option) => option.item_name !== selected?.unit_code
 	);
+
+	console.log("selected", filteredOptions);
+	// console.log("selected", filteredOptions);
 
 	return (
 		<div
@@ -46,7 +49,7 @@ export default function Select({
 				onClick={() => onClick()}
 			>
 				<div className={styles.selectedOptionContainer}>
-					<div className={styles.selectedOption}>{selected?.label}</div>
+					<div className={styles.selectedOption}>{selected?.item_name}</div>
 				</div>
 				<span className={styles.arrow}>
 					{state ? <DropdownOpenedIcon /> : <DropdownClosedIcon />}
@@ -56,11 +59,11 @@ export default function Select({
 				<ul className={styles.optionList}>
 					{filteredOptions.map((option) => (
 						<li
-							key={option.value}
+							key={option.unit_code}
 							className={styles.option}
 							onClick={() => handleSelect(option)}
 						>
-							{option.label}
+							{option.item_name}
 						</li>
 					))}
 				</ul>

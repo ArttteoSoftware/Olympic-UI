@@ -9,6 +9,7 @@ function MainPageSportsGrid() {
 	const [data, setData] = useState([]);
 	const { dataState, unitCode } = useSocketStore();
 	const [listData, setListData] = useState([]);
+	const [sportKey, setSportKey] = useState("");
 
 	const loadData = useCallback(async () => {
 		try {

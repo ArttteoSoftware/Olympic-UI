@@ -40,10 +40,75 @@ export const AppRoutes = () => {
 				element={
 					<SportDetail
 						columns={AlpineCol}
-						title={"Alpine"}
+						title={"Alpine skiing"}
 						filter={Gender}
 						color={"#D64540"}
 						sportKey={"ALP"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/CCS"
+				element={
+					<SportDetail
+						columns={AlpineCol}
+						title={"CROSS COUNTRY SKIING"}
+						filter={Gender}
+						color={"#D64540"}
+						sportKey={"CCS"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/FRS"
+				element={
+					<SportDetail
+						columns={AlpineCol}
+						title={"Freestyle skiing"}
+						filter={Gender}
+						color={"#D64540"}
+						sportKey={"FRS"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/IHO"
+				element={
+					<SportDetail
+						columns={AlpineCol}
+						title={"Alpine"}
+						filter={Gender}
+						color={"#D64540"}
+						sportKey={"IHO"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/SBD"
+				element={
+					<SportDetail
+						columns={SnowboardCol}
+						title={"SNOWBOARD"}
+						filter={Gender}
+						color={"#D64540"}
+						sportKey={"SBD"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/STK"
+				element={
+					<SportDetail
+						columns={AlpineCol}
+						title={"Short Track"}
+						filter={Gender}
+						color={"#D64540"}
+						sportKey={"STK"}
 					/>
 				}
 			/>

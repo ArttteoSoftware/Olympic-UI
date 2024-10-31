@@ -12,12 +12,15 @@ const DetailsCard = ({
 	initialData,
 	title,
 	color,
-	filter,
+	unitNames,
 	setFilterValue,
 	loading,
 }) => {
 	const modalRef = useRef(null);
-	const [selectedFilter, setSelectedFilter] = useState(filter[0]);
+	const [selectedUnitName, setSelectedUnitName] = useState({
+		item_name: "All Group",
+		unit_code: "",
+	});
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
@@ -34,7 +37,6 @@ const DetailsCard = ({
 	};
 
 	const handleFilterSelect = (filter) => {
-		setSelectedFilter(filter);
 		setFilterValue(filter);
 	};
 
@@ -46,7 +48,7 @@ const DetailsCard = ({
 					<FilterSection
 						initialData={initialData}
 						color={color}
-						filter={filter}
+						unitNames={unitNames}
 						isOpen={isOpen}
 						setIsOpen={setIsOpen}
 						onFilterSelect={handleFilterSelect}
@@ -81,45 +83,20 @@ const CardHeader = ({ title }) => (
 const FilterSection = ({
 	initialData,
 	color,
-	filter,
+	unitNames,
 	isOpen,
 	setIsOpen,
 	onFilterSelect,
 }) => (
 	<div className={styles.filterContainer}>
-		<FilterInfo initialData={initialData} color={color} />
 		<Select
 			onSelect={onFilterSelect}
 			onClose={() => setIsOpen(false)}
 			onClick={() => setIsOpen(!isOpen)}
 			state={isOpen}
-			options={filter}
-			defaultValue={filter[0]}
+			options={unitNames}
+			defaultValue={{ item_name: "All Group", unit_code: "" }}
 		/>
-	</div>
-);
-
-const FilterInfo = ({ initialData, color }) => (
-	<div
-		className={styles.filterInnerContainer}
-		style={{ backgroundColor: color }}
-	>
-		<div className={styles.filterTitle}>
-			<div>Distance: {FormatData.formatDistance(initialData?.unit_code)}KM</div>
-			<DateTimeDisplay initialData={initialData} />
-		</div>
-	</div>
-);
-
-const DateTimeDisplay = ({ initialData }) => (
-	<div className={styles.dateAndTime}>
-		<div className={styles.date}>
-			{FormatData.formatDate(initialData?.start_date)}
-		</div>
-		<div className={styles.time}>
-			<div>•</div>
-			<div>{FormatData.formatTime(initialData?.start_date)}</div>
-		</div>
 	</div>
 );
 
