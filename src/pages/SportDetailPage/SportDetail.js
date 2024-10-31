@@ -5,17 +5,25 @@ import styles from "./SportDetail.module.css";
 import { u } from "framer-motion/client";
 
 function SportDetail({ columns, title, filter, color, sportKey }) {
-	const [selectedFilter, setSelectedFilter] = useState();
+	const [selectedFilter, setSelectedFilter] = useState({
+		item_name: "",
+		unit_code: "",
+	});
 	const [unitNames, setUnitNames] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
 	const loadData = useCallback(async () => {
 		setLoading(true);
 		try {
-			console.log("selected", selectedFilter);
-			const { data } = await getSportDataBySportKey(sportKey);
+			const { data } = await getSportDataBySportKey(
+				sportKey,
+				selectedFilter?.item_name
+			);
 
-			setUnitNames(data.units[0].unit_names);
+			if (unitNames.length > 0) {
+			} else {
+				setUnitNames(data.units[0].unit_names);
+			}
 			if (data.units.length > 0) {
 				setData(data.units[0].units);
 			} else {

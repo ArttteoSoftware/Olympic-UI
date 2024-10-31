@@ -17,10 +17,6 @@ const DetailsCard = ({
 	loading,
 }) => {
 	const modalRef = useRef(null);
-	const [selectedUnitName, setSelectedUnitName] = useState({
-		item_name: "All Group",
-		unit_code: "",
-	});
 	const [isOpen, setIsOpen] = useState(false);
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});

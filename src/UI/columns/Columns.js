@@ -193,6 +193,161 @@ export const AlpineCol = [
 	},
 ];
 
+export const ShortTrackCol = [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <AthleteRanking record={record} index={index} />;
+		},
+	},
+
+	{
+		key: "bib",
+		title: "Bib",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <>{record?.athlete?.bib}</>;
+		},
+	},
+
+	{
+		key: "name",
+		title: "Name",
+		textAlign: "start",
+		width: 100,
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} showCou />;
+		},
+	},
+
+	{
+		key: "lap/9",
+		title: "Lap/9",
+		textAlign: "center",
+		windth: 50,
+		render: (record) => {
+			return <>{record?.shootingResults?.value || "-"}</>;
+		},
+	},
+	{
+		key: "lap_sec",
+		title: "Lap Sec.",
+		textAlign: "center",
+		windth: 50,
+
+		render: (record) => {
+			return <>{record?.intermediates?.value ?? "-"}</>;
+		},
+	},
+	{
+		key: "total",
+		title: "Total",
+		textAlign: "end",
+
+		render: (record) => {
+			return <>{record?.intermediates?.diff ?? "-"}</>;
+		},
+	},
+];
+
+export const CrossCountryCol = [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <AthleteRanking record={record} index={index} />;
+		},
+	},
+
+	{
+		key: "bib",
+		title: "Bib",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <>{record?.athlete?.bib}</>;
+		},
+	},
+
+	{
+		key: "name",
+		title: "Name",
+		textAlign: "start",
+		width: 100,
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} showCou />;
+		},
+	},
+
+	{
+		key: "time",
+		title: "Time",
+		textAlign: "center",
+		windth: 50,
+
+		render: (record) => {
+			return <>{record?.intermediates?.value ?? "-"}</>;
+		},
+	},
+	{
+		key: "diff",
+		title: "Diff.",
+		textAlign: "end",
+
+		render: (record) => {
+			return <>{record?.intermediates?.diff ?? "-"}</>;
+		},
+	},
+];
+
+export const FreestyleCol = [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <AthleteRanking record={record} index={index} />;
+		},
+	},
+
+	{
+		key: "bib",
+		title: "Bib",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <>{record?.athlete?.bib}</>;
+		},
+	},
+
+	{
+		key: "name",
+		title: "Name",
+		textAlign: "start",
+		width: 100,
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} showCou />;
+		},
+	},
+
+	{
+		key: "score",
+		title: "Score",
+		textAlign: "end",
+
+		render: (record) => {
+			return <>{record?.intermediates?.diff ?? "-"}</>;
+		},
+	},
+];
+
 const AthleteCell = ({ record, showCountry }) => {
 	const { dataState } = useSocketStore();
 	const oldIndex = dataState.previous?.findIndex(
@@ -244,9 +399,9 @@ export const returnSportColumn = (sportKey) => {
 		case "BTH":
 			return BiathlonCol;
 		case "CCS":
-			return AlpineCol;
+			return CrossCountryCol;
 		case "FRS":
-			return AlpineCol;
+			return FreestyleCol;
 		case "IHO":
 			return AlpineCol;
 		case "STK":
