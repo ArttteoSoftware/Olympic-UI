@@ -15,10 +15,7 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 	const loadData = useCallback(async () => {
 		setLoading(true);
 		try {
-			const { data } = await getSportDataBySportKey(
-				sportKey,
-				selectedFilter?.item_name
-			);
+			const { data } = await getSportDataBySportKey(sportKey, selectedFilter);
 
 			if (unitNames.length > 0) {
 			} else {
