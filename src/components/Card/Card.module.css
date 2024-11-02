@@ -34,6 +34,10 @@
 	display: flex;
 	flex-direction: column;
 }
+.divider {
+	display: inline-block;
+	height: 2px;
+}
 
 .tableContainer {
 	display: flex;
@@ -126,51 +130,23 @@
 
 .result {
 	color: #2a3342;
-	font-weight: 700;
 	font-size: clamp(0.875rem, 1.5vw, 1rem);
+
+	font-weight: 700;
 }
 
 .video {
-	width: 100%;
-	height: 100%;
+	width: 437px;
+	height: 426px;
 	border-radius: 1.25rem;
 	object-fit: cover;
 }
 
-@media screen and (min-width: 48rem) {
-	.mainContainer {
-		max-width: 27.3rem;
-		margin: 0 auto;
-	}
-}
-
-@media screen and (max-width: 48rem) {
-	.mainContainer {
-		max-width: 100vw;
-		margin: 0 auto;
-	}
-
-	.divider > svg {
-		width: 200px;
-	}
-
-	.container {
-		max-width: 80vw;
-		min-width: 20rem;
-		margin: 0 auto;
-	}
-	.tableContainer {
-		max-width: 80vw;
-		min-width: 19.5rem;
-		margin: 0 auto;
-	}
-
-	.tableContainer > svg {
-		width: 80vw;
-	}
+@media screen and (max-width: 768px) {
+	.mainContainer,
 	.container,
 	.innerContainer,
 	.video {
-		width: 100%;
+		width: 95vw;
 	}
 }

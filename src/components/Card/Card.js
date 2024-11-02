@@ -20,7 +20,7 @@ const Card = ({ title, units }) => {
 	const commonStyles = useMemo(
 		() => ({
 			padding: "0px",
-			// position: "absolute",
+			position: "absolute",
 			display: "flex",
 			alignItems: "center",
 			justifyContent: "center",
