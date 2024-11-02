@@ -1,6 +1,7 @@
 import styles from "./Columns.module.css";
 import useSocketStore from "../../store/socketStore";
 import { RankingUp, RankingDown } from "../Icons";
+import { getFlag } from "../flags";
 
 export const SnowboardCol = [
 	{
@@ -15,11 +16,7 @@ export const SnowboardCol = [
 							{record.result?.intermediates.rank}.
 						</div>
 						<div className={styles.flag}>
-							<img
-								className="flag"
-								alt="country-flag"
-								src={`flags/${record.athlete?.organisation}.png`}
-							/>
+							{getFlag(record.athlete?.organisation)}
 						</div>
 					</div>
 				</div>
@@ -380,11 +377,7 @@ const AthleteRanking = ({ record, index }) => {
 		<div className={styles.rankingContainer}>
 			<div className={styles.ranking}>
 				<div className={styles.index}>{index + 1}.</div>
-				<img
-					className="flag"
-					alt="country-flag"
-					src={`flags/${record.athlete?.organisation}.png`}
-				/>
+				<div className="flag">{getFlag(record.athlete?.organisation)}</div>
 			</div>
 		</div>
 	);

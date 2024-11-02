@@ -1,11 +1,12 @@
 .mainContainer {
-	width: 437px;
-	height: 426px;
+	width: 100%;
+	height: 26.6rem;
 	cursor: pointer;
+	margin: 0 auto;
 }
 
 .container {
-	border-radius: 20px;
+	border-radius: 1.25rem;
 	background-color: #f5f7f7;
 }
 
@@ -13,11 +14,11 @@
 	z-index: 999;
 	background-color: #ffffff;
 	border: 1px solid hsla(218, 22%, 21%, 0.149);
-	width: 429px;
-	height: 355px;
-	margin: 0px 4px 4px 4px;
-	border-radius: 16px;
-	box-shadow: 0 -10px 20px 0 #0c0f300d;
+	width: calc(100% - 0.5rem);
+	height: 22.2rem;
+	margin: 0 0.25rem 0.25rem;
+	border-radius: 1rem;
+	box-shadow: 0 -0.625rem 1.25rem 0 #0c0f300d;
 	overflow-y: auto;
 }
 
@@ -33,10 +34,6 @@
 	display: flex;
 	flex-direction: column;
 }
-.divider {
-	display: inline-block;
-	height: 2px;
-}
 
 .tableContainer {
 	display: flex;
@@ -47,12 +44,12 @@
 .title {
 	text-align: center;
 	font-weight: 700;
-	font-size: 20px;
-	padding: 20px 100px;
+	font-size: clamp(1rem, 2vw, 1.25rem);
+	padding: 1.25rem clamp(2rem, 6vw, 6.25rem);
 }
 
 .row {
-	height: 32px;
+	height: 2rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -62,19 +59,19 @@
 .playerInfo {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 0.5rem;
 }
 
 .ranking {
 	background-color: #7d94a533;
 	color: #7d94a5;
-	border-radius: 6px;
-	width: 60px;
-	height: 32px;
+	border-radius: 0.375rem;
+	width: 3.75rem;
+	height: 2rem;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-	font-size: 16px;
+	font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .first {
@@ -111,37 +108,69 @@
 }
 
 .subtitle {
-	margin: 0 16px;
+	margin: 0 1rem;
 	white-space: nowrap;
 	color: #7d94a5;
-	font-size: 16px;
+	font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .country {
 	color: #7d94a5;
+	font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .name {
 	color: #2a3342;
+	font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .result {
 	color: #2a3342;
 	font-weight: 700;
+	font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .video {
-	width: 437px;
-	height: 426px;
-	border-radius: 20px;
+	width: 100%;
+	height: 100%;
+	border-radius: 1.25rem;
 	object-fit: cover;
 }
 
-@media screen and (max-width: 768px) {
-	.mainContainer,
+@media screen and (min-width: 48rem) {
+	.mainContainer {
+		max-width: 27.3rem;
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width: 48rem) {
+	.mainContainer {
+		max-width: 100vw;
+		margin: 0 auto;
+	}
+
+	.divider > svg {
+		width: 200px;
+	}
+
+	.container {
+		max-width: 80vw;
+		min-width: 20rem;
+		margin: 0 auto;
+	}
+	.tableContainer {
+		max-width: 80vw;
+		min-width: 19.5rem;
+		margin: 0 auto;
+	}
+
+	.tableContainer > svg {
+		width: 80vw;
+	}
 	.container,
 	.innerContainer,
 	.video {
-		width: 95vw;
+		width: 100%;
 	}
 }
