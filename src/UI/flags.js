@@ -6315,331 +6315,268 @@ export const getFlag = (country) => {
 		case "ALB":
 			return (
 				<div className="flag">
-					{" "}
 					<ALB />
 				</div>
 			);
 		case "AND":
 			return (
 				<div className="flag">
-					{" "}
 					<AND />
 				</div>
 			);
 		case "ARM":
 			return (
 				<div className="flag">
-					{" "}
 					<ARM />
 				</div>
 			);
 		case "AUT":
 			return (
 				<div className="flag">
-					{" "}
 					<AUT />
 				</div>
 			);
 		case "AZE":
 			return (
 				<div className="flag">
-					{" "}
 					<AZE />
 				</div>
 			);
 		case "BEL":
 			return (
 				<div className="flag">
-					{" "}
 					<BEL />
 				</div>
 			);
 		case "BIH":
 			return (
 				<div className="flag">
-					{" "}
 					<BIH />
 				</div>
 			);
 		case "BUL":
 			return (
 				<div className="flag">
-					{" "}
 					<BUL />
 				</div>
 			);
 		case "CRO":
 			return (
 				<div className="flag">
-					{" "}
 					<CRO />
 				</div>
 			);
 		case "CYP":
 			return (
 				<div className="flag">
-					{" "}
 					<CYP />
 				</div>
 			);
 		case "CZE":
 			return (
 				<div className="flag">
-					{" "}
 					<CZE />
 				</div>
 			);
 		case "DEN":
 			return (
 				<div className="flag">
-					{" "}
 					<DEN />
 				</div>
 			);
 		case "EST":
 			return (
 				<div className="flag">
-					{" "}
 					<EST />
 				</div>
 			);
 		case "FIN":
 			return (
 				<div className="flag">
-					{" "}
 					<FIN />
 				</div>
 			);
 		case "FRA":
 			return (
 				<div className="flag">
-					{" "}
 					<FRA />
 				</div>
 			);
 		case "GEO":
 			return (
 				<div className="flag">
-					{" "}
 					<GEO />
 				</div>
 			);
 		case "GER":
 			return (
 				<div className="flag">
-					{" "}
 					<GER />
 				</div>
 			);
 		case "GBR":
 			return (
 				<div className="flag">
-					{" "}
 					<GBR />
 				</div>
 			);
 		case "GRE":
 			return (
 				<div className="flag">
-					{" "}
 					<GRE />
 				</div>
 			);
 		case "HUN":
 			return (
 				<div className="flag">
-					{" "}
 					<HUN />
 				</div>
 			);
 		case "ISL":
 			return (
 				<div className="flag">
-					{" "}
 					<ISL />
 				</div>
 			);
 		case "IRL":
 			return (
 				<div className="flag">
-					{" "}
 					<IRL />
 				</div>
 			);
 		case "ISR":
 			return (
 				<div className="flag">
-					{" "}
 					<ISR />
 				</div>
 			);
 		case "ITA":
 			return (
 				<div className="flag">
-					{" "}
 					<ITA />
 				</div>
 			);
 		case "KOS":
 			return (
 				<div className="flag">
-					{" "}
 					<KOS />
 				</div>
 			);
 		case "LAT":
 			return (
 				<div className="flag">
-					{" "}
 					<LAT />
 				</div>
 			);
 		case "LIE":
 			return (
 				<div className="flag">
-					{" "}
 					<LIE />
 				</div>
 			);
 		case "LTU":
 			return (
 				<div className="flag">
-					{" "}
 					<LTU />
 				</div>
 			);
 		case "LUX":
 			return (
 				<div className="flag">
-					{" "}
 					<LUX />
 				</div>
 			);
 		case "MLT":
 			return (
 				<div className="flag">
-					{" "}
 					<MLT />
 				</div>
 			);
 		case "MDA":
 			return (
 				<div className="flag">
-					{" "}
 					<MDA />
 				</div>
 			);
 		case "MCO":
 			return (
 				<div className="flag">
-					{" "}
 					<MCO />
 				</div>
 			);
 		case "MNE":
 			return (
 				<div className="flag">
-					{" "}
 					<MNE />
 				</div>
 			);
 		case "NED":
 			return (
 				<div className="flag">
-					{" "}
 					<NED />
 				</div>
 			);
 		case "MKD":
 			return (
 				<div className="flag">
-					{" "}
 					<MKD />
 				</div>
 			);
 		case "NOR":
 			return (
 				<div className="flag">
-					{" "}
 					<NOR />
 				</div>
 			);
 		case "POL":
 			return (
 				<div className="flag">
-					{" "}
 					<POL />
 				</div>
 			);
 		case "POR":
 			return (
 				<div className="flag">
-					{" "}
 					<POR />
 				</div>
 			);
 		case "ROU":
-			return (
-				<div className="flag">
-					<ROU />
-				</div>
-			);
+			return <div className="flag"></div>;
 		case "SMR":
 			return (
 				<div className="flag">
-					{" "}
 					<SMR />
 				</div>
 			);
 		case "SRB":
-			return (
-				<div className="flag">
-					<SRB />
-				</div>
-			);
+			return <div className="flag"></div>;
 		case "SVK":
-			return (
-				<div className="flag">
-					<SVK />
-				</div>
-			);
+			return <div className="flag"></div>;
 		case "SVN":
-			return (
-				<div className="flag">
-					<SVN />
-				</div>
-			);
+			return <div className="flag"></div>;
 		case "ESP":
-			return (
-				<div className="flag">
-					<ESP />
-				</div>
-			);
+			return <div className="flag"></div>;
 		case "SWE":
 			return (
 				<div className="flag">
-					{" "}
 					<SWE />
 				</div>
 			);
 		case "SWI":
 			return (
 				<div className="flag">
-					{" "}
 					<SWI />
 				</div>
 			);
 		case "TUR":
 			return (
 				<div className="flag">
-					{" "}
 					<TUR />
 				</div>
 			);
 		case "UKR":
 			return (
 				<div className="flag">
-					{" "}
 					<UKR />
 				</div>
 			);
