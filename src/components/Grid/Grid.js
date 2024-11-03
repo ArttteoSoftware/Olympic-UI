@@ -3,6 +3,7 @@ import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
 import { useEffect, useState, memo } from "react";
+import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 
 const PlayerRow = memo(
 	({ record, columns, rowKey, onRowClick, index, details }) => {

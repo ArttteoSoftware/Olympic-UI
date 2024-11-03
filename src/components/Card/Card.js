@@ -7,6 +7,7 @@ import { BiathlonCol } from "../../UI/columns/Columns";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
 import { returnSportColumn } from "../../UI/columns/Columns";
+import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 
 const Card = ({ title, units }) => {
 	const [data, setData] = useState([]);
@@ -40,6 +41,7 @@ const Card = ({ title, units }) => {
 	const renderUnit = (unit) => {
 		const listData = getListData(unit);
 		return (
+			// <MarqueeEffect>
 			<div key={unit.unit_code}>
 				<UnitHeader item={unit} />
 				<Grid
@@ -49,6 +51,7 @@ const Card = ({ title, units }) => {
 					className={styles.cardGrid}
 				/>
 			</div>
+			// </MarqueeEffect>
 		);
 	};
 
