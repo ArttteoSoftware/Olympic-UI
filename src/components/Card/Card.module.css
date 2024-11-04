@@ -3,6 +3,8 @@
 	height: 26.6rem;
 	cursor: pointer;
 	margin: 0 auto;
+	display: flex;
+	justify-content: center;
 }
 
 .container {

@@ -399,6 +399,7 @@ export const returnSportColumn = (sportKey) => {
 			return AlpineCol;
 		case "STK":
 			return ShortTrackCol;
+
 		default:
 			return [];
 	}

@@ -57,6 +57,9 @@
 	padding: 20px;
 	border-radius: 10px;
 	margin: 0px 4px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 .avatar {
 	border-radius: 10px;
@@ -75,6 +78,9 @@
 
 .fullName {
 	font-size: 16px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .dob {
@@ -123,6 +129,35 @@
 
 .tableContainer {
 	padding-top: 16px;
+}
+
+.country {
+	gap: 6px;
+	display: flex;
+	align-items: center;
+}
+
+.competitionContainer {
+	display: flex;
+	align-items: center;
+	background-color: #f5f7f7;
+	padding: 10px 8px 10px 10px;
+	gap: 2px;
+	border-radius: 6px;
+	font-size: 14px;
+}
+.medalContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	gap: 6px;
+}
+
+.medalsContainer {
+	background-color: #fff;
+	display: flex;
+	gap: 6px;
+	justify-content: flex-end;
 }
 
 @media (max-width: 768px) {

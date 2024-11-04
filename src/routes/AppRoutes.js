@@ -7,7 +7,7 @@ import {
 	SnowboardCol,
 } from "../UI/columns/Columns";
 import { Gender, SnowboardStyles } from "../UI/FilterOptions/FilterOptions";
-import { AlpineCol, ShortTrackCol } from "../UI/columns/Columns";
+import { AlpineCol, ShortTrackCol, FreestyleCol } from "../UI/columns/Columns";
 
 export const AppRoutes = () => {
 	return (
@@ -68,7 +68,7 @@ export const AppRoutes = () => {
 				path="/FRS"
 				element={
 					<SportDetail
-						columns={AlpineCol}
+						columns={FreestyleCol}
 						title={"Freestyle skiing"}
 						filter={Gender}
 						color={"#D64540"}

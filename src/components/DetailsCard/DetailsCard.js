@@ -3,9 +3,8 @@ import { Divider } from "../../UI/Icons";
 import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
-import Modal from "../Modal/Modal";
+import PlayerInfoModal from "../PlayerInfoModal/PlayerInfoModal";
 import useSocketStore from "../../store/socketStore";
-import FormatData from "../../util/FormatData";
 
 const DetailsCard = ({
 	columns,
@@ -27,8 +26,8 @@ const DetailsCard = ({
 		setGridData(dataState?.length > 0 ? dataState : initialData);
 	}, [dataState, initialData]);
 
-	const handleRowClick = (record) => {
-		setPlayerInfo(record);
+	const handleRowClick = (record, unitName) => {
+		setPlayerInfo({ ...record, item_name: unitName });
 		setOpenInfo(true);
 	};
 
@@ -57,7 +56,7 @@ const DetailsCard = ({
 					/>
 				</div>
 			</div>
-			<PlayerInfoModal
+			<PlayerInfo
 				ref={modalRef}
 				playerInfo={playerInfo}
 				openInfo={openInfo}
@@ -76,14 +75,7 @@ const CardHeader = ({ title }) => (
 	</>
 );
 
-const FilterSection = ({
-	initialData,
-	color,
-	unitNames,
-	isOpen,
-	setIsOpen,
-	onFilterSelect,
-}) => (
+const FilterSection = ({ unitNames, isOpen, setIsOpen, onFilterSelect }) => (
 	<div className={styles.filterContainer}>
 		<Select
 			onSelect={onFilterSelect}
@@ -110,6 +102,7 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 						onRowClick={handleRowClick}
 						loading={loading}
 						isModal={false}
+						itemName={item.item_name}
 					/>
 				</div>
 			</div>
@@ -127,13 +120,13 @@ const GridHeader = ({ itemName }) => (
 	</div>
 );
 
-const PlayerInfoModal = ({ playerInfo, openInfo, onClose, ref }) =>
+const PlayerInfo = ({ playerInfo, openInfo, onClose, ref }) =>
 	openInfo && (
-		<Modal
+		<PlayerInfoModal
 			record={playerInfo}
 			ref={ref}
 			visible={Boolean(openInfo)}
-			title={playerInfo.name}
+			title={playerInfo}
 			onClose={onClose}
 		/>
 	);

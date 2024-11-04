@@ -3,10 +3,9 @@ import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
 import { useEffect, useState, memo } from "react";
-import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 
 const PlayerRow = memo(
-	({ record, columns, rowKey, onRowClick, index, details }) => {
+	({ record, columns, rowKey, onRowClick, index, details, itemName }) => {
 		return (
 			<Reorder.Item
 				as="tr"
@@ -17,7 +16,7 @@ const PlayerRow = memo(
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
-				// onClick={() => onRowClick(record)}
+				onClick={() => onRowClick(record, itemName)}
 			>
 				{columns?.map((column) => (
 					<td
@@ -42,11 +41,12 @@ function Grid({
 	columns,
 	data,
 	rowKey,
-	// onRowClick,
+	onRowClick,
 	loading,
 	isModal,
 	forCard,
 	details,
+	itemName,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
@@ -66,11 +66,7 @@ function Grid({
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading ? (
-				<div
-					className={
-						details ? styles.loaderContainer_details : styles.loaderContainer
-					}
-				>
+				<div className={styles.loaderContainer}>
 					<Loading />
 				</div>
 			) : (
@@ -107,10 +103,11 @@ function Grid({
 										record={record}
 										columns={columns}
 										rowKey={rowKey}
-										// onRowClick={onRowClick}
+										onRowClick={onRowClick}
 										animatedData={animatedData}
 										index={index}
 										details={details}
+										itemName={itemName}
 									/>
 								))}
 						</AnimatePresence>
