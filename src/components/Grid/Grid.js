@@ -53,25 +53,23 @@ function Grid({
 	const [animatedData, setAnimatedData] = useState([]);
 
 	useEffect(() => {
-		if (!isModal) {
-			if (!details && dataState?.current?.results?.length > 0) {
-				const sportKey = dataState.current?.unit_code?.substring(0, 3);
-				const item_name = dataState.current?.item_name;
+		if (!details && dataState?.current?.results?.length > 0) {
+			const sportKey = dataState.current?.unit_code?.substring(0, 3);
+			const item_name = dataState.current?.item_name;
 
-				data[sportKey][item_name] = dataState.current.results;
-				// data = {
-				// 	...data,
-				// 	[sportKey]: {
-				// 		[item_name]: dataState.current.results,
-				// 	},
-				// };
+			data[sportKey][item_name] = dataState.current.results;
+			// data = {
+			// 	...data,
+			// 	[sportKey]: {
+			// 		[item_name]: dataState.current.results,
+			// 	},
+			// };
 
-				setAnimatedData(data[sportKey][item_name]);
-			} else if (details) {
-				setAnimatedData(dataState.current || data);
-			} else {
-				setAnimatedData(data);
-			}
+			setAnimatedData(data[sportKey][item_name]);
+		} else if (details) {
+			setAnimatedData(dataState.current || data);
+		} else {
+			setAnimatedData(data);
 		}
 	}, [dataState, data, unitCode, details]);
 
