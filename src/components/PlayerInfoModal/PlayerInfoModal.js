@@ -99,14 +99,12 @@ export default function PlayerInfoModal({
 	const loadData = useCallback(async () => {
 		try {
 			const { data } = await getMedalsByPlayerId("1000188");
-			console.log(data);
 			setData(data);
 		} catch (err) {
 			console.error("Error while loading Data", err);
 		}
 	}, []);
 
-	console.log(title);
 	useEffect(() => {
 		loadData();
 	}, [loadData]);

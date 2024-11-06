@@ -6,6 +6,7 @@ import { useEffect, useState, memo } from "react";
 
 const PlayerRow = memo(
 	({ record, columns, rowKey, onRowClick, index, details, itemName }) => {
+		console.log(record);
 		return (
 			<Reorder.Item
 				as="tr"
@@ -47,19 +48,26 @@ function Grid({
 	forCard,
 	details,
 	itemName,
+	sportKey,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 
-	const ff = {
-		"BTHW12.5KMMS----------FNL-000100--": [{}, {}, {}],
-	};
 	useEffect(() => {
 		if (!isModal) {
-			if (!details && unitCode === data?.unit_code) {
-				setAnimatedData((prev) => {
-					prev.item_name = dataState.current.result;
-				});
+			if (!details && dataState?.current?.results?.length > 0) {
+				const sportKey = dataState.current?.unit_code?.substring(0, 3);
+				const item_name = dataState.current?.item_name;
+
+				data[sportKey][item_name] = dataState.current.results;
+				// data = {
+				// 	...data,
+				// 	[sportKey]: {
+				// 		[item_name]: dataState.current.results,
+				// 	},
+				// };
+
+				setAnimatedData(data[sportKey][item_name]);
 			} else if (details) {
 				setAnimatedData(dataState.current || data);
 			} else {
@@ -68,6 +76,7 @@ function Grid({
 		}
 	}, [dataState, data, isModal, unitCode, details]);
 
+	console.log(animatedData);
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading ? (
@@ -96,25 +105,30 @@ function Grid({
 					<Reorder.Group
 						as="tbody"
 						axis="y"
-						values={animatedData || []}
+						values={animatedData[sportKey] || []}
 						onReorder={setAnimatedData}
 						drag={false}
 					>
 						<AnimatePresence>
-							{Array.isArray(animatedData) &&
-								animatedData?.map((record, index) => (
-									<PlayerRow
-										key={record.athlete?.code}
-										record={record}
-										columns={columns}
-										rowKey={rowKey}
-										onRowClick={onRowClick}
-										animatedData={animatedData}
-										index={index}
-										details={details}
-										itemName={itemName}
-									/>
-								))}
+							{Array.isArray(animatedData[sportKey]) &&
+								animatedData[sportKey]?.map(
+									(record, index) => (
+										console.log(record),
+										(
+											<PlayerRow
+												key={record.athlete?.code}
+												record={record}
+												columns={columns}
+												rowKey={rowKey}
+												onRowClick={onRowClick}
+												animatedData={animatedData}
+												index={index}
+												details={details}
+												itemName={itemName}
+											/>
+										)
+									)
+								)}
 						</AnimatePresence>
 					</Reorder.Group>
 				</table>

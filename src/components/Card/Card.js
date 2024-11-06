@@ -14,7 +14,6 @@ const Card = ({ title, units, startList }) => {
 	const [isFlipped, setIsFlipped] = useState(false);
 	const { dataState, unitCode } = useSocketStore();
 
-	console.log("STARTLIST *****", startList);
 	useEffect(() => {
 		setData(units);
 	}, [units]);
@@ -31,28 +30,33 @@ const Card = ({ title, units, startList }) => {
 		}),
 		[]
 	);
-	const getListData = (unit) => {
-		console.log("SOCKET_*****", dataState.current);
-		if (unit.unit_code === unitCode) {
-			return dataState.current;
-		} else {
-			return unit;
+	const getListData = (startList) => {
+		// dataState.current.item_name
+		if (dataState?.current?.results?.length > 0) {
+			startList[dataState?.current?.item_name] = dataState?.current?.results;
 		}
+		return startList;
+		// if (unit.unit_code === unitCode) {
+		// 	return dataState.current;
+		// } else {
+		// 	return unit;
+		// }
 	};
 
 	const renderUnit = (unit) => {
-		const listData = getListData(unit);
+		const listData = getListData(startList);
 
-		console.log("***LISTDATA", listData);
 		return (
 			// <MarqueeEffect>
 			<div key={unit.unit_code}>
 				<UnitHeader item={unit} />
 				<Grid
+					sportKey={title}
 					details={false}
 					columns={returnSportColumn(title)}
 					data={listData}
 					className={styles.cardGrid}
+					// data={startList}
 				/>
 			</div>
 			// </MarqueeEffect>
@@ -68,6 +72,7 @@ const Card = ({ title, units, startList }) => {
 				data={data}
 				setData={setData}
 				renderUnit={renderUnit}
+				startList={startList}
 			/>
 			<BackCard commonStyles={commonStyles} isFlipped={isFlipped} />
 		</div>
@@ -95,6 +100,7 @@ const FrontCard = ({
 	data,
 	setData,
 	renderUnit,
+	startList,
 }) => (
 	<Reorder.Group
 		style={commonStyles}

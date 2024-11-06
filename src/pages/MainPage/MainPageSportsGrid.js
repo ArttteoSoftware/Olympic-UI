@@ -12,18 +12,19 @@ function MainPageSportsGrid() {
 		try {
 			const { data } = await getAllMatches();
 
-			console.log("****DATA", data.units);
-			for (let i = 0; i < data.units.length; i++) {
-				// setStartList((prev) => [...prev, data.units[i]]);
-				for (let j = 0; j < data.units[i].units.length; j++) {
-					console.log("JJ", data.units[i].units[j]);
-					setStartList((prev) => ({
-						...prev,
-						[data.units[i].units[j].item_name]:
-							data.units[i].units[j].start_list,
-					}));
-				}
-			}
+			const newStartList = data.units.reduce((acc, unit) => {
+				unit.units.forEach((subUnit) => {
+					if (subUnit && subUnit.item_name) {
+						const key = subUnit.unit_code.substring(0, 3); // Get the first 3 letters of unit_code
+
+						acc[key] = { [subUnit.item_name]: subUnit.start_list };
+					}
+				});
+
+				return acc;
+			}, {});
+
+			setStartList(newStartList); // Merge with existing startList
 			setData(data.units);
 		} catch (err) {
 			console.error("Error while loading Data", err);
