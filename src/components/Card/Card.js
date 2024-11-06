@@ -31,8 +31,15 @@ const Card = ({ title, units }) => {
 		[]
 	);
 	const getListData = (unit) => {
-		if (unit.unit_code === unitCode) {
-			return dataState.current;
+		if (unit.item_name === dataState.item_name) {
+			const updatedData = data.map((item) =>
+				item.item_name === dataState.item_name
+					? { ...item, start_list: unit.start_list }
+					: item
+			);
+
+			return updatedData[0]; // **** CHECK FOR TWO SPORTS
+			// setData(updatedData);
 		} else {
 			return unit.start_list;
 		}

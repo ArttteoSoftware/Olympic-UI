@@ -24,7 +24,18 @@ const DetailsCard = ({
 	const { dataState } = useSocketStore();
 
 	useEffect(() => {
-		setGridData(dataState?.length > 0 ? dataState : initialData);
+		if (dataState.current?.length > 0) {
+			initialData.forEach((element) => {
+				if (element.item_name === dataState.item_name) {
+					initialData.startList = dataState.current;
+					// setGridData(initialData);
+
+					return initialData;
+				}
+			});
+		} else {
+			setGridData(initialData);
+		}
 	}, [dataState, initialData]);
 
 	const handleRowClick = (record, unitName) => {
@@ -99,7 +110,7 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 					<Grid
 						details={true}
 						columns={columns}
-						data={item.start_list}
+						data={item}
 						rowKey={(record) => record._id}
 						onRowClick={handleRowClick}
 						loading={loading}

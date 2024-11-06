@@ -15,7 +15,7 @@ function App() {
 
 		// Listen for specific events from the server
 		socket.on("DT_RESULT", (newData) => {
-			setData({ data: newData.results });
+			setData({ data: newData });
 			setUnitCode({ unitCode: newData.unit_code });
 		});
 

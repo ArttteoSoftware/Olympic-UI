@@ -129,7 +129,6 @@ export default function PlayerInfoModal({
 						<div className={styles.modalFooter}>
 							<span className={styles.modalFooterTitle}>Results</span>
 							{results?.map((element) => {
-								console.log(element);
 								const resultsArr = [];
 								resultsArr.push(element.result);
 

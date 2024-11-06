@@ -1,8 +1,6 @@
-import { animate, AnimatePresence, Reorder } from "framer-motion";
 import styles from "./HistoryGrid.module.css";
 import Loading from "../../UI/Loader/Loading";
-import useSocketStore from "../../store/socketStore";
-import { useEffect, useState, memo } from "react";
+import { memo } from "react";
 
 const PlayerRow = memo(
 	({ record, columns, rowKey, onRowClick, index, details, itemName }) => {
@@ -36,12 +34,9 @@ function HistoryGrid({
 	rowKey,
 	onRowClick,
 	loading,
-	forCard,
 	details,
 	itemName,
-	sportKey,
 }) {
-	console.log("@#!@#!@@2", data);
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading ? (
@@ -69,24 +64,19 @@ function HistoryGrid({
 					</thead>
 					<tbody>
 						{Array.isArray(data) &&
-							data.map(
-								(record, index) => (
-									console.log(record),
-									(
-										<PlayerRow
-											key={record.athlete?.code}
-											record={record}
-											columns={columns}
-											rowKey={rowKey}
-											onRowClick={onRowClick}
-											data={data}
-											index={index}
-											details={details}
-											itemName={itemName}
-										/>
-									)
-								)
-							)}
+							data.map((record, index) => (
+								<PlayerRow
+									key={record.athlete?.code}
+									record={record}
+									columns={columns}
+									rowKey={rowKey}
+									onRowClick={onRowClick}
+									data={data}
+									index={index}
+									details={details}
+									itemName={itemName}
+								/>
+							))}
 					</tbody>
 				</table>
 			)}
