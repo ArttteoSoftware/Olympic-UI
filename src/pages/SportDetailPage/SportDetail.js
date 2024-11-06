@@ -43,6 +43,7 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 				initialData={data}
 				columns={columns}
 				title={title}
+				sportKey={sportKey}
 				unitNames={unitNames}
 				color={color}
 				filterValue={selectedFilter}

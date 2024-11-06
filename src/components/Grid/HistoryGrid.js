@@ -1,5 +1,5 @@
 import { animate, AnimatePresence, Reorder } from "framer-motion";
-import styles from "./Grid.module.css";
+import styles from "./HistoryGrid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
 import { useEffect, useState, memo } from "react";
@@ -7,15 +7,8 @@ import { useEffect, useState, memo } from "react";
 const PlayerRow = memo(
 	({ record, columns, rowKey, onRowClick, index, details, itemName }) => {
 		return (
-			<Reorder.Item
-				as="tr"
-				value={record}
-				id={record.athlete?.code}
+			<tr
 				className={details ? styles.tr_details : styles.tr}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				transition={{ duration: 0.3 }}
 				onClick={() => onRowClick(record, itemName)}
 			>
 				{columns?.map((column) => (
@@ -32,12 +25,12 @@ const PlayerRow = memo(
 						{column.render ? column.render(record, index) : record[column.key]}
 					</td>
 				))}
-			</Reorder.Item>
+			</tr>
 		);
 	}
 );
 
-function Grid({
+function HistoryGrid({
 	columns,
 	data,
 	rowKey,
@@ -48,19 +41,7 @@ function Grid({
 	itemName,
 	sportKey,
 }) {
-	const { dataState, unitCode } = useSocketStore();
-	const [animatedData, setAnimatedData] = useState([]);
-
-	useEffect(() => {
-		if (!details && unitCode === data?.unit_code) {
-			setAnimatedData(dataState.current);
-		} else if (details) {
-			setAnimatedData(dataState.current || data);
-		} else {
-			setAnimatedData(data);
-		}
-	}, [dataState, data, unitCode, details]);
-
+	console.log("@#!@#!@@2", data);
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading ? (
@@ -86,34 +67,31 @@ function Grid({
 							))}
 						</tr>
 					</thead>
-					<Reorder.Group
-						as="tbody"
-						axis="y"
-						values={animatedData[sportKey] || []}
-						onReorder={setAnimatedData}
-						drag={false}
-					>
-						<AnimatePresence>
-							{Array.isArray(animatedData) &&
-								animatedData?.map((record, index) => (
-									<PlayerRow
-										key={record.athlete?.code}
-										record={record}
-										columns={columns}
-										rowKey={rowKey}
-										onRowClick={onRowClick}
-										animatedData={animatedData}
-										index={index}
-										details={details}
-										itemName={itemName}
-									/>
-								))}
-						</AnimatePresence>
-					</Reorder.Group>
+					<tbody>
+						{Array.isArray(data) &&
+							data.map(
+								(record, index) => (
+									console.log(record),
+									(
+										<PlayerRow
+											key={record.athlete?.code}
+											record={record}
+											columns={columns}
+											rowKey={rowKey}
+											onRowClick={onRowClick}
+											data={data}
+											index={index}
+											details={details}
+											itemName={itemName}
+										/>
+									)
+								)
+							)}
+					</tbody>
 				</table>
 			)}
 		</div>
 	);
 }
 
-export default Grid;
+export default HistoryGrid;

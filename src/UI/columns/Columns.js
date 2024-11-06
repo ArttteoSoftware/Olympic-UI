@@ -120,6 +120,64 @@ export const BiathlonCol = [
 	},
 ];
 
+export const HistoryCol = (title) => [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return (
+				<div className={styles.rankingContainer}>
+					<div className={styles.ranking}>
+						<div className={styles.index}>{record.intermediates.rank}.</div>
+					</div>
+				</div>
+			);
+		},
+	},
+
+	{
+		key: "description",
+		title: title,
+		textAlign: "start",
+		width: 400,
+		render: (record, index) => {
+			return <div style={{ padding: "10px 14px" }}>Final Standing</div>;
+		},
+	},
+
+	{
+		key: "shooting",
+		title: "Shooting",
+		textAlign: "end",
+		windth: 50,
+
+		render: (record) => {
+			return <>{record?.shootingResults?.value || "-"}</>;
+		},
+	},
+	{
+		key: "time",
+		title: "Time",
+		textAlign: "end",
+		windth: 50,
+
+		render: (record) => {
+			return <>{record?.intermediates?.value ?? "-"}</>;
+		},
+	},
+	{
+		key: "difference",
+		title: "Diff.",
+		textAlign: "end",
+
+		render: (record) => {
+			return <>{record?.intermediates?.diff ?? "-"}</>;
+		},
+	},
+];
+
 export const AlpineCol = [
 	{
 		key: "_id",
@@ -197,7 +255,8 @@ export const ShortTrackCol = [
 		textAlign: "center",
 		width: 50,
 		render: (record, index) => {
-			return <AthleteRanking record={record} index={index} />;
+			// return <AthleteRanking record={record} index={index} />;
+			return "";
 		},
 	},
 
@@ -207,7 +266,8 @@ export const ShortTrackCol = [
 		textAlign: "center",
 		width: 50,
 		render: (record, index) => {
-			return <>{record?.athlete?.bib}</>;
+			// return <>{record?.athlete?.bib}</>;
+			return "";
 		},
 	},
 
@@ -217,7 +277,8 @@ export const ShortTrackCol = [
 		textAlign: "start",
 		// width: 100,
 		render: (record, index) => {
-			return <AthleteCell record={record} index={index} showCou />;
+			// return <AthleteCell record={record} index={index} showCou />;
+			return "";
 		},
 	},
 
@@ -227,7 +288,8 @@ export const ShortTrackCol = [
 		textAlign: "center",
 		windth: 50,
 		render: (record) => {
-			return <>{record?.intermediates?.pos || "-"}</>;
+			// return <>{record?.intermediates?.pos || "-"}</>;
+			return "";
 		},
 	},
 	{
@@ -237,7 +299,8 @@ export const ShortTrackCol = [
 		windth: 50,
 
 		render: (record) => {
-			return <>{record?.intermediates?.value2 ?? "-"}</>;
+			// return <>{record?.intermediates?.value2 ?? "-"}</>;
+			return "";
 		},
 	},
 	{
@@ -246,7 +309,8 @@ export const ShortTrackCol = [
 		textAlign: "end",
 
 		render: (record) => {
-			return <>{record?.intermediates?.value ?? "-"}</>;
+			// return <>{record?.intermediates?.value ?? "-"}</>;
+			return "";
 		},
 	},
 ];
@@ -394,9 +458,11 @@ export const returnSportColumn = (sportKey) => {
 		case "CCS":
 			return CrossCountryCol;
 		case "FRS":
-			return FreestyleCol;
+			return ShortTrackCol;
 		case "IHO":
-			return AlpineCol;
+			return ShortTrackCol;
+		case "FSK":
+			return ShortTrackCol;
 		case "STK":
 			return ShortTrackCol;
 
