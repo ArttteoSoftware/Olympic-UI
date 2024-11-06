@@ -10,6 +10,8 @@
 .container {
 	border-radius: 1.25rem;
 	background-color: #f5f7f7;
+	width: 100%;
+	max-width: 437px;
 }
 
 .innerContainer {
@@ -42,6 +44,7 @@
 }
 
 .tableContainer {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

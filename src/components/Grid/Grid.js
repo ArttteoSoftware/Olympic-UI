@@ -44,7 +44,6 @@ function Grid({
 	rowKey,
 	onRowClick,
 	loading,
-	isModal,
 	forCard,
 	details,
 	itemName,
@@ -74,7 +73,7 @@ function Grid({
 				setAnimatedData(data);
 			}
 		}
-	}, [dataState, data, isModal, unitCode, details]);
+	}, [dataState, data, unitCode, details]);
 
 	console.log(animatedData);
 	return (

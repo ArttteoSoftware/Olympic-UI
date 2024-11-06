@@ -13,6 +13,7 @@ const DetailsCard = ({
 	color,
 	unitNames,
 	setFilterValue,
+	sportKey,
 	loading,
 }) => {
 	const modalRef = useRef(null);
@@ -58,6 +59,7 @@ const DetailsCard = ({
 			</div>
 			<PlayerInfo
 				ref={modalRef}
+				sportKey={sportKey}
 				playerInfo={playerInfo}
 				openInfo={openInfo}
 				onClose={() => setOpenInfo(false)}
@@ -101,7 +103,6 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 						rowKey={(record) => record._id}
 						onRowClick={handleRowClick}
 						loading={loading}
-						isModal={false}
 						itemName={item.item_name}
 					/>
 				</div>
@@ -120,13 +121,13 @@ const GridHeader = ({ itemName }) => (
 	</div>
 );
 
-const PlayerInfo = ({ playerInfo, openInfo, onClose, ref }) =>
+const PlayerInfo = ({ sportKey, playerInfo, openInfo, onClose, ref }) =>
 	openInfo && (
 		<PlayerInfoModal
 			record={playerInfo}
 			ref={ref}
 			visible={Boolean(openInfo)}
-			title={playerInfo}
+			sportKey={sportKey}
 			onClose={onClose}
 		/>
 	);

@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./PlayerInfoModal.module.css";
-import Grid from "../Grid/Grid";
 import {
 	CloseModalIcon,
 	SilverMedal,
@@ -9,105 +8,54 @@ import {
 	VerticalDivider,
 } from "../../UI/Icons";
 import Bread from "../Bread/Bread";
-import { getMedalsByPlayerId } from "../../services/PlayerDetailService";
+import {
+	getMedalsByPlayerId,
+	getResultsByPlayerId,
+} from "../../services/PlayerDetailService";
 import { useCallback, useEffect, useState } from "react";
 import { getFlag } from "../../UI/flags";
 import FormatData from "../../util/FormatData";
+import { HistoryCol, returnSportColumn } from "../../UI/columns/Columns";
+import HistoryGrid from "../Grid/HistoryGrid";
 
 export default function PlayerInfoModal({
 	visible,
 	onClose,
 	ref,
 	record,
-	title,
+	sportKey,
 }) {
-	// const playerColumns = [
-	// 	{
-	// 		key: "_id",
-	// 		title: "#",
-	// 		width: 100,
-	// 		textAlign: "center",
-	// 		render: (record) => {
-	// 			return (
-	// 				<div className={styles.rankingContainer}>
-	// 					<div className={styles.ranking}>
-	// 						<div className={styles.index}>{1}.</div>
-	// 						<div className={styles.flag}>{record.flag}</div>
-	// 					</div>
-	// 				</div>
-	// 			);
-	// 		},
-	// 	},
-	// 	{
-	// 		key: "description",
-	// 		title: "Description",
-	// 		width: 800,
-	// 		textAlign: "start",
-	// 		render: (record) => {
-	// 			return (
-	// 				<>
-	// 					<div className={styles.nameContainer}>
-	// 						<div className={styles.country}>({record.country})</div>
-	// 						<div className={styles.name}>{record.name}</div>
-	// 					</div>
-	// 				</>
-	// 			);
-	// 		},
-	// 	},
-
-	// 	{
-	// 		key: "shooting",
-	// 		title: "Shooting",
-	// 		textAlign: "center",
-
-	// 		render: (record) => {
-	// 			return <>-</>;
-	// 		},
-	// 	},
-	// 	{
-	// 		key: "time",
-	// 		title: "Time",
-	// 		textAlign: "center",
-
-	// 		render: (record) => {
-	// 			return <>-</>;
-	// 		},
-	// 	},
-	// 	{
-	// 		key: "difference",
-	// 		title: "Diff.",
-	// 		textAlign: "center",
-
-	// 		render: (record) => {
-	// 			return <>-</>;
-	// 		},
-	// 	},
-	// ];
-
-	// const alpineSkiingBoys = [
-	// 	{
-	// 		country: "FIN",
-	// 		flag: <img className="flag" alt="country-flag" src="flags/Finland.png" />,
-	// 		name: "E. Saravuo",
-	// 		time: "1:29.55",
-	// 		rankChangeAmount: 0,
-	// 	},
-	// ];
-
 	const [data, setData] = useState([]);
+	const [results, setResults] = useState([]);
 
 	const loadData = useCallback(async () => {
 		try {
-			const { data } = await getMedalsByPlayerId("1000188");
+			const { data } = await getMedalsByPlayerId(record.athlete.code);
+
 			setData(data);
 		} catch (err) {
 			console.error("Error while loading Data", err);
 		}
 	}, []);
 
+	const loadResults = useCallback(async () => {
+		try {
+			const { data } = await getResultsByPlayerId(record.athlete.code);
+
+			setResults(data);
+		} catch (err) {
+			console.error("Error while loading player's result", err);
+		}
+	}, []);
+
 	useEffect(() => {
 		loadData();
 	}, [loadData]);
+
+	useEffect(() => {
+		loadResults();
+	}, [loadResults]);
+
 	return (
 		<div className={styles.modalOverlay}>
 			{visible && (
@@ -180,9 +128,20 @@ export default function PlayerInfoModal({
 
 						<div className={styles.modalFooter}>
 							<span className={styles.modalFooterTitle}>Results</span>
-							<div className={styles.tableContainer}>
-								<Grid columns={[]} data={[]} isModal={true} />
-							</div>
+							{results?.map((element) => {
+								console.log(element);
+								const resultsArr = [];
+								resultsArr.push(element.result);
+
+								return (
+									<div className={styles.tableContainer} key={element.id}>
+										<HistoryGrid
+											columns={HistoryCol(element.item_name)}
+											data={resultsArr}
+										/>
+									</div>
+								);
+							})}
 						</div>
 					</div>
 				</div>
