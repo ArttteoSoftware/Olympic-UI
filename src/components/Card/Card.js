@@ -9,11 +9,12 @@ import Grid from "../Grid/Grid";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 
-const Card = ({ title, units }) => {
+const Card = ({ title, units, startList }) => {
 	const [data, setData] = useState([]);
 	const [isFlipped, setIsFlipped] = useState(false);
 	const { dataState, unitCode } = useSocketStore();
 
+	console.log("STARTLIST *****", startList);
 	useEffect(() => {
 		setData(units);
 	}, [units]);
@@ -31,15 +32,18 @@ const Card = ({ title, units }) => {
 		[]
 	);
 	const getListData = (unit) => {
+		console.log("SOCKET_*****", dataState.current);
 		if (unit.unit_code === unitCode) {
 			return dataState.current;
 		} else {
-			return unit.start_list;
+			return unit;
 		}
 	};
 
 	const renderUnit = (unit) => {
 		const listData = getListData(unit);
+
+		console.log("***LISTDATA", listData);
 		return (
 			// <MarqueeEffect>
 			<div key={unit.unit_code}>

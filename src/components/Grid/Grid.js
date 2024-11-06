@@ -1,4 +1,4 @@
-import { AnimatePresence, Reorder } from "framer-motion";
+import { animate, AnimatePresence, Reorder } from "framer-motion";
 import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
@@ -51,10 +51,15 @@ function Grid({
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 
+	const ff = {
+		"BTHW12.5KMMS----------FNL-000100--": [{}, {}, {}],
+	};
 	useEffect(() => {
 		if (!isModal) {
 			if (!details && unitCode === data?.unit_code) {
-				setAnimatedData(dataState.current);
+				setAnimatedData((prev) => {
+					prev.item_name = dataState.current.result;
+				});
 			} else if (details) {
 				setAnimatedData(dataState.current || data);
 			} else {

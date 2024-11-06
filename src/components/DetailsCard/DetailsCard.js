@@ -97,7 +97,7 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 					<Grid
 						details={true}
 						columns={columns}
-						data={item.start_list}
+						data={item}
 						rowKey={(record) => record._id}
 						onRowClick={handleRowClick}
 						loading={loading}

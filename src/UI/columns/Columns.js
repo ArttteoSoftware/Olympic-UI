@@ -345,6 +345,27 @@ export const FreestyleCol = [
 	},
 ];
 
+export const playerDetailCol = [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <AthleteRanking record={record} index={index} />;
+		},
+	},
+
+	{
+		key: "bib",
+		title: "Bib",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <>{record?.athlete?.bib}</>;
+		},
+	},
+];
 const AthleteCell = ({ record, showCountry }) => {
 	const { dataState } = useSocketStore();
 	const oldIndex = dataState.previous?.findIndex(
