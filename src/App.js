@@ -29,7 +29,7 @@ function App() {
 			socket.disconnect();
 			setStatus("Disconnected");
 		};
-	}, []);
+	}, [setData, setStatus, setUnitCode]);
 
 	return (
 		<div>

@@ -1,4 +1,4 @@
-import { animate, AnimatePresence, Reorder } from "framer-motion";
+import { AnimatePresence, Reorder } from "framer-motion";
 import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
@@ -16,6 +16,11 @@ const PlayerRow = memo(
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
+				onClick={() => {
+					if (details) {
+						onRowClick(record, itemName);
+					}
+				}}
 			>
 				{columns?.map((column) => (
 					<td
@@ -98,7 +103,7 @@ function Grid({
 							{Array.isArray(animatedData) &&
 								animatedData?.map((record, index) => (
 									<PlayerRow
-										key={record.athlete?.code}
+										key={record.athlete?.code || index}
 										record={record}
 										columns={columns}
 										rowKey={rowKey}
@@ -106,6 +111,7 @@ function Grid({
 										index={index}
 										details={details}
 										itemName={itemName}
+										onRowClick={onRowClick}
 									/>
 								))}
 						</AnimatePresence>

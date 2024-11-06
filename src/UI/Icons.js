@@ -254,7 +254,7 @@ export const VerticalDivider = () => {
 				x2="0.5"
 				y2="12.5"
 				stroke="#2A3342"
-				stroke-opacity="0.1"
+				strokeOpacity="0.1"
 			/>
 		</svg>
 	);

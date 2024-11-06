@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Divider } from "../../UI/Icons";
 import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
@@ -132,15 +132,17 @@ const GridHeader = ({ itemName }) => (
 	</div>
 );
 
-const PlayerInfo = ({ sportKey, playerInfo, openInfo, onClose, ref }) =>
-	openInfo && (
-		<PlayerInfoModal
-			record={playerInfo}
-			ref={ref}
-			visible={Boolean(openInfo)}
-			sportKey={sportKey}
-			onClose={onClose}
-		/>
-	);
+const PlayerInfo = React.forwardRef(
+	({ sportKey, playerInfo, openInfo, onClose }, ref) =>
+		openInfo && (
+			<PlayerInfoModal
+				record={playerInfo}
+				modalRef={ref}
+				visible={Boolean(openInfo)}
+				sportKey={sportKey}
+				onClose={onClose}
+			/>
+		)
+);
 
 export default DetailsCard;

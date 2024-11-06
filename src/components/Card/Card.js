@@ -3,16 +3,14 @@ import styles from "./Card.module.css";
 import { motion, Reorder } from "framer-motion";
 import { Divider } from "../../UI/Icons";
 import { convertSportTitle } from "../../enum/Sport";
-import { BiathlonCol } from "../../UI/columns/Columns";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
 import { returnSportColumn } from "../../UI/columns/Columns";
-import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 
 const Card = ({ title, units }) => {
 	const [data, setData] = useState([]);
-	const [isFlipped, setIsFlipped] = useState(false);
-	const { dataState, unitCode } = useSocketStore();
+	const [isFlipped] = useState(false);
+	const { dataState } = useSocketStore();
 
 	useEffect(() => {
 		setData(units);

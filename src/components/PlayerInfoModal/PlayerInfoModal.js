@@ -15,15 +15,14 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { getFlag } from "../../UI/flags";
 import FormatData from "../../util/FormatData";
-import { HistoryCol, returnSportColumn } from "../../UI/columns/Columns";
+import { HistoryCol } from "../../UI/columns/Columns";
 import HistoryGrid from "../Grid/HistoryGrid";
 
 export default function PlayerInfoModal({
 	visible,
 	onClose,
-	ref,
+	modalRef,
 	record,
-	sportKey,
 }) {
 	const [data, setData] = useState([]);
 	const [results, setResults] = useState([]);
@@ -36,7 +35,7 @@ export default function PlayerInfoModal({
 		} catch (err) {
 			console.error("Error while loading Data", err);
 		}
-	}, []);
+	}, [record.athlete.code]);
 
 	const loadResults = useCallback(async () => {
 		try {
@@ -46,7 +45,7 @@ export default function PlayerInfoModal({
 		} catch (err) {
 			console.error("Error while loading player's result", err);
 		}
-	}, []);
+	}, [record.athlete.code]);
 
 	useEffect(() => {
 		loadData();
@@ -60,7 +59,7 @@ export default function PlayerInfoModal({
 		<div className={styles.modalOverlay}>
 			{visible && (
 				<div>
-					<div className={styles.modal} ref={ref}>
+					<div className={styles.modal} ref={modalRef}>
 						<div className={styles.modalHeader}>
 							<div className={styles.modalBreadcrumbs}>
 								<Bread
@@ -111,9 +110,12 @@ export default function PlayerInfoModal({
 							</div>
 
 							<div className={styles.medalsContainer}>
-								{data?.medals?.map((competition) => {
+								{data?.medals?.map((competition, index) => {
 									return (
-										<div className={styles.medalContainer}>
+										<div
+											className={styles.medalContainer}
+											key={competition._id ? competition._id : `medal-${index}`}
+										>
 											<div className={styles.competitionContainer}>
 												{competition.unit.item_name}
 												{competition.medal_code === "GOLD" && <GoldMedal />}
