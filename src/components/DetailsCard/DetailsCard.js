@@ -24,14 +24,12 @@ const DetailsCard = ({
 	const { dataState } = useSocketStore();
 
 	useEffect(() => {
-		if (dataState.current?.length > 0) {
+		if (dataState && dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
 				if (element.item_name === dataState.item_name) {
 					initialData.startList = dataState.current;
-					// setGridData(initialData);
-
-					return initialData;
 				}
+				return initialData;
 			});
 		} else {
 			setGridData(initialData);
