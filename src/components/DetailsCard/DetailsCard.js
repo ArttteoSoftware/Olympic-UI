@@ -29,7 +29,7 @@ const DetailsCard = ({
 				if (element.item_name === dataState.item_name) {
 					initialData.startList = dataState.current;
 				}
-				return initialData;
+				setGridData(initialData);
 			});
 		} else {
 			setGridData(initialData);
@@ -112,7 +112,7 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 						rowKey={(record) => record._id}
 						onRowClick={handleRowClick}
 						loading={loading}
-						itemName={item.item_name}
+						item_name={item.item_name}
 					/>
 				</div>
 			</div>

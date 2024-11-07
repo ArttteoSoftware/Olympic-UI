@@ -52,12 +52,13 @@ function Grid({
 	details,
 	itemName,
 	sportKey,
+	item_name,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 
 	useEffect(() => {
-		if (dataState.item_name === data?.item_name) {
+		if (dataState.item_name === item_name) {
 			setAnimatedData(dataState.current);
 		} else {
 			if (details) {

@@ -414,7 +414,6 @@ const AthleteCell = ({ record, showCountry }) => {
 
 	// TODO: CHECK IF BIB IS ALWAYS UNIQUE FOR SAME PLAYERS IN DIFFERENT GAME
 
-	console.log(record);
 	const oldIndex = dataState.previous?.findIndex(
 		(item) =>
 			item.athlete?.code === record.athlete?.code &&

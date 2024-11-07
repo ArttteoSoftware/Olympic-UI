@@ -54,6 +54,7 @@ const Card = ({ title, units }) => {
 					columns={returnSportColumn(title)}
 					data={listData}
 					className={styles.cardGrid}
+					item_name={unit.item_name}
 				/>
 			</div>
 			// </MarqueeEffect>
