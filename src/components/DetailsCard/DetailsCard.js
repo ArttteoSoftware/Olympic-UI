@@ -106,6 +106,7 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 				<GridHeader itemName={item.item_name} />
 				<div className={styles.dataContainer}>
 					<Grid
+						result_status={item.result_status}
 						details={true}
 						columns={columns}
 						data={item}

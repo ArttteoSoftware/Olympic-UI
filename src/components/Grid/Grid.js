@@ -5,7 +5,16 @@ import useSocketStore from "../../store/socketStore";
 import { useEffect, useState, memo } from "react";
 
 const PlayerRow = memo(
-	({ record, columns, rowKey, onRowClick, index, details, itemName }) => {
+	({
+		record,
+		columns,
+		rowKey,
+		onRowClick,
+		index,
+		details,
+		itemName,
+		result_status,
+	}) => {
 		return (
 			<Reorder.Item
 				as="tr"
@@ -34,7 +43,9 @@ const PlayerRow = memo(
 						}}
 						className={details ? styles.td_details : styles.td}
 					>
-						{column.render ? column.render(record, index) : record[column.key]}
+						{column.render
+							? column.render(record, index, result_status)
+							: record[column.key]}
 					</td>
 				))}
 			</Reorder.Item>
@@ -53,10 +64,10 @@ function Grid({
 	itemName,
 	sportKey,
 	item_name,
+	result_status,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
-
 	useEffect(() => {
 		if (dataState.item_name === item_name) {
 			setAnimatedData(dataState.current);
@@ -114,6 +125,7 @@ function Grid({
 										details={details}
 										itemName={itemName}
 										onRowClick={onRowClick}
+										result_status={result_status}
 									/>
 								))}
 						</AnimatePresence>

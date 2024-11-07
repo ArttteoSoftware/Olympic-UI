@@ -50,6 +50,7 @@ const Card = ({ title, units }) => {
 			<div key={unit.unit_code}>
 				<UnitHeader item={unit} />
 				<Grid
+					result_status={unit.result_status}
 					details={false}
 					columns={returnSportColumn(title)}
 					data={listData}

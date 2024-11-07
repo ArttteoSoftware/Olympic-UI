@@ -1,19 +1,43 @@
-.ranking {
-	background-color: #7d94a533;
-	color: #7d94a5;
+.ranking,
+.first_place,
+.second_place,
+.third_place {
 	border-radius: 6px;
-	width: 60px;
-	padding: 3px;
+	width: 52px;
+	padding: 0 4px;
 	height: 32px;
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	align-items: center;
 	font-size: 16px;
+	color: #ffffff;
+}
+
+.index {
+	display: flex;
+	width: 100%;
+	justify-content: center;
 }
 
 .rankingContainer {
 	display: flex;
 	justify-content: start;
+}
+
+.ranking {
+	background-color: #7d94a533;
+	color: #7d94a5;
+}
+.first_place {
+	background-color: #e8bc4f;
+}
+
+.second_place {
+	background-color: #95999a;
+}
+
+.third_place {
+	background-color: #db8f5a;
 }
 
 .country {

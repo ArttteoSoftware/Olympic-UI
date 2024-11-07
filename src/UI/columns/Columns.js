@@ -7,25 +7,22 @@ export const SnowboardCol = [
 	{
 		key: "_id",
 		title: "#",
+		width: 60,
 		textAlign: "center",
-		render: (record) => {
+		render: (record, index, result_status) => {
 			return (
-				<div className={styles.rankingContainer}>
-					<div className={styles.ranking}>
-						<div className={styles.index}>
-							{record.result?.intermediates.rank}.
-						</div>
-						<div className={styles.flag}>
-							{getFlag(record.athlete?.organisation)}
-						</div>
-					</div>
-				</div>
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+				/>
 			);
 		},
 	},
 	{
 		key: "athlete",
 		title: "Athlete",
+		width: 120,
 		textAlign: "start",
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} />;
@@ -35,7 +32,8 @@ export const SnowboardCol = [
 	{
 		key: "run1",
 		title: "Run1",
-		textAlign: "center",
+		textAlign: "end",
+		// width: 50,
 
 		render: (record) => {
 			return <>-</>;
@@ -44,7 +42,8 @@ export const SnowboardCol = [
 	{
 		key: "run2",
 		title: "Run2",
-		textAlign: "center",
+		textAlign: "end",
+		// width: 50,
 		render: (record) => {
 			return <>-</>;
 		},
@@ -52,7 +51,9 @@ export const SnowboardCol = [
 	{
 		key: "run3",
 		title: "Run3",
-		textAlign: "center",
+		textAlign: "end",
+		// width: 50,
+
 		render: (record) => {
 			return <>-</>;
 		},
@@ -60,8 +61,8 @@ export const SnowboardCol = [
 	{
 		key: "score",
 		title: "Score",
-		textAlign: "center",
-
+		textAlign: "end",
+		// width: 50,
 		render: (record) => {
 			return <>-</>;
 		},
@@ -72,10 +73,16 @@ export const BiathlonCol = [
 	{
 		key: "_id",
 		title: "#",
+		width: 60,
 		textAlign: "center",
-		width: 50,
-		render: (record, index) => {
-			return <AthleteRanking record={record} index={index} />;
+		render: (record, index, result_status) => {
+			return (
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+				/>
+			);
 		},
 	},
 
@@ -83,18 +90,17 @@ export const BiathlonCol = [
 		key: "description",
 		title: "Description",
 		textAlign: "start",
-		width: 150,
+		width: 120,
 		render: (record, index) => {
-			return <AthleteCell record={record} index={index} showCou />;
+			return <AthleteCell record={record} index={index} />;
 		},
 	},
 
 	{
 		key: "shooting",
 		title: "Shooting",
-		textAlign: "center",
-		windth: 50,
-
+		textAlign: "end",
+		windth: 100,
 		render: (record) => {
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
@@ -102,7 +108,7 @@ export const BiathlonCol = [
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "center",
+		textAlign: "end",
 		windth: 50,
 
 		render: (record) => {
@@ -112,7 +118,7 @@ export const BiathlonCol = [
 	{
 		key: "difference",
 		title: "Diff.",
-		textAlign: "center",
+		textAlign: "end",
 
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;
@@ -125,14 +131,14 @@ export const HistoryCol = (title) => [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
-		width: 50,
-		render: (record, index) => {
+		width: 60,
+		render: (record, index, result_status) => {
 			return (
-				<div className={styles.rankingContainer}>
-					<div className={styles.ranking}>
-						<div className={styles.index}>{record.intermediates.rank}.</div>
-					</div>
-				</div>
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+				/>
 			);
 		},
 	},
@@ -183,9 +189,15 @@ export const AlpineCol = [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
-		width: 50,
-		render: (record, index) => {
-			return <AthleteRanking record={record} index={index} />;
+		width: 60,
+		render: (record, index, result_status) => {
+			return (
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+				/>
+			);
 		},
 	},
 
@@ -212,7 +224,7 @@ export const AlpineCol = [
 	{
 		key: "run1",
 		title: "Run1",
-		textAlign: "center",
+		textAlign: "end",
 		windth: 50,
 		render: (record) => {
 			return <>{record?.shootingResults?.value || "-"}</>;
@@ -221,7 +233,7 @@ export const AlpineCol = [
 	{
 		key: "run2",
 		title: "Run2",
-		textAlign: "center",
+		textAlign: "end",
 		windth: 50,
 
 		render: (record) => {
@@ -253,7 +265,7 @@ export const ShortTrackCol = [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
-		width: 50,
+		width: 60,
 		render: (record, index) => {
 			// return <AthleteRanking record={record} index={index} />;
 			return "";
@@ -320,9 +332,15 @@ export const CrossCountryCol = [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
-		width: 50,
-		render: (record, index) => {
-			return <AthleteRanking record={record} index={index} />;
+		width: 60,
+		render: (record, index, result_status) => {
+			return (
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+				/>
+			);
 		},
 	},
 
@@ -349,7 +367,7 @@ export const CrossCountryCol = [
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "center",
+		textAlign: "end",
 		windth: 50,
 
 		render: (record) => {
@@ -372,9 +390,15 @@ export const FreestyleCol = [
 		key: "_id",
 		title: "#",
 		textAlign: "center",
-		width: 50,
-		render: (record, index) => {
-			return <AthleteRanking record={record} index={index} />;
+		width: 60,
+		render: (record, index, result_status) => {
+			return (
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+				/>
+			);
 		},
 	},
 
@@ -394,7 +418,7 @@ export const FreestyleCol = [
 		textAlign: "start",
 		width: 100,
 		render: (record, index) => {
-			return <AthleteCell record={record} index={index} showCou />;
+			return <AthleteCell record={record} index={index} />;
 		},
 	},
 
@@ -427,13 +451,26 @@ const AthleteCell = ({ record, showCountry }) => {
 	);
 
 	const indx = oldIndex - newIndex;
+
+	// Logic to modify the athlete's name only if it contains a hyphen
+	let modifiedName = record.athlete?.name;
+	if (modifiedName && modifiedName.includes("-")) {
+		const lastname = modifiedName.split(". ");
+		const firstName = lastname[0];
+		const parts = lastname[lastname.length - 1];
+
+		const newName = parts.split("-");
+
+		modifiedName = `${firstName}. ${newName[0].charAt(0)}-${newName[1]}`;
+	}
+
 	return (
 		<>
 			<div className={styles.nameContainer}>
 				{showCountry && (
 					<div className={styles.country}>({record.athlete?.organisation})</div>
 				)}
-				<div className={styles.name}>{record.athlete?.name}</div>
+				<div className={styles.name}>{modifiedName}</div>
 				<div>
 					{indx > 0 && <RankingUp />}
 					{indx < 0 && <RankingDown />}
@@ -443,15 +480,54 @@ const AthleteCell = ({ record, showCountry }) => {
 	);
 };
 
-const AthleteRanking = ({ record, index }) => {
-	return (
-		<div className={styles.rankingContainer}>
-			<div className={styles.ranking}>
-				<div className={styles.index}>{index + 1}.</div>
-				<div className="flag">{getFlag(record.athlete?.organisation)}</div>
+const AthleteRanking = ({ record, index, result_status }) => {
+	const getRanking = (index) => {
+		switch (index) {
+			case 0:
+				return styles.first_place;
+			case 1:
+				return styles.second_place;
+			case 2:
+				return styles.third_place;
+
+			default:
+				return styles.ranking;
+		}
+	};
+
+	if (
+		result_status === "UNCONFIRMED" ||
+		result_status === "UNOFFICIAL" ||
+		result_status === "OFFICIAL"
+	) {
+		return (
+			<div className={styles.rankingContainer}>
+				<div className={getRanking(index)}>
+					<div className={styles.index}>{index + 1}.</div>
+					<div className="flag">
+						<img
+							src={getFlag(record.athlete.organisation)}
+							onError={(e) => (e.target.src = "flags/ESP.svg")}
+						/>
+					</div>
+				</div>
 			</div>
-		</div>
-	);
+		);
+	} else {
+		return (
+			<div className={styles.rankingContainer}>
+				<div className={styles.ranking}>
+					<div className={styles.index}>{index + 1}.</div>
+					<div className="flag">
+						<img
+							src={getFlag(record.athlete.organisation)}
+							onError={(e) => (e.target.src = "flags/ESP.svg")}
+						/>
+					</div>
+				</div>
+			</div>
+		);
+	}
 };
 
 export const returnSportColumn = (sportKey) => {
