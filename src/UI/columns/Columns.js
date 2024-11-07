@@ -138,6 +138,7 @@ export const HistoryCol = (title) => [
 					record={record}
 					index={index}
 					result_status={result_status}
+					isHistory={true}
 				/>
 			);
 		},
@@ -474,7 +475,7 @@ const AthleteCell = ({ record, showCountry }) => {
 	);
 };
 
-const AthleteRanking = ({ record, index, result_status }) => {
+const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 	const getRanking = (index) => {
 		switch (index) {
 			case 0:
@@ -496,8 +497,16 @@ const AthleteRanking = ({ record, index, result_status }) => {
 	) {
 		return (
 			<div className={styles.rankingContainer}>
-				<div className={getRanking(index)}>
-					<div className={styles.index}>{index + 1}.</div>
+				<div
+					className={
+						isHistory
+							? getRanking(record.intermediates.rank)
+							: getRanking(index)
+					}
+				>
+					<div className={styles.index}>
+						{isHistory ? record.intermediates.rank : index + 1}.
+					</div>
 					<img
 						className="flag"
 						src={getFlag(record.athlete.organisation)}
