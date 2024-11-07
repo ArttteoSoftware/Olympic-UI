@@ -98,7 +98,14 @@ export default function PlayerInfoModal({
 											<VerticalDivider />
 										</span>
 										<span className={styles.country}>
-											<div>{getFlag(data.organisation)}</div>
+											<div>
+												<img
+													className="flag"
+													src={getFlag(record.athlete.organisation)}
+													alt="flag"
+													onError={(e) => (e.target.src = "flags/ESP.svg")}
+												/>
+											</div>
 											<div>({data.organisation})</div>
 										</span>
 									</div>
@@ -128,22 +135,26 @@ export default function PlayerInfoModal({
 							</div>
 						</div>
 
-						<div className={styles.modalFooter}>
-							<span className={styles.modalFooterTitle}>Results</span>
-							{results?.map((element) => {
-								const resultsArr = [];
-								resultsArr.push(element.result);
+						{results && (
+							<div className={styles.modalFooter}>
+								<span className={styles.modalFooterTitle}>Results</span>
+								{results?.map((element) => {
+									const resultsArr = [];
+									resultsArr.push(element.result);
 
-								return (
-									<div className={styles.tableContainer} key={element.id}>
-										<HistoryGrid
-											columns={HistoryCol(element.item_name)}
-											data={resultsArr}
-										/>
-									</div>
-								);
-							})}
-						</div>
+									console.log(element.status);
+									return (
+										<div className={styles.tableContainer} key={element.id}>
+											<HistoryGrid
+												columns={HistoryCol(element.item_name)}
+												data={resultsArr}
+												result_status={element.status}
+											/>
+										</div>
+									);
+								})}
+							</div>
+						)}
 					</div>
 				</div>
 			)}

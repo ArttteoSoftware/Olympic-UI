@@ -16,7 +16,7 @@
 	justify-content: center;
 }
 .cardTitle {
-	font-size: 20px;
+	font-size: clamp(1rem, 2vw, 1.25rem);
 	color: #2a3342;
 	text-align: center;
 	padding: 20px 0px;
@@ -82,10 +82,10 @@
 }
 
 .subtitle {
-	margin: 0 16px;
+	margin: 0 1rem;
 	white-space: nowrap;
 	color: #7d94a5;
-	font-size: 16px;
+	font-size: clamp(1rem, 2vw, 1rem);
 }
 
 .loadContainer {

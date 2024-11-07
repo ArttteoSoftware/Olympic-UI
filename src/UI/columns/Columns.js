@@ -147,9 +147,8 @@ export const HistoryCol = (title) => [
 		key: "description",
 		title: title,
 		textAlign: "start",
-		width: 400,
 		render: (record, index) => {
-			return <div style={{ padding: "10px 14px" }}>Final Standing</div>;
+			return <>Final Standing</>;
 		},
 	},
 
@@ -157,8 +156,6 @@ export const HistoryCol = (title) => [
 		key: "shooting",
 		title: "Shooting",
 		textAlign: "end",
-		windth: 50,
-
 		render: (record) => {
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
@@ -167,8 +164,6 @@ export const HistoryCol = (title) => [
 		key: "time",
 		title: "Time",
 		textAlign: "end",
-		windth: 50,
-
 		render: (record) => {
 			return <>{record?.intermediates?.value ?? "-"}</>;
 		},
@@ -177,7 +172,6 @@ export const HistoryCol = (title) => [
 		key: "difference",
 		title: "Diff.",
 		textAlign: "end",
-
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;
 		},
@@ -504,12 +498,12 @@ const AthleteRanking = ({ record, index, result_status }) => {
 			<div className={styles.rankingContainer}>
 				<div className={getRanking(index)}>
 					<div className={styles.index}>{index + 1}.</div>
-					<div className="flag">
-						<img
-							src={getFlag(record.athlete.organisation)}
-							onError={(e) => (e.target.src = "flags/ESP.svg")}
-						/>
-					</div>
+					<img
+						className="flag"
+						src={getFlag(record.athlete.organisation)}
+						alt="flag"
+						onError={(e) => (e.target.src = "flags/ESP.svg")}
+					/>
 				</div>
 			</div>
 		);
@@ -518,12 +512,12 @@ const AthleteRanking = ({ record, index, result_status }) => {
 			<div className={styles.rankingContainer}>
 				<div className={styles.ranking}>
 					<div className={styles.index}>{index + 1}.</div>
-					<div className="flag">
-						<img
-							src={getFlag(record.athlete.organisation)}
-							onError={(e) => (e.target.src = "flags/ESP.svg")}
-						/>
-					</div>
+					<img
+						className="flag"
+						src={getFlag(record.athlete.organisation)}
+						alt="flag"
+						onError={(e) => (e.target.src = "flags/ESP.svg")}
+					/>
 				</div>
 			</div>
 		);

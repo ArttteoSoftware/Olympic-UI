@@ -3,7 +3,16 @@ import Loading from "../../UI/Loader/Loading";
 import { memo } from "react";
 
 const PlayerRow = memo(
-	({ record, columns, rowKey, onRowClick, index, details, itemName }) => {
+	({
+		record,
+		columns,
+		rowKey,
+		onRowClick,
+		index,
+		details,
+		itemName,
+		result_status,
+	}) => {
 		return (
 			<tr
 				className={details ? styles.tr_details : styles.tr}
@@ -20,7 +29,9 @@ const PlayerRow = memo(
 						}}
 						className={details ? styles.td_details : styles.td}
 					>
-						{column.render ? column.render(record, index) : record[column.key]}
+						{column.render
+							? column.render(record, index, result_status)
+							: record[column.key]}
 					</td>
 				))}
 			</tr>
@@ -36,6 +47,7 @@ function HistoryGrid({
 	loading,
 	details,
 	itemName,
+	result_status,
 }) {
 	return (
 		<div className={details ? styles.container_details : styles.container}>
@@ -75,6 +87,7 @@ function HistoryGrid({
 									index={index}
 									details={details}
 									itemName={itemName}
+									result_status={result_status}
 								/>
 							))}
 					</tbody>

@@ -31,7 +31,7 @@
 	align-items: center;
 	padding: 20px;
 	height: 20px;
-	font-size: 12px;
+	font-size: clamp(0.875rem, 2vw, 1rem);
 	opacity: 80%;
 	color: #2a3342;
 	margin: 4px 4px 0px 4px;
@@ -77,14 +77,14 @@
 }
 
 .fullName {
-	font-size: 16px;
+	font-size: clamp(1rem, 2vw, 1.25rem);
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
 .dob {
-	font-size: 12px;
+	font-size: clamp(0.875rem, 1.5vw, 1rem);
 }
 
 .modalFooter {
@@ -104,7 +104,7 @@
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-	font-size: 16px;
+	font-size: clamp(1rem, 2vw, 1.125rem);
 }
 
 .rankingContainer {
@@ -124,7 +124,7 @@
 
 .modalFooterTitle {
 	color: #2a3342;
-	font-size: 16px;
+	font-size: clamp(1rem, 2vw, 1.25rem);
 }
 
 .tableContainer {
@@ -144,7 +144,7 @@
 	padding: 10px 8px 10px 10px;
 	gap: 2px;
 	border-radius: 6px;
-	font-size: 14px;
+	font-size: clamp(0.875rem, 2vw, 1rem);
 }
 .medalContainer {
 	display: flex;
@@ -167,11 +167,24 @@
 		padding: 10px;
 	}
 
+	.modalBody {
+		display: flex;
+		flex-direction: column;
+		row-gap: 2px;
+	}
 	.contentContainer {
 		flex-direction: column;
 		text-align: center;
 	}
 	.tableContainer {
 		width: 100%;
+	}
+
+	.fullName {
+		font-size: clamp(1rem, 2vw, 1.25rem);
+	}
+
+	.dob {
+		font-size: clamp(0.875rem, 1.5vw, 1rem);
 	}
 }

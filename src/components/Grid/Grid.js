@@ -27,7 +27,11 @@ const PlayerRow = memo(
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 				onClick={() => {
-					if (details) {
+					if (
+						(details && result_status === "UNCONFIRMED") ||
+						result_status === "UNOFFICIAL" ||
+						result_status === "OFFICIAL"
+					) {
 						onRowClick(record, itemName);
 					}
 				}}
@@ -78,7 +82,7 @@ function Grid({
 				setAnimatedData(data);
 			}
 		}
-	}, [dataState, data, unitCode, details]);
+	}, [dataState, data, unitCode, details, item_name]);
 
 	return (
 		<div className={details ? styles.container_details : styles.container}>
