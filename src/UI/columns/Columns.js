@@ -411,12 +411,20 @@ export const FreestyleCol = [
 
 const AthleteCell = ({ record, showCountry }) => {
 	const { dataState } = useSocketStore();
+
+	// TODO: CHECK IF BIB IS ALWAYS UNIQUE FOR SAME PLAYERS IN DIFFERENT GAME
+
+	console.log(record);
 	const oldIndex = dataState.previous?.findIndex(
-		(item) => item.athlete?.code === record.athlete?.code
+		(item) =>
+			item.athlete?.code === record.athlete?.code &&
+			item.athlete?.bib === record.athlete?.bib
 	);
 
 	const newIndex = dataState.current?.findIndex(
-		(item) => item.athlete?.code === record.athlete?.code
+		(item) =>
+			item.athlete?.code === record.athlete?.code &&
+			item.athlete?.bib === record.athlete?.bib
 	);
 
 	const indx = oldIndex - newIndex;

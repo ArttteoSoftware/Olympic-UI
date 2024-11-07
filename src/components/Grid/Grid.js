@@ -14,6 +14,7 @@ const PlayerRow = memo(
 				className={details ? styles.tr_details : styles.tr}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
+				drag={false}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 				onClick={() => {
