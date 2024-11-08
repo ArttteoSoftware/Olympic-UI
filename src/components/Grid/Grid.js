@@ -28,9 +28,10 @@ const PlayerRow = memo(
 				transition={{ duration: 0.3 }}
 				onClick={() => {
 					if (
-						(details && result_status === "UNCONFIRMED") ||
-						result_status === "UNOFFICIAL" ||
-						result_status === "OFFICIAL"
+						details &&
+						(result_status === "UNCONFIRMED" ||
+							result_status === "UNOFFICIAL" ||
+							result_status === "OFFICIAL")
 					) {
 						onRowClick(record, itemName);
 					}
