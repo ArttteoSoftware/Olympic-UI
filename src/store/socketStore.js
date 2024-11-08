@@ -5,6 +5,7 @@ const useSocketStore = create((set) => ({
 		current: null,
 		previous: null,
 		item_name: null,
+		result_status: null,
 	},
 	unitCode: null,
 	status: "Disconnected",
@@ -14,6 +15,7 @@ const useSocketStore = create((set) => ({
 				previous: state.dataState.current,
 				current: newData.data.results,
 				item_name: newData.data.item_name,
+				result_status: newData.data.result_status,
 			},
 		}));
 	},

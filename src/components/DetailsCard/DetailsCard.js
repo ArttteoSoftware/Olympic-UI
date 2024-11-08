@@ -27,7 +27,10 @@ const DetailsCard = ({
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
 				if (element.item_name === dataState.item_name) {
+					console.log("(****", dataState.result_status);
+					console.log("(**** INITIAL", initialData.result_status);
 					initialData.startList = dataState.current;
+					initialData.result_status = dataState.result_status;
 				}
 				setGridData(initialData);
 			});

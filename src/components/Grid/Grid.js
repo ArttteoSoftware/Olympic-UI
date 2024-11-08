@@ -72,10 +72,16 @@ function Grid({
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
+	const [status, setStatus] = useState();
+
+	console.log("dd", result_status);
 	useEffect(() => {
 		if (dataState.item_name === item_name) {
 			setAnimatedData(dataState.current);
+			setStatus(dataState.result_status);
 		} else {
+			setStatus(result_status);
+
 			if (details) {
 				setAnimatedData(data.start_list);
 			} else {
@@ -129,7 +135,7 @@ function Grid({
 										details={details}
 										itemName={itemName}
 										onRowClick={onRowClick}
-										result_status={result_status}
+										result_status={status}
 									/>
 								))}
 						</AnimatePresence>

@@ -490,6 +490,8 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 		}
 	};
 
+	console.log(result_status);
+
 	if (
 		result_status === "UNCONFIRMED" ||
 		result_status === "UNOFFICIAL" ||
@@ -500,7 +502,7 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 				<div
 					className={
 						isHistory
-							? getRanking(record.intermediates.rank)
+							? getRanking(record.intermediates.rank - 1)
 							: getRanking(index)
 					}
 				>
