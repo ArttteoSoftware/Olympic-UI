@@ -36,7 +36,8 @@ export const SnowboardCol = [
 		// width: 50,
 
 		render: (record) => {
-			return <>-</>;
+			console.log("***SBD", record);
+			return <>{record.intermediates[0]?.result}</>;
 		},
 	},
 	{
@@ -45,7 +46,7 @@ export const SnowboardCol = [
 		textAlign: "end",
 		// width: 50,
 		render: (record) => {
-			return <>-</>;
+			return <>{record.intermediates[1]?.result}</>;
 		},
 	},
 	{
@@ -55,7 +56,7 @@ export const SnowboardCol = [
 		// width: 50,
 
 		render: (record) => {
-			return <>-</>;
+			return <>{record.intermediates[2]?.result}</>;
 		},
 	},
 	{
@@ -64,7 +65,7 @@ export const SnowboardCol = [
 		textAlign: "end",
 		// width: 50,
 		render: (record) => {
-			return <>-</>;
+			return <>{record.result}</>;
 		},
 	},
 ];
@@ -200,7 +201,6 @@ export const AlpineCol = [
 		key: "bib",
 		title: "Bib",
 		textAlign: "center",
-		width: 50,
 		render: (record, index) => {
 			return <>{record?.athlete?.bib}</>;
 		},
@@ -218,21 +218,21 @@ export const AlpineCol = [
 
 	{
 		key: "run1",
-		title: "Run1",
+		title: "Run 1",
 		textAlign: "end",
 		windth: 50,
 		render: (record) => {
-			return <>{record?.shootingResults?.value || "-"}</>;
+			return <>{record?.shootingResults?.value || "49.13"}</>;
 		},
 	},
 	{
 		key: "run2",
-		title: "Run2",
+		title: "Run 2",
 		textAlign: "end",
 		windth: 50,
 
 		render: (record) => {
-			return <>{record?.intermediates?.value ?? "-"}</>;
+			return <>{record?.intermediates?.value ?? "49.13"}</>;
 		},
 	},
 	{
@@ -250,6 +250,7 @@ export const AlpineCol = [
 		textAlign: "end",
 
 		render: (record) => {
+			console.log("**ss", record);
 			return <>{record?.intermediates?.diff ?? "-"}</>;
 		},
 	},

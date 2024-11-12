@@ -23,7 +23,10 @@ const DetailsCard = ({
 	const [gridData, setGridData] = useState([]);
 	const { dataState } = useSocketStore();
 
+	console.log("**** SOCKET_DATA", dataState.current);
+
 	useEffect(() => {
+		console.log("$$$$$", dataState.item_name);
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
 				if (element.item_name === dataState.item_name) {
@@ -40,6 +43,7 @@ const DetailsCard = ({
 	}, [dataState, initialData]);
 
 	const handleRowClick = (record, unitName) => {
+		console.log("***", unitName);
 		setPlayerInfo({ ...record, item_name: unitName });
 		setOpenInfo(true);
 	};
@@ -135,13 +139,14 @@ const GridHeader = ({ itemName }) => (
 );
 
 const PlayerInfo = React.forwardRef(
-	({ sportKey, playerInfo, openInfo, onClose }, ref) =>
+	({ sportKey, playerInfo, openInfo, onClose, itemName }, ref) =>
 		openInfo && (
 			<PlayerInfoModal
 				record={playerInfo}
 				modalRef={ref}
 				visible={Boolean(openInfo)}
 				sportKey={sportKey}
+				itemName={itemName}
 				onClose={onClose}
 			/>
 		)

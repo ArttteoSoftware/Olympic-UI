@@ -15,6 +15,7 @@ const PlayerRow = memo(
 		itemName,
 		result_status,
 	}) => {
+		console.log("i***III	", itemName);
 		return (
 			<Reorder.Item
 				as="tr"
@@ -33,6 +34,7 @@ const PlayerRow = memo(
 							result_status === "UNOFFICIAL" ||
 							result_status === "OFFICIAL")
 					) {
+						console.log("**itemm", itemName);
 						onRowClick(record, itemName);
 					}
 				}}
@@ -64,10 +66,8 @@ function Grid({
 	rowKey,
 	onRowClick,
 	loading,
-	forCard,
 	details,
 	itemName,
-	sportKey,
 	item_name,
 	result_status,
 }) {
@@ -134,7 +134,7 @@ function Grid({
 										animatedData={animatedData}
 										index={index}
 										details={details}
-										itemName={itemName}
+										itemName={item_name}
 										onRowClick={onRowClick}
 										result_status={status}
 									/>

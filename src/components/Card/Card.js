@@ -6,6 +6,7 @@ import { convertSportTitle } from "../../enum/Sport";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
 import { returnSportColumn } from "../../UI/columns/Columns";
+import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 
 const Card = ({ title, units }) => {
 	const [data, setData] = useState([]);
@@ -36,8 +37,7 @@ const Card = ({ title, units }) => {
 					: item
 			);
 
-			return updatedData[0]; // **** CHECK FOR TWO SPORTS
-			// setData(updatedData);
+			return updatedData[0];
 		} else {
 			return unit.start_list;
 		}
@@ -45,21 +45,41 @@ const Card = ({ title, units }) => {
 
 	const renderUnit = (unit) => {
 		const listData = getListData(unit);
-		return (
-			// <MarqueeEffect>
-			<div key={unit.unit_code}>
-				<UnitHeader item={unit} />
-				<Grid
-					result_status={unit.result_status}
-					details={false}
-					columns={returnSportColumn(title)}
-					data={listData}
-					className={styles.cardGrid}
-					item_name={unit.item_name}
-				/>
-			</div>
-			// </MarqueeEffect>
-		);
+		if (unit.item_name === dataState.item_name) {
+			console.log("ITEMNAME", unit.item_name);
+			console.log("SOCKET ITEMNAME", dataState.item_name);
+			return (
+				<>
+					{/* <MarqueeEffect> */}
+					<div key={unit.unit_code}>
+						<UnitHeader item={unit} />
+						<Grid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							item_name={unit.item_name}
+						/>
+					</div>
+					{/* </MarqueeEffect> */}
+				</>
+			);
+		} else {
+			return (
+				<div key={unit.unit_code}>
+					<UnitHeader item={unit} />
+					<Grid
+						result_status={unit.result_status}
+						details={false}
+						columns={returnSportColumn(title)}
+						data={listData}
+						className={styles.cardGrid}
+						item_name={unit.item_name}
+					/>
+				</div>
+			);
+		}
 	};
 
 	return (
