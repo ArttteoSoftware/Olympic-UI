@@ -19,7 +19,8 @@ export const CalendarIcon = () => {
 	);
 };
 
-export const Divider = () => {
+export const Divider = ({ color }) => {
+	console.log("CO", color);
 	return (
 		<svg
 			width="389"
@@ -33,7 +34,7 @@ export const Divider = () => {
 				width="2"
 				height="389"
 				transform="rotate(-90 0 2)"
-				fill="url(#paint0_linear_1_1591)"
+				fill={`url(#${color})`}
 			/>
 			<defs>
 				<linearGradient
@@ -44,9 +45,9 @@ export const Divider = () => {
 					y2="391"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stopColor="#D64540" stopOpacity="0" />
-					<stop offset="0.505" stopColor="#D64540" />
-					<stop offset="1" stopColor="#D64540" stopOpacity="0" />
+					<stop stopColor={color} stopOpacity="0" />
+					<stop offset="0.505" stopColor={color} />
+					<stop offset="1" stopColor={color} stopOpacity="0" />
 				</linearGradient>
 			</defs>
 		</svg>

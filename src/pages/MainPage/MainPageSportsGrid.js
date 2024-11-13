@@ -3,6 +3,10 @@ import styles from "./MainPageSportsGrid.module.css";
 import { getAllMatches } from "../../services/MainPageService";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import VideoPlayer from "../../components/Videoplayer/VideoPlayer";
+import { motion } from "framer-motion";
+import { getDividerColor } from "../../enum/Divider";
+
 function MainPageSportsGrid() {
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
@@ -25,16 +29,22 @@ function MainPageSportsGrid() {
 		<div className={styles.container}>
 			{data.map((item) => {
 				return (
-					<div
+					<motion.div
 						key={item._id}
-						onClick={() => {
-							navigate(`/${item._id}`);
-						}}
+						// onClick={() => {
+						// 	navigate(`/${item._id}`);
+						// }}
 					>
-						<Card key={item._id} title={item._id} units={item.units} />
-					</div>
+						<Card
+							color={getDividerColor(item._id)}
+							key={item._id}
+							title={item._id}
+							units={item.units}
+						/>
+					</motion.div>
 				);
 			})}
+			{/* <VideoPlayer /> */}
 		</div>
 	);
 }

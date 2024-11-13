@@ -91,7 +91,6 @@ export const BiathlonCol = [
 		key: "description",
 		title: "Description",
 		textAlign: "start",
-		width: 120,
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} />;
 		},
@@ -103,6 +102,7 @@ export const BiathlonCol = [
 		textAlign: "end",
 		windth: 100,
 		render: (record) => {
+			console.log("record_col", record);
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
 	},
@@ -222,7 +222,11 @@ export const AlpineCol = [
 		textAlign: "end",
 		windth: 50,
 		render: (record) => {
-			return <>{record?.shootingResults?.value || "49.13"}</>;
+			if (record.intermediates?.length > 0) {
+				return <>{record.intermediates[0]?.time}</>;
+			} else {
+				return "-";
+			}
 		},
 	},
 	{
@@ -230,9 +234,12 @@ export const AlpineCol = [
 		title: "Run 2",
 		textAlign: "end",
 		windth: 50,
-
 		render: (record) => {
-			return <>{record?.intermediates?.value ?? "49.13"}</>;
+			if (record.intermediates?.length > 1) {
+				return <>{record.intermediates[1]?.time}</>;
+			} else {
+				return "-";
+			}
 		},
 	},
 	{
@@ -241,7 +248,13 @@ export const AlpineCol = [
 		textAlign: "end",
 
 		render: (record) => {
-			return <>{record?.intermediates?.diff ?? "-"}</>;
+			if (record.intermediates?.length > 0) {
+				return (
+					<>{record?.intermediates[record?.intermediates?.length - 1]?.diff}</>
+				);
+			} else {
+				return "-";
+			}
 		},
 	},
 	{
@@ -323,6 +336,88 @@ export const ShortTrackCol = [
 	},
 ];
 
+export const FigureSkatingCol = [
+	{
+		key: "_id",
+		title: "#",
+		textAlign: "center",
+		width: 60,
+		render: (record, index) => {
+			return <AthleteRanking record={record} index={index} />;
+		},
+	},
+
+	{
+		key: "bib",
+		title: "No",
+		textAlign: "center",
+		width: 50,
+		render: (record, index) => {
+			return <>{record?.athlete?.bib}</>;
+		},
+	},
+
+	{
+		key: "name",
+		title: "Name",
+		textAlign: "start",
+		width: 100,
+		render: (record, index) => {
+			return <AthleteCell record={record} index={index} showCou />;
+		},
+	},
+
+	{
+		key: "lap/9",
+		title: "Lap/9",
+		textAlign: "center",
+		windth: 50,
+		render: (record) => {
+			// return <>{record?.intermediates?.pos || "-"}</>;
+			return "";
+		},
+	},
+	{
+		key: "lap_sec",
+		title: "Tech El.",
+		textAlign: "center",
+		windth: 50,
+
+		render: (record) => {
+			return <>{record?.intermediates?.value2 ?? "-"}</>;
+		},
+	},
+	{
+		key: "comps",
+		title: "Comps",
+		textAlign: "end",
+
+		render: (record) => {
+			// return <>{record?.intermediates?.value ?? "-"}</>;
+			return "";
+		},
+	},
+	{
+		key: "deduct",
+		title: "Deduct.",
+		textAlign: "end",
+
+		render: (record) => {
+			// return <>{record?.intermediates?.value ?? "-"}</>;
+			return "";
+		},
+	},
+	{
+		key: "total",
+		title: "Total",
+		textAlign: "end",
+
+		render: (record) => {
+			// return <>{record?.intermediates?.value ?? "-"}</>;
+			return "";
+		},
+	},
+];
 export const CrossCountryCol = [
 	{
 		key: "_id",

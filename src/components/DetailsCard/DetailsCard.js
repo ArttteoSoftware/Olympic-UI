@@ -108,23 +108,29 @@ const FilterSection = ({ unitNames, isOpen, setIsOpen, onFilterSelect }) => (
 
 const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 	<>
-		{gridData.map((item) => (
-			<div key={item.item_name}>
-				<GridHeader itemName={item.item_name} />
-				<div className={styles.dataContainer}>
-					<Grid
-						result_status={item.result_status}
-						details={true}
-						columns={columns}
-						data={item}
-						rowKey={(record) => record._id}
-						onRowClick={handleRowClick}
-						loading={loading}
-						item_name={item.item_name}
-					/>
-				</div>
-			</div>
-		))}
+		{gridData.map(
+			(item) => (
+				console.log("ITEM", item),
+				(
+					<div key={item.item_name}>
+						<GridHeader itemName={item.item_name} />
+						<div className={styles.dataContainer}>
+							<Grid
+								result_status={item.result_status}
+								details={true}
+								columns={columns}
+								data={item}
+								rowKey={(record) => record._id}
+								onRowClick={handleRowClick}
+								loading={loading}
+								item_name={item.item_name}
+								athlete={item.athlete}
+							/>
+						</div>
+					</div>
+				)
+			)
+		)}
 	</>
 );
 

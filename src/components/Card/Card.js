@@ -7,10 +7,11 @@ import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
+import VideoPlayer from "../Videoplayer/VideoPlayer";
 
-const Card = ({ title, units }) => {
+const Card = ({ title, units, color }) => {
 	const [data, setData] = useState([]);
-	const [isFlipped] = useState(false);
+	const [isFlipped, setIsFlipped] = useState(false);
 	const { dataState } = useSocketStore();
 
 	useEffect(() => {
@@ -91,8 +92,14 @@ const Card = ({ title, units }) => {
 				data={data}
 				setData={setData}
 				renderUnit={renderUnit}
+				setIsFlipped={setIsFlipped}
+				color={color}
 			/>
-			<BackCard commonStyles={commonStyles} isFlipped={isFlipped} />
+			<BackCard
+				commonStyles={commonStyles}
+				isFlipped={isFlipped}
+				setIsFlipped={setIsFlipped}
+			/>
 		</div>
 	);
 };
@@ -118,6 +125,8 @@ const FrontCard = ({
 	data,
 	setData,
 	renderUnit,
+	setIsFlipped,
+	color,
 }) => (
 	<Reorder.Group
 		style={commonStyles}
@@ -125,26 +134,29 @@ const FrontCard = ({
 		transition={{ duration: 0.6 }}
 		values={data}
 		onReorder={setData}
+		onClick={() => setIsFlipped(true)}
 		className={styles.container}
 	>
 		<div className={styles.title}>{convertSportTitle(title)}</div>
 		<div className={styles.tableContainer}>
-			<Divider />
+			<Divider color={color} />
 			<div className={styles.innerContainer}>{data.map(renderUnit)}</div>
 		</div>
 	</Reorder.Group>
 );
 
-const BackCard = ({ commonStyles, isFlipped }) => (
+const BackCard = ({ commonStyles, isFlipped, setIsFlipped }) => (
 	<motion.div
 		style={commonStyles}
 		initial={{ rotateY: 180 }}
 		animate={{ rotateY: isFlipped ? 0 : 180 }}
 		transition={{ duration: 0.6 }}
 	>
-		<video autoPlay loop muted playsInline className={styles.video}>
-			<source src="/assets/video.mp4" type="video/mp4" />
-		</video>
+		{/* <VideoPlayer
+			onVideoEnd={() => {
+				setIsFlipped(false);
+			}}
+		/> */}
 	</motion.div>
 );
 

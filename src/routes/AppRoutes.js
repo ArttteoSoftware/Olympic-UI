@@ -4,6 +4,7 @@ import SportDetail from "../pages/SportDetailPage/SportDetail";
 import {
 	BiathlonCol,
 	CrossCountryCol,
+	FigureSkatingCol,
 	SnowboardCol,
 } from "../UI/columns/Columns";
 import { Gender, SnowboardStyles } from "../UI/FilterOptions/FilterOptions";
@@ -19,7 +20,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={SnowboardCol}
 						title={"Snowboard"}
-						filter={SnowboardStyles}
 						color={"#3F78A3"}
 						sportKey={"SNB"}
 					/>
@@ -31,7 +31,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={BiathlonCol}
 						title={"Biathlon"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"BTH"}
 					/>
@@ -44,7 +43,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={AlpineCol}
 						title={"Alpine skiing"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"ALP"}
 					/>
@@ -57,7 +55,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={CrossCountryCol}
 						title={"CROSS COUNTRY SKIING"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"CCS"}
 					/>
@@ -70,9 +67,20 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={FreestyleCol}
 						title={"Freestyle skiing"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"FRS"}
+					/>
+				}
+			/>
+
+			<Route
+				path="/FSK"
+				element={
+					<SportDetail
+						columns={FigureSkatingCol}
+						title={"Figure Skating"}
+						color={"#D64540"}
+						sportKey={"FSK"}
 					/>
 				}
 			/>
@@ -83,7 +91,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={AlpineCol}
 						title={"Alpine"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"IHO"}
 					/>
@@ -96,7 +103,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={SnowboardCol}
 						title={"SNOWBOARD"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"SBD"}
 					/>
@@ -109,7 +115,6 @@ export const AppRoutes = () => {
 					<SportDetail
 						columns={ShortTrackCol}
 						title={"Short Track"}
-						filter={Gender}
 						color={"#D64540"}
 						sportKey={"STK"}
 					/>

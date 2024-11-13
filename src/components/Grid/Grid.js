@@ -14,6 +14,7 @@ const PlayerRow = memo(
 		details,
 		itemName,
 		result_status,
+		athlete,
 	}) => {
 		console.log("i***III	", itemName);
 		return (
@@ -28,14 +29,9 @@ const PlayerRow = memo(
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
 				onClick={() => {
-					if (
-						details &&
-						(result_status === "UNCONFIRMED" ||
-							result_status === "UNOFFICIAL" ||
-							result_status === "OFFICIAL")
-					) {
+					if (details) {
 						console.log("**itemm", itemName);
-						onRowClick(record, itemName);
+						onRowClick(record, itemName, athlete);
 					}
 				}}
 			>

@@ -20,18 +20,23 @@ import HistoryGrid from "../Grid/HistoryGrid";
 
 export default function PlayerInfoModal({
 	visible,
+	athlete,
 	onClose,
 	modalRef,
 	record,
 }) {
-	const [data, setData] = useState([]);
+	const [medals, setMedals] = useState([]);
 	const [results, setResults] = useState([]);
 
 	const loadData = useCallback(async () => {
+		console.log("Loading medals data..."); // Log before the API call
+
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);
+			console.log("***", data); // Log the data received
 
-			setData(data);
+			setMedals(data.medals);
+			console.log("Medals Data:", data); // Added log for medals data
 		} catch (err) {
 			console.error("Error while loading Data", err);
 		}
@@ -48,6 +53,7 @@ export default function PlayerInfoModal({
 	}, [record.athlete.code]);
 
 	useEffect(() => {
+		console.log("(***");
 		loadData();
 	}, [loadData]);
 
@@ -93,8 +99,7 @@ export default function PlayerInfoModal({
 								</div>
 								<div>
 									<div className={styles.fullName}>
-										{`${data.given_name} ${data.family_name}`}
-
+										{record.athlete.fullName}
 										<span className={styles.verticalDivider}>
 											<VerticalDivider />
 										</span>
@@ -107,18 +112,18 @@ export default function PlayerInfoModal({
 													onError={(e) => (e.target.src = "flags/ESP.svg")}
 												/>
 											</div>
-											<div>({data.organisation})</div>
+											<div>({record.athlete?.organisation})</div>
 										</span>
 									</div>
 									<div className={styles.dob}>
-										<span className={styles.label}>Date of birth:</span>{" "}
-										{FormatData.formatDate(data.birth_date)}
+										<span className={styles.label}>Date of birth:</span>
+										{FormatData.formatDate(record.athlete.birthDate)}
 									</div>
 								</div>
 							</div>
 
 							<div className={styles.medalsContainer}>
-								{data?.medals?.map((competition, index) => {
+								{medals?.map((competition, index) => {
 									return (
 										<div
 											className={styles.medalContainer}
@@ -136,7 +141,7 @@ export default function PlayerInfoModal({
 							</div>
 						</div>
 
-						{results && (
+						{results.length > 0 && (
 							<div className={styles.modalFooter}>
 								<span className={styles.modalFooterTitle}>Results</span>
 								{results?.map((element) => {
