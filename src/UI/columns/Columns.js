@@ -36,7 +36,6 @@ export const SnowboardCol = [
 		// width: 50,
 
 		render: (record) => {
-			console.log("***SBD", record);
 			return <>{record.intermediates[0]?.result}</>;
 		},
 	},
@@ -102,7 +101,6 @@ export const BiathlonCol = [
 		textAlign: "end",
 		windth: 100,
 		render: (record) => {
-			console.log("record_col", record);
 			return <>{record?.shootingResults?.value || "-"}</>;
 		},
 	},
@@ -149,8 +147,12 @@ export const HistoryCol = (title) => [
 		key: "description",
 		title: title,
 		textAlign: "start",
-		render: (record, index) => {
-			return <>Final Standing</>;
+		render: (record, index, result_status) => {
+			if (result_status) {
+				return "Final Standing";
+			} else {
+				return "Current Standing";
+			}
 		},
 	},
 
@@ -263,7 +265,6 @@ export const AlpineCol = [
 		textAlign: "end",
 
 		render: (record) => {
-			console.log("**ss", record);
 			return <>{record?.intermediates?.diff ?? "-"}</>;
 		},
 	},
@@ -586,8 +587,6 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 		}
 	};
 
-	console.log(result_status);
-
 	if (
 		result_status === "UNCONFIRMED" ||
 		result_status === "UNOFFICIAL" ||
@@ -598,12 +597,12 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 				<div
 					className={
 						isHistory
-							? getRanking(record.intermediates.rank - 1)
+							? getRanking(record?.intermediates?.rank - 1)
 							: getRanking(index)
 					}
 				>
 					<div className={styles.index}>
-						{isHistory ? record.intermediates.rank : index + 1}.
+						{isHistory ? record?.intermediates?.rank : index + 1}.
 					</div>
 					<img
 						className="flag"

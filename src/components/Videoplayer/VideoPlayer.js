@@ -5,7 +5,6 @@ import styles from "./VideoPlayer.module.css";
 const VideoPlayer = ({ onVideoEnd }) => {
 	const videoRef = useRef(null);
 
-	console.log("onVideoEnd", onVideoEnd);
 	useEffect(() => {
 		if (Hls.isSupported()) {
 			const hls = new Hls();

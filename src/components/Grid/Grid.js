@@ -16,7 +16,6 @@ const PlayerRow = memo(
 		result_status,
 		athlete,
 	}) => {
-		console.log("i***III	", itemName);
 		return (
 			<Reorder.Item
 				as="tr"
@@ -30,8 +29,7 @@ const PlayerRow = memo(
 				transition={{ duration: 0.3 }}
 				onClick={() => {
 					if (details) {
-						console.log("**itemm", itemName);
-						onRowClick(record, itemName, athlete);
+						onRowClick(record, itemName, athlete, result_status, columns);
 					}
 				}}
 			>
@@ -71,7 +69,6 @@ function Grid({
 	const [animatedData, setAnimatedData] = useState([]);
 	const [status, setStatus] = useState();
 
-	console.log("dd", result_status);
 	useEffect(() => {
 		if (dataState.item_name === item_name) {
 			setAnimatedData(dataState.current);

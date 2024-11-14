@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Divider } from "../../UI/Icons";
+import { Divider, RedDivider } from "../../UI/Icons";
 import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
@@ -10,11 +10,11 @@ const DetailsCard = ({
 	columns,
 	initialData,
 	title,
-	color,
 	unitNames,
 	setFilterValue,
 	sportKey,
 	loading,
+	color,
 }) => {
 	const modalRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(false);
@@ -22,16 +22,12 @@ const DetailsCard = ({
 	const [playerInfo, setPlayerInfo] = useState({});
 	const [gridData, setGridData] = useState([]);
 	const { dataState } = useSocketStore();
-
-	console.log("**** SOCKET_DATA", dataState.current);
+	const [resultStatus, setResultStatus] = useState();
 
 	useEffect(() => {
-		console.log("$$$$$", dataState.item_name);
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
 				if (element.item_name === dataState.item_name) {
-					console.log("(****", dataState.result_status);
-					console.log("(**** INITIAL", initialData.result_status);
 					initialData.startList = dataState.current;
 					initialData.result_status = dataState.result_status;
 				}
@@ -43,9 +39,10 @@ const DetailsCard = ({
 	}, [dataState, initialData]);
 
 	const handleRowClick = (record, unitName) => {
-		console.log("***", unitName);
 		setPlayerInfo({ ...record, item_name: unitName });
 		setOpenInfo(true);
+
+		setResultStatus(record.result_status);
 	};
 
 	const handleFilterSelect = (filter) => {
@@ -76,7 +73,9 @@ const DetailsCard = ({
 			<PlayerInfo
 				ref={modalRef}
 				sportKey={sportKey}
+				result_status={initialData?.result_status}
 				playerInfo={playerInfo}
+				columns={columns}
 				openInfo={openInfo}
 				onClose={() => setOpenInfo(false)}
 			/>
@@ -88,7 +87,7 @@ const CardHeader = ({ title }) => (
 	<>
 		<div className={styles.cardTitle}>{title}</div>
 		<div className={styles.divider}>
-			<Divider />
+			<RedDivider />
 		</div>
 	</>
 );
@@ -108,29 +107,24 @@ const FilterSection = ({ unitNames, isOpen, setIsOpen, onFilterSelect }) => (
 
 const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 	<>
-		{gridData.map(
-			(item) => (
-				console.log("ITEM", item),
-				(
-					<div key={item.item_name}>
-						<GridHeader itemName={item.item_name} />
-						<div className={styles.dataContainer}>
-							<Grid
-								result_status={item.result_status}
-								details={true}
-								columns={columns}
-								data={item}
-								rowKey={(record) => record._id}
-								onRowClick={handleRowClick}
-								loading={loading}
-								item_name={item.item_name}
-								athlete={item.athlete}
-							/>
-						</div>
-					</div>
-				)
-			)
-		)}
+		{gridData.map((item) => (
+			<div key={item.item_name}>
+				<GridHeader itemName={item.item_name} />
+				<div className={styles.dataContainer}>
+					<Grid
+						result_status={item.result_status}
+						details={true}
+						columns={columns}
+						data={item}
+						rowKey={(record) => record._id}
+						onRowClick={handleRowClick}
+						loading={loading}
+						item_name={item.item_name}
+						athlete={item.athlete}
+					/>
+				</div>
+			</div>
+		))}
 	</>
 );
 
@@ -145,15 +139,28 @@ const GridHeader = ({ itemName }) => (
 );
 
 const PlayerInfo = React.forwardRef(
-	({ sportKey, playerInfo, openInfo, onClose, itemName }, ref) =>
+	(
+		{
+			sportKey,
+			playerInfo,
+			openInfo,
+			onClose,
+			itemName,
+			result_status,
+			columns,
+		},
+		ref
+	) =>
 		openInfo && (
 			<PlayerInfoModal
 				record={playerInfo}
+				result_status={result_status}
 				modalRef={ref}
 				visible={Boolean(openInfo)}
 				sportKey={sportKey}
 				itemName={itemName}
 				onClose={onClose}
+				columns={columns}
 			/>
 		)
 );

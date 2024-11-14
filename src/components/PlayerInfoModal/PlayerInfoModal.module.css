@@ -160,6 +160,12 @@
 	justify-content: flex-end;
 }
 
+.gridContainer {
+	display: flex;
+	gap: 5px;
+	flex-direction: column;
+}
+
 @media (max-width: 768px) {
 	.modalHeader,
 	.modalBody,

@@ -9,7 +9,7 @@ import { returnSportColumn } from "../../UI/columns/Columns";
 import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 import VideoPlayer from "../Videoplayer/VideoPlayer";
 
-const Card = ({ title, units, color }) => {
+const Card = ({ title, units, divider }) => {
 	const [data, setData] = useState([]);
 	const [isFlipped, setIsFlipped] = useState(false);
 	const { dataState } = useSocketStore();
@@ -47,8 +47,6 @@ const Card = ({ title, units, color }) => {
 	const renderUnit = (unit) => {
 		const listData = getListData(unit);
 		if (unit.item_name === dataState.item_name) {
-			console.log("ITEMNAME", unit.item_name);
-			console.log("SOCKET ITEMNAME", dataState.item_name);
 			return (
 				<>
 					{/* <MarqueeEffect> */}
@@ -93,7 +91,7 @@ const Card = ({ title, units, color }) => {
 				setData={setData}
 				renderUnit={renderUnit}
 				setIsFlipped={setIsFlipped}
-				color={color}
+				divider={divider}
 			/>
 			<BackCard
 				commonStyles={commonStyles}
@@ -126,7 +124,7 @@ const FrontCard = ({
 	setData,
 	renderUnit,
 	setIsFlipped,
-	color,
+	divider,
 }) => (
 	<Reorder.Group
 		style={commonStyles}
@@ -139,7 +137,8 @@ const FrontCard = ({
 	>
 		<div className={styles.title}>{convertSportTitle(title)}</div>
 		<div className={styles.tableContainer}>
-			<Divider color={color} />
+			{/* <Divider color={color} /> */}
+			{divider}
 			<div className={styles.innerContainer}>{data.map(renderUnit)}</div>
 		</div>
 	</Reorder.Group>

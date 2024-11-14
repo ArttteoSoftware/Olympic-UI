@@ -1,16 +1,22 @@
+import {
+	BlueDivider,
+	GreenDivider,
+	RedDivider,
+	YellowDivider,
+} from "../UI/Icons";
+
 export const DividerColorEnum = {
-	ALP: "D64540",
-	BTH: "E8BC4F",
-	CCS: "57A870",
-	FRS: "3F78A3",
-	FSK: "D64540",
-	IHO: "E8BC4F",
-	SBD: "57A870",
-	STK: "3F78A3",
+	ALP: <RedDivider />,
+	BTH: <YellowDivider />,
+	CCS: <GreenDivider />,
+	FRS: <BlueDivider />,
+	FSK: <RedDivider />,
+	IHO: <YellowDivider />,
+	SBD: <GreenDivider />,
+	STK: <BlueDivider />,
 };
 
 export const getDividerColor = (disciplineCode) => {
-	console.log("disciplineCode", disciplineCode);
 	switch (disciplineCode) {
 		case "ALP":
 			return DividerColorEnum.ALP;

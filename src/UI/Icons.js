@@ -19,8 +19,7 @@ export const CalendarIcon = () => {
 	);
 };
 
-export const Divider = ({ color }) => {
-	console.log("CO", color);
+export const GreenDivider = () => {
 	return (
 		<svg
 			width="389"
@@ -34,20 +33,121 @@ export const Divider = ({ color }) => {
 				width="2"
 				height="389"
 				transform="rotate(-90 0 2)"
-				fill={`url(#${color})`}
+				fill="url(#paint0_linear_1160_4845)"
 			/>
 			<defs>
 				<linearGradient
-					id="paint0_linear_1_1591"
+					id="paint0_linear_1160_4845"
 					x1="1"
 					y1="2"
 					x2="1"
 					y2="391"
 					gradientUnits="userSpaceOnUse"
 				>
-					<stop stopColor={color} stopOpacity="0" />
-					<stop offset="0.505" stopColor={color} />
-					<stop offset="1" stopColor={color} stopOpacity="0" />
+					<stop stop-color="#57A870" stop-opacity="0" />
+					<stop offset="0.505" stop-color="#57A870" />
+					<stop offset="1" stop-color="#57A870" stop-opacity="0" />
+				</linearGradient>
+			</defs>
+		</svg>
+	);
+};
+
+export const BlueDivider = () => {
+	return (
+		<svg
+			width="389"
+			height="2"
+			viewBox="0 0 389 2"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect
+				y="2"
+				width="2"
+				height="389"
+				transform="rotate(-90 0 2)"
+				fill="url(#paint0_linear_466_4902)"
+			/>
+			<defs>
+				<linearGradient
+					id="paint0_linear_466_4902"
+					x1="1"
+					y1="2"
+					x2="1"
+					y2="391"
+					gradientUnits="userSpaceOnUse"
+				>
+					<stop stop-color="#3F78A3" stop-opacity="0" />
+					<stop offset="0.505" stop-color="#3F78A3" />
+					<stop offset="1" stop-color="#3F78A3" stop-opacity="0" />
+				</linearGradient>
+			</defs>
+		</svg>
+	);
+};
+export const YellowDivider = () => {
+	return (
+		<svg
+			width="389"
+			height="2"
+			viewBox="0 0 389 2"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect
+				y="2"
+				width="2"
+				height="389"
+				transform="rotate(-90 0 2)"
+				fill="url(#paint0_linear_1160_4102)"
+			/>
+			<defs>
+				<linearGradient
+					id="paint0_linear_1160_4102"
+					x1="1"
+					y1="2"
+					x2="1"
+					y2="391"
+					gradientUnits="userSpaceOnUse"
+				>
+					<stop stop-color="#E8BC4F" stop-opacity="0" />
+					<stop offset="0.505" stop-color="#E8BC4F" />
+					<stop offset="1" stop-color="#E8BC4F" stop-opacity="0" />
+				</linearGradient>
+			</defs>
+		</svg>
+	);
+};
+
+export const RedDivider = () => {
+	return (
+		<svg
+			width="389"
+			height="2"
+			viewBox="0 0 389 2"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<rect
+				y="2"
+				width="2"
+				height="389"
+				transform="rotate(-90 0 2)"
+				fill="url(#paint0_linear_1160_3249)"
+			/>
+			<defs>
+				<linearGradient
+					id="paint0_linear_1160_3249"
+					x1="1"
+					y1="2"
+					x2="1"
+					y2="391"
+					gradientUnits="userSpaceOnUse"
+				>
+					<stop stop-color="#D64540" stop-opacity="0" />
+					<stop offset="0.505" stop-color="#D64540" />
+					<stop offset="1" stop-color="#D64540" stop-opacity="0" />
 				</linearGradient>
 			</defs>
 		</svg>

@@ -20,23 +20,20 @@ import HistoryGrid from "../Grid/HistoryGrid";
 
 export default function PlayerInfoModal({
 	visible,
-	athlete,
 	onClose,
 	modalRef,
 	record,
+	result_status,
+	columns,
 }) {
 	const [medals, setMedals] = useState([]);
 	const [results, setResults] = useState([]);
 
 	const loadData = useCallback(async () => {
-		console.log("Loading medals data..."); // Log before the API call
-
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);
-			console.log("***", data); // Log the data received
 
 			setMedals(data.medals);
-			console.log("Medals Data:", data); // Added log for medals data
 		} catch (err) {
 			console.error("Error while loading Data", err);
 		}
@@ -53,7 +50,6 @@ export default function PlayerInfoModal({
 	}, [record.athlete.code]);
 
 	useEffect(() => {
-		console.log("(***");
 		loadData();
 	}, [loadData]);
 
@@ -61,7 +57,6 @@ export default function PlayerInfoModal({
 		loadResults();
 	}, [loadResults]);
 
-	console.log(record);
 	return (
 		<div className={styles.modalOverlay}>
 			{visible && (
@@ -141,26 +136,35 @@ export default function PlayerInfoModal({
 							</div>
 						</div>
 
-						{results.length > 0 && (
-							<div className={styles.modalFooter}>
-								<span className={styles.modalFooterTitle}>Results</span>
-								{results?.map((element) => {
-									const resultsArr = [];
-									resultsArr.push(element.result);
+						<div className={styles.modalFooter}>
+							<span className={styles.modalFooterTitle}>Results</span>
 
-									console.log(element.status);
-									return (
-										<div className={styles.tableContainer} key={element.id}>
-											<HistoryGrid
-												columns={HistoryCol(element.item_name)}
-												data={resultsArr}
-												result_status={element.status}
-											/>
+							<div className={styles.gridContainer}>
+								{result_status !== "UNCONFIRMED" &&
+									result_status !== "UNOFFICIAL" &&
+									result_status !== "OFFICIAL" && (
+										<div className={styles.tableContainer}>
+											<HistoryGrid columns={columns} data={[record]} />
 										</div>
-									);
-								})}
+									)}
+
+								{results.length > 0 &&
+									results?.map((element) => {
+										const resultsArr = [];
+										resultsArr.push(element.result);
+
+										return (
+											<div className={styles.tableContainer} key={element.id}>
+												<HistoryGrid
+													columns={HistoryCol(element.item_name)}
+													data={resultsArr}
+													result_status={element.status}
+												/>
+											</div>
+										);
+									})}
 							</div>
-						)}
+						</div>
 					</div>
 				</div>
 			)}

@@ -36,7 +36,7 @@ function MainPageSportsGrid() {
 						// }}
 					>
 						<Card
-							color={getDividerColor(item._id)}
+							divider={getDividerColor(item._id)}
 							key={item._id}
 							title={item._id}
 							units={item.units}
