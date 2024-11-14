@@ -53,22 +53,14 @@ const DetailsCard = ({
 	return (
 		<>
 			<div className={styles.mainContainer}>
-				<div
-					className={styles.cardHeaderContainer}
-					style={{
-						display: "flex",
-						justifyContent: "space-between",
-						alignItems: "center",
-					}}
-				>
-					<div style={styles.liveIndicatorContainer}></div>
+				<div className={styles.cardHeaderContainer}>
+					<div className={styles.liveIndicatorContainer}></div>
 					<CardHeader title={title} />
 
 					<div className={styles.liveIndicatorContainer}>
 						{/* TODO : There is a time gap while dataState is loaded */}
 						{initialData.result_status === "LIVE" && (
 							<div
-								style={{ width: "100px" }}
 								onClick={() => {
 									setYoutube(true);
 								}}
