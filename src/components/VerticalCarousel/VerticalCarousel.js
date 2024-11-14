@@ -37,6 +37,7 @@ const VerticalCarousel = ({ items, loader }) => {
 			onTouchStart={handleTouchStart}
 			onTouchMove={handleTouchMove}
 			onTouchEnd={handleTouchEnd}
+			style={{ justifyContent: loader && "center" }}
 		>
 			{loader ? (
 				<Loading />

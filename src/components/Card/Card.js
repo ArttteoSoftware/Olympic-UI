@@ -132,7 +132,7 @@ const FrontCard = ({
 		transition={{ duration: 0.6 }}
 		values={data}
 		onReorder={setData}
-		onClick={() => setIsFlipped(true)}
+		onClick={() => setIsFlipped(false)}
 		className={styles.container}
 	>
 		<div className={styles.title}>{convertSportTitle(title)}</div>
