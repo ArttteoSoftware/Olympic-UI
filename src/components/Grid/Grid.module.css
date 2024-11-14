@@ -69,11 +69,6 @@ ul {
 	margin: 0;
 }
 
-tbody tr:hover,
-.tr:hover {
-	/* background-color: #f5f7f7; */
-}
-
 .tr {
 	display: table-row;
 	vertical-align: inherit;
@@ -88,17 +83,10 @@ tbody tr:hover,
 	min-height: 300px;
 }
 
-@media screen and (min-width: 48rem) {
-	.container {
-		max-width: 27.3rem;
-		margin: 0 auto;
-	}
-}
-
 @media screen and (max-width: 48rem) {
 	.container,
 	.container_details {
-		max-width: 80vw;
+		max-width: 90vw;
 		min-width: 20rem;
 		margin: 0 auto;
 	}
