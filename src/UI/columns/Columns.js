@@ -92,8 +92,10 @@ export const BiathlonCol = (title) => [
 		key: "description",
 		title: title ? title : "Description",
 		textAlign: "start",
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} />;
+		render: (record, index, result_status, livescoring) => {
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -464,8 +466,10 @@ export const FreestyleCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} />;
+		render: (record, index, result_status, livescoring) => {
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -480,10 +484,8 @@ export const FreestyleCol = (title) => [
 	},
 ];
 
-const AthleteCell = ({ record, showCountry }) => {
+const AthleteCell = ({ record, showCountry, livescoring }) => {
 	const { dataState } = useSocketStore();
-
-	// TODO: CHECK IF BIB IS ALWAYS UNIQUE FOR SAME PLAYERS IN DIFFERENT GAME
 
 	const oldIndex = dataState.previous?.findIndex(
 		(item) =>
@@ -499,7 +501,6 @@ const AthleteCell = ({ record, showCountry }) => {
 
 	const indx = oldIndex - newIndex;
 
-	// Logic to modify the athlete's name only if it contains a hyphen
 	let modifiedName = record.athlete?.name;
 	if (modifiedName && modifiedName.includes("-")) {
 		const lastname = modifiedName.split(". ");
@@ -518,10 +519,12 @@ const AthleteCell = ({ record, showCountry }) => {
 					<div className={styles.country}>({record.athlete?.organisation})</div>
 				)}
 				<div className={styles.name}>{modifiedName}</div>
-				<div>
-					{indx > 0 && <RankingUp />}
-					{indx < 0 && <RankingDown />}
-				</div>
+				{livescoring && (
+					<div>
+						{indx > 0 && <RankingUp />}
+						{indx < 0 && <RankingDown />}
+					</div>
+				)}
 			</div>
 		</>
 	);
@@ -583,17 +586,19 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 			</div>
 		);
 	} else {
-		<div className={styles.rankingContainer}>
-			<div className={styles.ranking}>
-				<div className={styles.index}>{index + 1}.</div>
-				<img
-					className="flag"
-					src={getFlag(record.athlete.organisation)}
-					alt="flag"
-					onError={(e) => (e.target.src = "flags/ESP.svg")}
-				/>
+		return (
+			<div className={styles.rankingContainer}>
+				<div className={styles.ranking}>
+					<div className={styles.index}>{index + 1}.</div>
+					<img
+						className="flag"
+						src={getFlag(record.athlete.organisation)}
+						alt="flag"
+						onError={(e) => (e.target.src = "flags/ESP.svg")}
+					/>
+				</div>
 			</div>
-		</div>;
+		);
 	}
 };
 
@@ -608,37 +613,14 @@ export const returnSportColumn = (sportKey, item_name) => {
 		case "CCS":
 			return CrossCountryCol(item_name);
 		case "FRS":
-			return ShortTrackCol(item_name);
+			return [];
 		case "IHO":
-			return ShortTrackCol(item_name);
+			return [];
 		case "FSK":
-			return ShortTrackCol(item_name);
+			return [];
 		case "STK":
-			return ShortTrackCol(item_name);
+			return [];
 		default:
 			return [];
 	}
 };
-
-// 	switch (sportKey) {
-// 		case "SBD":
-// 			return SnowboardCol;
-// 		case "ALP":
-// 			return AlpineCol;
-// 		case "BTH":
-// 			return BiathlonCol;
-// 		case "CCS":
-// 			return CrossCountryCol;
-// 		case "FRS":
-// 			return ShortTrackCol;
-// 		case "IHO":
-// 			return ShortTrackCol;
-// 		case "FSK":
-// 			return ShortTrackCol;
-// 		case "STK":
-// 			return ShortTrackCol;
-
-// 		default:
-// 			return [];
-// 	}
-// };

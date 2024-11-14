@@ -16,6 +16,7 @@ const PlayerRow = memo(
 		result_status,
 		athlete,
 	}) => {
+		const { dataState } = useSocketStore();
 		return (
 			<Reorder.Item
 				as="tr"
@@ -46,7 +47,12 @@ const PlayerRow = memo(
 							className={details ? styles.td_details : styles.td}
 						>
 							{column.render
-								? column.render(record, index, result_status)
+								? column.render(
+										record,
+										index,
+										result_status,
+										Boolean(itemName === dataState?.item_name)
+								  )
 								: record[column.key]}
 						</td>
 					))}
