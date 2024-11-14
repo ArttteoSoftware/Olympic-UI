@@ -27,12 +27,12 @@ export default function PlayerInfoModal({
 	result_status,
 	sportKey,
 	item_name,
-	columns,
 }) {
 	const [medals, setMedals] = useState([]);
 	const [results, setResults] = useState([]);
 	const { dataState } = useSocketStore();
 
+	console.log("***", record);
 	const loadData = useCallback(async () => {
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);
@@ -61,6 +61,7 @@ export default function PlayerInfoModal({
 		loadResults();
 	}, [loadResults]);
 
+	console.log(record);
 	return (
 		<div className={styles.modalOverlay}>
 			{visible && (
@@ -106,7 +107,7 @@ export default function PlayerInfoModal({
 											<div>
 												<img
 													className="flag"
-													src={getFlag(record.athlete.organisation)}
+													src={getFlag(record.athlete?.organisation)}
 													alt="flag"
 													onError={(e) => (e.target.src = "flags/ESP.svg")}
 												/>
@@ -116,7 +117,7 @@ export default function PlayerInfoModal({
 									</div>
 									<div className={styles.dob}>
 										<span className={styles.label}>Date of birth:</span>
-										{FormatData.formatDate(record.athlete.birthDate)}
+										{FormatData.formatDate(record.athlete?.birthDate)}
 									</div>
 								</div>
 							</div>
@@ -141,19 +142,24 @@ export default function PlayerInfoModal({
 						</div>
 
 						<div className={styles.modalFooter}>
-							<span className={styles.modalFooterTitle}>Results</span>
-
 							<div className={styles.gridContainer}>
 								{dataState?.item_name === item_name &&
 									result_status !== "UNCONFIRMED" &&
 									result_status !== "UNOFFICIAL" &&
 									result_status !== "OFFICIAL" && (
-										<div className={styles.tableContainer}>
-											<HistoryGrid
-												columns={returnSportColumn(sportKey, record.item_name)}
-												data={[record]}
-											/>
-										</div>
+										<>
+											<span className={styles.modalFooterTitle}>Results</span>
+
+											<div className={styles.tableContainer}>
+												<HistoryGrid
+													columns={returnSportColumn(
+														sportKey,
+														record.item_name
+													)}
+													data={[record]}
+												/>
+											</div>
+										</>
 									)}
 
 								{results.length > 0 &&

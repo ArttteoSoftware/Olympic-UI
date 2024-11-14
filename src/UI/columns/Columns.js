@@ -82,7 +82,7 @@ export const BiathlonCol = (title) => [
 					record={record}
 					index={index}
 					result_status={result_status}
-					isHistory={true}
+					isHistory={Boolean(title)}
 				/>
 			);
 		},
@@ -92,6 +92,7 @@ export const BiathlonCol = (title) => [
 		key: "description",
 		title: title ? title : "Description",
 		textAlign: "start",
+		width: 150,
 		render: (record, index, result_status, livescoring) => {
 			return (
 				<AthleteCell record={record} index={index} livescoring={livescoring} />
@@ -102,7 +103,7 @@ export const BiathlonCol = (title) => [
 	{
 		key: "shooting",
 		title: "Shooting",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 100,
 		render: (record) => {
 			return <>{record?.shootingResults?.value || "-"}</>;
@@ -151,6 +152,7 @@ export const AlpineCol = (title) => [
 		key: "bib",
 		title: "Bib",
 		textAlign: "center",
+		width: 20,
 		render: (record, index) => {
 			return <>{record?.athlete?.bib}</>;
 		},
@@ -160,7 +162,7 @@ export const AlpineCol = (title) => [
 		key: "name",
 		title: title ? title : "Name",
 		textAlign: "start",
-		width: 100,
+		width: 110,
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} showCou />;
 		},
@@ -531,6 +533,7 @@ const AthleteCell = ({ record, showCountry, livescoring }) => {
 };
 
 const AthleteRanking = ({ record, index, result_status, isHistory }) => {
+	console.log("RANK", record);
 	const getRanking = (index) => {
 		switch (index) {
 			case 0:
@@ -552,33 +555,13 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 	) {
 		return (
 			<div className={styles.rankingContainer}>
-				<div
-					className={
-						isHistory
-							? getRanking(record?.intermediates?.rank - 1)
-							: getRanking(index)
-					}
-				>
+				<div className={getRanking(record?.intermediates?.rank - 1)}>
 					<div className={styles.index}>
 						{isHistory ? record?.intermediates?.rank : index + 1}.
 					</div>
 					<img
 						className="flag"
-						src={getFlag(record.athlete.organisation)}
-						alt="flag"
-						onError={(e) => (e.target.src = "flags/ESP.svg")}
-					/>
-				</div>
-			</div>
-		);
-	} else if (isHistory) {
-		return (
-			<div className={styles.rankingContainer}>
-				<div className={styles.ranking}>
-					<div className={styles.index}>{record?.intermediates?.rank}.</div>
-					<img
-						className="flag"
-						src={getFlag(record.athlete.organisation)}
+						src={getFlag(record?.athlete?.organisation)}
 						alt="flag"
 						onError={(e) => (e.target.src = "flags/ESP.svg")}
 					/>
@@ -589,7 +572,7 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 		return (
 			<div className={styles.rankingContainer}>
 				<div className={styles.ranking}>
-					<div className={styles.index}>{index + 1}.</div>
+					<div className={styles.index}>{record?.intermediates?.rank}.</div>
 					<img
 						className="flag"
 						src={getFlag(record.athlete.organisation)}

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Divider, RedDivider } from "../../UI/Icons";
+import { Divider, RedDivider, YellowDivider } from "../../UI/Icons";
 import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
@@ -22,6 +22,7 @@ const DetailsCard = ({
 	const [playerInfo, setPlayerInfo] = useState({});
 	const [gridData, setGridData] = useState([]);
 	const { dataState } = useSocketStore();
+	const [youtube, setYoutube] = useState(false);
 
 	useEffect(() => {
 		if (dataState?.current?.length > 0) {
@@ -46,10 +47,29 @@ const DetailsCard = ({
 		setFilterValue(filter);
 	};
 
+	const handleModal = () => {
+		setYoutube(!youtube);
+	};
 	return (
 		<>
 			<div className={styles.mainContainer}>
-				<CardHeader title={title} />
+				<div className={styles.cardHeaderContainer}>
+					<div></div>
+					<CardHeader title={title} />
+					<div
+						onClick={() => {
+							setYoutube(true);
+						}}
+						className={styles.liveIndicator}
+					>
+						Live
+						<span className={`${styles.liveIcon} ${styles.pulseDot}`}></span>
+					</div>
+				</div>
+
+				<div className={styles.divider}>
+					<RedDivider />
+				</div>
 				<div className={styles.container}>
 					<FilterSection
 						initialData={initialData}
@@ -76,6 +96,20 @@ const DetailsCard = ({
 				openInfo={openInfo}
 				onClose={() => setOpenInfo(false)}
 			/>
+
+			{youtube && (
+				<div className={styles.overlay} onClick={handleModal}>
+					<iframe
+						className={styles.youtubeIframe}
+						src="https://www.youtube.com/embed/LB25cfAvpqw?si=aNFGvuBb_IzT3jWJ"
+						title="YouTube video player"
+						frameBorder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerPolicy="strict-origin-when-cross-origin"
+						allowFullScreen
+					></iframe>
+				</div>
+			)}
 		</>
 	);
 };
@@ -83,9 +117,6 @@ const DetailsCard = ({
 const CardHeader = ({ title }) => (
 	<>
 		<div className={styles.cardTitle}>{title}</div>
-		<div className={styles.divider}>
-			<RedDivider />
-		</div>
 	</>
 );
 

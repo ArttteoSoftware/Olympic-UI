@@ -19,7 +19,7 @@ export const AppRoutes = () => {
 				path="/BTH"
 				element={
 					<SportDetail
-						columns={BiathlonCol()}
+						columns={BiathlonCol(false)}
 						title={"Biathlon"}
 						color={"#D64540"}
 						sportKey={"BTH"}
