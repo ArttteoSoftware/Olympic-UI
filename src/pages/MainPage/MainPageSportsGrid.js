@@ -54,7 +54,6 @@ function MainPageSportsGrid() {
 					);
 				})
 			)}
-			{/* <VideoPlayer /> */}
 		</div>
 	);
 }
