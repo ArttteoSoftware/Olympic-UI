@@ -14,22 +14,12 @@ export const AppRoutes = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<SportsGrid />} />
-			<Route
-				path="/snowboard"
-				element={
-					<SportDetail
-						columns={SnowboardCol}
-						title={"Snowboard"}
-						color={"#3F78A3"}
-						sportKey={"SNB"}
-					/>
-				}
-			/>
+
 			<Route
 				path="/BTH"
 				element={
 					<SportDetail
-						columns={BiathlonCol}
+						columns={BiathlonCol()}
 						title={"Biathlon"}
 						color={"#D64540"}
 						sportKey={"BTH"}
@@ -41,7 +31,7 @@ export const AppRoutes = () => {
 				path="/ALP"
 				element={
 					<SportDetail
-						columns={AlpineCol}
+						columns={AlpineCol()}
 						title={"Alpine skiing"}
 						color={"#D64540"}
 						sportKey={"ALP"}
@@ -53,7 +43,7 @@ export const AppRoutes = () => {
 				path="/CCS"
 				element={
 					<SportDetail
-						columns={CrossCountryCol}
+						columns={CrossCountryCol()}
 						title={"CROSS COUNTRY SKIING"}
 						color={"#D64540"}
 						sportKey={"CCS"}
@@ -65,7 +55,7 @@ export const AppRoutes = () => {
 				path="/FRS"
 				element={
 					<SportDetail
-						columns={FreestyleCol}
+						columns={FreestyleCol()}
 						title={"Freestyle skiing"}
 						color={"#D64540"}
 						sportKey={"FRS"}
@@ -77,7 +67,7 @@ export const AppRoutes = () => {
 				path="/FSK"
 				element={
 					<SportDetail
-						columns={FigureSkatingCol}
+						columns={FigureSkatingCol()}
 						title={"Figure Skating"}
 						color={"#D64540"}
 						sportKey={"FSK"}
@@ -89,7 +79,7 @@ export const AppRoutes = () => {
 				path="/IHO"
 				element={
 					<SportDetail
-						columns={AlpineCol}
+						columns={AlpineCol()}
 						title={"Alpine"}
 						color={"#D64540"}
 						sportKey={"IHO"}
@@ -101,7 +91,7 @@ export const AppRoutes = () => {
 				path="/SBD"
 				element={
 					<SportDetail
-						columns={SnowboardCol}
+						columns={SnowboardCol()}
 						title={"SNOWBOARD"}
 						color={"#D64540"}
 						sportKey={"SBD"}
@@ -113,7 +103,7 @@ export const AppRoutes = () => {
 				path="/STK"
 				element={
 					<SportDetail
-						columns={ShortTrackCol}
+						columns={ShortTrackCol()}
 						title={"Short Track"}
 						color={"#D64540"}
 						sportKey={"STK"}

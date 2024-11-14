@@ -22,7 +22,6 @@ const DetailsCard = ({
 	const [playerInfo, setPlayerInfo] = useState({});
 	const [gridData, setGridData] = useState([]);
 	const { dataState } = useSocketStore();
-	const [resultStatus, setResultStatus] = useState();
 
 	useEffect(() => {
 		if (dataState?.current?.length > 0) {
@@ -41,8 +40,6 @@ const DetailsCard = ({
 	const handleRowClick = (record, unitName) => {
 		setPlayerInfo({ ...record, item_name: unitName });
 		setOpenInfo(true);
-
-		setResultStatus(record.result_status);
 	};
 
 	const handleFilterSelect = (filter) => {
@@ -139,18 +136,7 @@ const GridHeader = ({ itemName }) => (
 );
 
 const PlayerInfo = React.forwardRef(
-	(
-		{
-			sportKey,
-			playerInfo,
-			openInfo,
-			onClose,
-			itemName,
-			result_status,
-			columns,
-		},
-		ref
-	) =>
+	({ sportKey, playerInfo, openInfo, onClose, result_status, columns }, ref) =>
 		openInfo && (
 			<PlayerInfoModal
 				record={playerInfo}
@@ -158,7 +144,7 @@ const PlayerInfo = React.forwardRef(
 				modalRef={ref}
 				visible={Boolean(openInfo)}
 				sportKey={sportKey}
-				itemName={itemName}
+				item_name={playerInfo.item_name}
 				onClose={onClose}
 				columns={columns}
 			/>

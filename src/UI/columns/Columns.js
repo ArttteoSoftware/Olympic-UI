@@ -3,7 +3,7 @@ import useSocketStore from "../../store/socketStore";
 import { RankingUp, RankingDown } from "../Icons";
 import { getFlag } from "../flags";
 
-export const SnowboardCol = [
+export const SnowboardCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
@@ -15,13 +15,14 @@ export const SnowboardCol = [
 					record={record}
 					index={index}
 					result_status={result_status}
+					isHistory={Boolean(title)}
 				/>
 			);
 		},
 	},
 	{
 		key: "athlete",
-		title: "Athlete",
+		title: title ? title : "Athlete",
 		width: 120,
 		textAlign: "start",
 		render: (record, index) => {
@@ -69,7 +70,7 @@ export const SnowboardCol = [
 	},
 ];
 
-export const BiathlonCol = [
+export const BiathlonCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
@@ -81,6 +82,7 @@ export const BiathlonCol = [
 					record={record}
 					index={index}
 					result_status={result_status}
+					isHistory={true}
 				/>
 			);
 		},
@@ -88,7 +90,7 @@ export const BiathlonCol = [
 
 	{
 		key: "description",
-		title: "Description",
+		title: title ? title : "Description",
 		textAlign: "start",
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} />;
@@ -125,7 +127,7 @@ export const BiathlonCol = [
 	},
 ];
 
-export const HistoryCol = (title) => [
+export const AlpineCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
@@ -137,63 +139,7 @@ export const HistoryCol = (title) => [
 					record={record}
 					index={index}
 					result_status={result_status}
-					isHistory={true}
-				/>
-			);
-		},
-	},
-
-	{
-		key: "description",
-		title: title,
-		textAlign: "start",
-		render: (record, index, result_status) => {
-			if (result_status) {
-				return "Final Standing";
-			} else {
-				return "Current Standing";
-			}
-		},
-	},
-
-	{
-		key: "shooting",
-		title: "Shooting",
-		textAlign: "end",
-		render: (record) => {
-			return <>{record?.shootingResults?.value || "-"}</>;
-		},
-	},
-	{
-		key: "time",
-		title: "Time",
-		textAlign: "end",
-		render: (record) => {
-			return <>{record?.intermediates?.value ?? "-"}</>;
-		},
-	},
-	{
-		key: "difference",
-		title: "Diff.",
-		textAlign: "end",
-		render: (record) => {
-			return <>{record?.intermediates?.diff ?? "-"}</>;
-		},
-	},
-];
-
-export const AlpineCol = [
-	{
-		key: "_id",
-		title: "#",
-		textAlign: "center",
-		width: 60,
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
+					isHistory={Boolean(title)}
 				/>
 			);
 		},
@@ -210,7 +156,7 @@ export const AlpineCol = [
 
 	{
 		key: "name",
-		title: "Name",
+		title: title ? title : "Name",
 		textAlign: "start",
 		width: 100,
 		render: (record, index) => {
@@ -270,7 +216,7 @@ export const AlpineCol = [
 	},
 ];
 
-export const ShortTrackCol = [
+export const ShortTrackCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
@@ -295,7 +241,7 @@ export const ShortTrackCol = [
 
 	{
 		key: "name",
-		title: "Name",
+		title: title ?? "Name",
 		textAlign: "start",
 		// width: 100,
 		render: (record, index) => {
@@ -337,14 +283,21 @@ export const ShortTrackCol = [
 	},
 ];
 
-export const FigureSkatingCol = [
+export const FigureSkatingCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
 		textAlign: "center",
 		width: 60,
-		render: (record, index) => {
-			return <AthleteRanking record={record} index={index} />;
+		render: (record, index, result_status) => {
+			return (
+				<AthleteRanking
+					record={record}
+					index={index}
+					result_status={result_status}
+					isHistory={Boolean(title)}
+				/>
+			);
 		},
 	},
 
@@ -360,7 +313,7 @@ export const FigureSkatingCol = [
 
 	{
 		key: "name",
-		title: "Name",
+		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
 		render: (record, index) => {
@@ -419,7 +372,7 @@ export const FigureSkatingCol = [
 		},
 	},
 ];
-export const CrossCountryCol = [
+export const CrossCountryCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
@@ -431,6 +384,7 @@ export const CrossCountryCol = [
 					record={record}
 					index={index}
 					result_status={result_status}
+					isHistory={Boolean(title)}
 				/>
 			);
 		},
@@ -448,7 +402,7 @@ export const CrossCountryCol = [
 
 	{
 		key: "name",
-		title: "Name",
+		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
 		render: (record, index) => {
@@ -477,7 +431,7 @@ export const CrossCountryCol = [
 	},
 ];
 
-export const FreestyleCol = [
+export const FreestyleCol = (title) => [
 	{
 		key: "_id",
 		title: "#",
@@ -489,6 +443,7 @@ export const FreestyleCol = [
 					record={record}
 					index={index}
 					result_status={result_status}
+					isHistory={Boolean(title)}
 				/>
 			);
 		},
@@ -506,7 +461,7 @@ export const FreestyleCol = [
 
 	{
 		key: "name",
-		title: "Name",
+		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
 		render: (record, index) => {
@@ -613,11 +568,11 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 				</div>
 			</div>
 		);
-	} else {
+	} else if (isHistory) {
 		return (
 			<div className={styles.rankingContainer}>
 				<div className={styles.ranking}>
-					<div className={styles.index}>{index + 1}.</div>
+					<div className={styles.index}>{record?.intermediates?.rank}.</div>
 					<img
 						className="flag"
 						src={getFlag(record.athlete.organisation)}
@@ -627,29 +582,63 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 				</div>
 			</div>
 		);
+	} else {
+		<div className={styles.rankingContainer}>
+			<div className={styles.ranking}>
+				<div className={styles.index}>{index + 1}.</div>
+				<img
+					className="flag"
+					src={getFlag(record.athlete.organisation)}
+					alt="flag"
+					onError={(e) => (e.target.src = "flags/ESP.svg")}
+				/>
+			</div>
+		</div>;
 	}
 };
 
-export const returnSportColumn = (sportKey) => {
+export const returnSportColumn = (sportKey, item_name) => {
 	switch (sportKey) {
 		case "SBD":
-			return SnowboardCol;
+			return SnowboardCol(item_name);
 		case "ALP":
-			return AlpineCol;
+			return AlpineCol(item_name);
 		case "BTH":
-			return BiathlonCol;
+			return BiathlonCol(item_name);
 		case "CCS":
-			return CrossCountryCol;
+			return CrossCountryCol(item_name);
 		case "FRS":
-			return ShortTrackCol;
+			return ShortTrackCol(item_name);
 		case "IHO":
-			return ShortTrackCol;
+			return ShortTrackCol(item_name);
 		case "FSK":
-			return ShortTrackCol;
+			return ShortTrackCol(item_name);
 		case "STK":
-			return ShortTrackCol;
-
+			return ShortTrackCol(item_name);
 		default:
 			return [];
 	}
 };
+
+// 	switch (sportKey) {
+// 		case "SBD":
+// 			return SnowboardCol;
+// 		case "ALP":
+// 			return AlpineCol;
+// 		case "BTH":
+// 			return BiathlonCol;
+// 		case "CCS":
+// 			return CrossCountryCol;
+// 		case "FRS":
+// 			return ShortTrackCol;
+// 		case "IHO":
+// 			return ShortTrackCol;
+// 		case "FSK":
+// 			return ShortTrackCol;
+// 		case "STK":
+// 			return ShortTrackCol;
+
+// 		default:
+// 			return [];
+// 	}
+// };

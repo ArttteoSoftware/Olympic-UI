@@ -15,8 +15,9 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { getFlag } from "../../UI/flags";
 import FormatData from "../../util/FormatData";
-import { HistoryCol } from "../../UI/columns/Columns";
 import HistoryGrid from "../Grid/HistoryGrid";
+import { returnSportColumn } from "../../UI/columns/Columns";
+import useSocketStore from "../../store/socketStore";
 
 export default function PlayerInfoModal({
 	visible,
@@ -24,10 +25,13 @@ export default function PlayerInfoModal({
 	modalRef,
 	record,
 	result_status,
+	sportKey,
+	item_name,
 	columns,
 }) {
 	const [medals, setMedals] = useState([]);
 	const [results, setResults] = useState([]);
+	const { dataState } = useSocketStore();
 
 	const loadData = useCallback(async () => {
 		try {
@@ -140,11 +144,15 @@ export default function PlayerInfoModal({
 							<span className={styles.modalFooterTitle}>Results</span>
 
 							<div className={styles.gridContainer}>
-								{result_status !== "UNCONFIRMED" &&
+								{dataState?.item_name === item_name &&
+									result_status !== "UNCONFIRMED" &&
 									result_status !== "UNOFFICIAL" &&
 									result_status !== "OFFICIAL" && (
 										<div className={styles.tableContainer}>
-											<HistoryGrid columns={columns} data={[record]} />
+											<HistoryGrid
+												columns={returnSportColumn(sportKey, record.item_name)}
+												data={[record]}
+											/>
 										</div>
 									)}
 
@@ -156,7 +164,10 @@ export default function PlayerInfoModal({
 										return (
 											<div className={styles.tableContainer} key={element.id}>
 												<HistoryGrid
-													columns={HistoryCol(element.item_name)}
+													columns={returnSportColumn(
+														sportKey,
+														element.item_name
+													)}
 													data={resultsArr}
 													result_status={element.status}
 												/>
