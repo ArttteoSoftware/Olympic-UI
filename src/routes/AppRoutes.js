@@ -7,7 +7,6 @@ import {
 	FigureSkatingCol,
 	SnowboardCol,
 } from "../UI/columns/Columns";
-import { Gender, SnowboardStyles } from "../UI/FilterOptions/FilterOptions";
 import { AlpineCol, ShortTrackCol, FreestyleCol } from "../UI/columns/Columns";
 
 export const AppRoutes = () => {
