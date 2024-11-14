@@ -1,0 +1,30 @@
+.carouselContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 45rem; /* Adjust height as needed */
+	overflow: hidden; /* Hide overflow to prevent content from spilling out */
+}
+
+.carouselContent {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	transition: transform 0.3s ease;
+	gap: 10px;
+}
+
+.carouselButton {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	margin: 5px;
+	border-radius: 5px;
+}
+
+.carouselButton:hover {
+	background-color: #0056b3;
+}

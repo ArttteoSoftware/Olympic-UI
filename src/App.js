@@ -32,7 +32,7 @@ function App() {
 	}, [setData, setStatus, setUnitCode]);
 
 	return (
-		<div>
+		<div className="outerContainer">
 			<img
 				className="background"
 				alt="background"

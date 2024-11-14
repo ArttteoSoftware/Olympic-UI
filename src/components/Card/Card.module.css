@@ -154,5 +154,6 @@
 	.innerContainer,
 	.video {
 		width: 95vw;
+		max-width: 95vw;
 	}
 }
