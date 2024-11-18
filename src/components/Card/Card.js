@@ -151,11 +151,11 @@ const BackCard = ({ commonStyles, isFlipped, setIsFlipped }) => (
 		animate={{ rotateY: isFlipped ? 0 : 180 }}
 		transition={{ duration: 0.6 }}
 	>
-		{/* <VideoPlayer
+		<VideoPlayer
 			onVideoEnd={() => {
 				setIsFlipped(false);
 			}}
-		/> */}
+		/>
 	</motion.div>
 );
 

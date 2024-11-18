@@ -46,6 +46,21 @@
 
 .nameContainer {
 	display: flex;
-	text-align: center;
+	align-items: center;
+	justify-content: flex-start;
 	gap: 3px;
+	overflow: hidden;
+}
+
+.name {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	flex-grow: 1;
+}
+
+.arrow {
+	width: 16px;
+	height: 16px;
 }

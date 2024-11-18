@@ -50,7 +50,7 @@ th,
 	text-align: left;
 	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis; /* Added to handle text overflow */
+	text-overflow: ellipsis;
 }
 
 th {

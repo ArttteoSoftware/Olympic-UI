@@ -39,9 +39,9 @@ const PlayerRow = memo(
 						<td
 							key={`${record[rowKey]}-${column.key}`}
 							style={{
-								width: column.width,
-								minWidth: column.minWidth,
-								maxWidth: column.maxWidth,
+								width: `${column.width}px`,
+								minWidth: `${column.minWidth}px`,
+								maxWidth: `${column.maxWidth}px`,
 								textAlign: column.textAlign,
 							}}
 							className={details ? styles.td_details : styles.td}
@@ -106,9 +106,9 @@ function Grid({
 									<th
 										key={column.key}
 										style={{
-											width: column.width,
-											minWidth: column.minWidth,
-											maxWidth: column.maxWidth,
+											width: `${column.width}px`,
+											minWidth: `${column.minWidth}px`,
+											maxWidth: `${column.maxWidth}px`,
 											textAlign: column.textAlign,
 										}}
 									>

@@ -151,8 +151,8 @@ export const AlpineCol = (title) => [
 	{
 		key: "bib",
 		title: "Bib",
-		textAlign: "center",
-		width: 20,
+		textAlign: "start",
+		width: 30,
 		render: (record, index) => {
 			return <>{record?.athlete?.bib}</>;
 		},
@@ -162,7 +162,7 @@ export const AlpineCol = (title) => [
 		key: "name",
 		title: title ? title : "Name",
 		textAlign: "start",
-		width: 110,
+		width: 100,
 		render: (record, index) => {
 			return <AthleteCell record={record} index={index} showCou />;
 		},
@@ -172,7 +172,7 @@ export const AlpineCol = (title) => [
 		key: "run1",
 		title: "Run 1",
 		textAlign: "end",
-		windth: 50,
+		// width: 50,
 		render: (record) => {
 			if (record.intermediates?.length > 0) {
 				return <>{record.intermediates[0]?.time}</>;
@@ -185,7 +185,7 @@ export const AlpineCol = (title) => [
 		key: "run2",
 		title: "Run 2",
 		textAlign: "end",
-		windth: 50,
+		// width: 50,
 		render: (record) => {
 			if (record.intermediates?.length > 1) {
 				return <>{record.intermediates[1]?.time}</>;
@@ -198,7 +198,7 @@ export const AlpineCol = (title) => [
 		key: "total",
 		title: "Total",
 		textAlign: "end",
-
+		// width: 50,
 		render: (record) => {
 			if (record.intermediates?.length > 0) {
 				return (
@@ -489,6 +489,7 @@ export const FreestyleCol = (title) => [
 const AthleteCell = ({ record, showCountry, livescoring }) => {
 	const { dataState } = useSocketStore();
 
+	console.log(dataState.current);
 	const oldIndex = dataState.previous?.findIndex(
 		(item) =>
 			item.athlete?.code === record.athlete?.code &&
@@ -515,25 +516,22 @@ const AthleteCell = ({ record, showCountry, livescoring }) => {
 	}
 
 	return (
-		<>
-			<div className={styles.nameContainer}>
-				{showCountry && (
-					<div className={styles.country}>({record.athlete?.organisation})</div>
-				)}
-				<div className={styles.name}>{modifiedName}</div>
-				{livescoring && (
-					<div>
-						{indx > 0 && <RankingUp />}
-						{indx < 0 && <RankingDown />}
-					</div>
-				)}
-			</div>
-		</>
+		<div className={styles.nameContainer}>
+			{showCountry && (
+				<div className={styles.country}>({record.athlete?.organisation})</div>
+			)}
+			<div className={styles.name}>{modifiedName}</div>
+			{livescoring && (
+				<div>
+					{indx > 0 && <RankingUp className={styles.arrow} />}
+					{indx < 0 && <RankingDown className={styles.arrow} />}
+				</div>
+			)}
+		</div>
 	);
 };
 
 const AthleteRanking = ({ record, index, result_status, isHistory }) => {
-	console.log("RANK", record);
 	const getRanking = (index) => {
 		switch (index) {
 			case 0:

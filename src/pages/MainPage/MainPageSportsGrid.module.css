@@ -1,6 +1,7 @@
 body {
 	/* overflow: hidden; */
 }
+
 .container {
 	width: calc(100% - 1.5rem);
 	margin: 0 auto;
