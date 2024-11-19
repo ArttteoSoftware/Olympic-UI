@@ -70,6 +70,7 @@ function Grid({
 	details,
 	itemName,
 	item_name,
+	unit_code,
 	result_status,
 }) {
 	const { dataState, unitCode } = useSocketStore();
@@ -77,7 +78,7 @@ function Grid({
 	const [status, setStatus] = useState();
 
 	useEffect(() => {
-		if (dataState.item_name === item_name) {
+		if (unit_code === unitCode) {
 			setAnimatedData(dataState.current);
 			setStatus(dataState.result_status);
 		} else {
@@ -90,8 +91,6 @@ function Grid({
 			}
 		}
 	}, [dataState, data, unitCode, details, item_name]);
-
-	console.log("ANIMATED", animatedData);
 
 	return (
 		<div className={details ? styles.container_details : styles.container}>

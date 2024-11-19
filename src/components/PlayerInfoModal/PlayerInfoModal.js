@@ -32,7 +32,6 @@ export default function PlayerInfoModal({
 	const [results, setResults] = useState([]);
 	const { dataState } = useSocketStore();
 
-	console.log("***", record.athlete.code);
 	const loadData = useCallback(async () => {
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);

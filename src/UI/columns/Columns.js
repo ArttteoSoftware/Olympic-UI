@@ -51,7 +51,6 @@ export const SnowboardCol = (title) => [
 		textAlign: "end",
 		// width: 50,
 		render: (record) => {
-			console.log(record.intermediates.length);
 			if (record?.intermediates?.length > 1) {
 				return <>{record?.intermediates[1]?.result || "-"}</>;
 			} else {

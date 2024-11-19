@@ -21,14 +21,23 @@ const DetailsCard = ({
 	const [openInfo, setOpenInfo] = useState(false);
 	const [playerInfo, setPlayerInfo] = useState({});
 	const [gridData, setGridData] = useState([]);
-	const { dataState } = useSocketStore();
+	const { dataState, unitCode } = useSocketStore();
 	const [youtube, setYoutube] = useState(false);
 
 	useEffect(() => {
+		// console.log({
+		// 	dataState_unit_code: unitCode,
+		// 	data: initialData,
+		// });
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
-				if (element.item_name === dataState.item_name) {
-					initialData.startList = dataState.current;
+				console.log({
+					dataState_unit_code: unitCode,
+					element_unitCode: element.unit_code,
+					isMatching: unitCode === element.unit_code,
+				});
+				if (element.unitCode === unitCode) {
+					initialData.start_list = dataState.current; //initialData.startList
 					initialData.result_status = dataState.result_status;
 				}
 				setGridData(initialData);
@@ -50,6 +59,7 @@ const DetailsCard = ({
 	const handleModal = () => {
 		setYoutube(!youtube);
 	};
+
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -156,6 +166,7 @@ const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
 						onRowClick={handleRowClick}
 						loading={loading}
 						item_name={item.item_name}
+						unit_code={item.unit_code}
 						athlete={item.athlete}
 					/>
 				</div>

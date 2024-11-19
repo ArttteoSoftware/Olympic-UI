@@ -18,8 +18,6 @@ const Card = ({ title, units, divider }) => {
 		setData(units);
 	}, [units]);
 
-	console.log("DDDD", data);
-
 	const commonStyles = useMemo(
 		() => ({
 			padding: "0px",
@@ -128,25 +126,22 @@ const FrontCard = ({
 	setIsFlipped,
 	divider,
 }) => (
-	console.log("*****", data),
-	(
-		<Reorder.Group
-			style={commonStyles}
-			animate={{ rotateY: isFlipped ? 180 : 0 }}
-			transition={{ duration: 0.6 }}
-			values={data}
-			onReorder={setData}
-			onClick={() => setIsFlipped(true)}
-			className={styles.container}
-		>
-			<div className={styles.title}>{convertSportTitle(title)}</div>
-			<div className={styles.tableContainer}>
-				{/* <Divider color={color} /> */}
-				{divider}
-				<div className={styles.innerContainer}>{data.map(renderUnit)}</div>
-			</div>
-		</Reorder.Group>
-	)
+	<Reorder.Group
+		style={commonStyles}
+		animate={{ rotateY: isFlipped ? 180 : 0 }}
+		transition={{ duration: 0.6 }}
+		values={data}
+		onReorder={setData}
+		onClick={() => setIsFlipped(true)}
+		className={styles.container}
+	>
+		<div className={styles.title}>{convertSportTitle(title)}</div>
+		<div className={styles.tableContainer}>
+			{/* <Divider color={color} /> */}
+			{divider}
+			<div className={styles.innerContainer}>{data.map(renderUnit)}</div>
+		</div>
+	</Reorder.Group>
 );
 
 const BackCard = ({ commonStyles, isFlipped, setIsFlipped }) => (
