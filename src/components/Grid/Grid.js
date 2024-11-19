@@ -91,6 +91,8 @@ function Grid({
 		}
 	}, [dataState, data, unitCode, details, item_name]);
 
+	console.log("ANIMATED", animatedData);
+
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading ? (

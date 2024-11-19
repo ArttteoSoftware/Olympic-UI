@@ -10,6 +10,8 @@ const useSocketStore = create((set) => ({
 	unitCode: null,
 	status: "Disconnected",
 	setData: (newData) => {
+		console.log("SOCKET &&&", newData);
+
 		set((state) => ({
 			dataState: {
 				previous: state.dataState.current,

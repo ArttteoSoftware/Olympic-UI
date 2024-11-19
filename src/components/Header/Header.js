@@ -29,7 +29,7 @@ function Header() {
 						<div className={styles.time}>{FormatData.formatTime(date)}</div>
 					</div>
 					<div>
-						<CalendarIcon />
+						<CalendarIcon className={styles.calendarIcon} />
 					</div>
 				</div>
 			</div>
