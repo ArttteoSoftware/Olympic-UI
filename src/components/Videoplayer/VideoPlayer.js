@@ -8,7 +8,7 @@ const VideoPlayer = ({ onVideoEnd }) => {
 	useEffect(() => {
 		if (Hls.isSupported()) {
 			const hls = new Hls();
-			hls.loadSource("http://localhost:5000/hls/stream.m3u8");
+			hls.loadSource(`${process.env.REACT_APP_API_URL}hls/stream.m3u8`);
 			hls.attachMedia(videoRef.current);
 			hls.on(Hls.Events.MANIFEST_PARSED, () => {
 				if (!videoRef.current.paused) {
@@ -18,7 +18,7 @@ const VideoPlayer = ({ onVideoEnd }) => {
 		} else if (
 			videoRef?.current?.canPlayType("application/vnd.apple.mpegurl")
 		) {
-			videoRef.current.src = "http://localhost:5000/hls/stream.m3u8";
+			videoRef.current.src = `${process.env.REACT_APP_API_URL}hls/stream.m3u8`;
 			videoRef.current.addEventListener("loadedmetadata", () => {
 				if (!videoRef.current.paused) {
 					videoRef.current.play();

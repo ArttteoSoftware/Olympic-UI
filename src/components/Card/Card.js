@@ -144,7 +144,6 @@ const FrontCard = ({
 	>
 		<div className={styles.title}>{convertSportTitle(title)}</div>
 		<div className={styles.tableContainer}>
-			{/* <Divider color={color} /> */}
 			{divider}
 
 			<div className={styles.innerContainer}>
@@ -158,6 +157,7 @@ const FrontCard = ({
 									<img
 										src={`assets/placeholders/${title}.png`}
 										alt="placeholder"
+										loading="lazy"
 									/>
 								</div>
 								<div className={styles.placeholderText}>
