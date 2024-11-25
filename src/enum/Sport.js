@@ -1,11 +1,12 @@
 export const SportTitleEnum = {
-	BTH: "Biathlon",
-	ALP: "Alpine Skiing",
-	CCS: "Cross Country Skiing",
-	FRS: "Freestyle Skiing",
-	IHO: "Ice Hockey",
-	SBD: "Snowboarding",
-	STK: "Short Track",
+	BTH: "BIATHLON",
+	ALP: "ALPINE SKIING",
+	CCS: "CROSS COUNTRY SKIING",
+	FRS: "FREESTYLE SKIING",
+	FSK: "FIGURE SKATING",
+	IHO: "ICE HOCKEY",
+	SBD: "SNOWBOARDING",
+	STK: "SHORT TRACK",
 };
 
 export const convertSportTitle = (props) => {
