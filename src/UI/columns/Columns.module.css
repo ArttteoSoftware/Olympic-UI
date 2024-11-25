@@ -1,7 +1,4 @@
-.ranking,
-.first_place,
-.second_place,
-.third_place {
+/* .ranking {
 	border-radius: 6px;
 	width: 52px;
 	padding: 0 4px;
@@ -11,17 +8,36 @@
 	align-items: center;
 	font-size: 16px;
 	color: #ffffff;
+} */
+
+.first_place,
+.second_place,
+.third_place,
+.ranking {
+	border-radius: 6px;
+	min-width: 32px;
+	min-height: 32px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 16px;
+	border-radius: 50%;
+	color: #ffffff;
 }
 
 .index {
 	display: flex;
-	width: 100%;
+	min-width: 100%;
 	justify-content: center;
 }
 
 .rankingContainer {
 	display: flex;
-	justify-content: start;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	flex-direction: row;
+	gap: 4px;
 }
 
 .ranking {

@@ -34,7 +34,7 @@ export const SnowboardCol = (title) => [
 	{
 		key: "run1",
 		title: "Run1",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 
 		render: (record) => {
@@ -48,7 +48,7 @@ export const SnowboardCol = (title) => [
 	{
 		key: "run2",
 		title: "Run2",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 		render: (record) => {
 			if (record?.intermediates?.length > 1) {
@@ -61,7 +61,7 @@ export const SnowboardCol = (title) => [
 	{
 		key: "run3",
 		title: "Run3",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 
 		render: (record) => {
@@ -75,7 +75,7 @@ export const SnowboardCol = (title) => [
 	{
 		key: "score",
 		title: "Score",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 		render: (record) => {
 			return <>{record.result}</>;
@@ -125,7 +125,7 @@ export const BiathlonCol = (title) => [
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 50,
 
 		render: (record) => {
@@ -184,7 +184,7 @@ export const AlpineCol = (title) => [
 	{
 		key: "run1",
 		title: "Run 1",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 		render: (record) => {
 			if (record.intermediates?.length > 0) {
@@ -197,7 +197,7 @@ export const AlpineCol = (title) => [
 	{
 		key: "run2",
 		title: "Run 2",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 		render: (record) => {
 			if (record.intermediates?.length > 1) {
@@ -210,7 +210,7 @@ export const AlpineCol = (title) => [
 	{
 		key: "total",
 		title: "Total",
-		textAlign: "end",
+		textAlign: "center",
 		// width: 50,
 		render: (record) => {
 			if (record.intermediates?.length > 0) {
@@ -293,7 +293,7 @@ export const ShortTrackCol = (title) => [
 	{
 		key: "total",
 		title: "Total",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.value ?? "-"}</>;
@@ -342,7 +342,7 @@ export const FigureSkatingCol = (title) => [
 	{
 		key: "comps",
 		title: "Comps",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.componentScore ?? "-"}</>;
@@ -351,7 +351,7 @@ export const FigureSkatingCol = (title) => [
 	{
 		key: "deduct",
 		title: "Deduct.",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.deductions ?? "-"}</>;
@@ -448,7 +448,6 @@ export const FreestyleCol = (title) => [
 		key: "bib",
 		title: "Bib",
 		textAlign: "center",
-		width: 50,
 		render: (record, index) => {
 			return <>{record?.athlete?.bib}</>;
 		},
@@ -458,7 +457,7 @@ export const FreestyleCol = (title) => [
 		key: "name",
 		title: title ?? "Name",
 		textAlign: "start",
-		width: 100,
+		width: 80,
 		render: (record, index, result_status, livescoring) => {
 			return (
 				<AthleteCell record={record} index={index} livescoring={livescoring} />
@@ -469,7 +468,7 @@ export const FreestyleCol = (title) => [
 	{
 		key: "run1",
 		title: "Run 1",
-		textAlign: "end",
+		textAlign: "center",
 		render: (record) => {
 			if (record.runs?.length > 0) {
 				return <>{record?.runs[0]?.result ?? "-"}</>;
@@ -481,7 +480,7 @@ export const FreestyleCol = (title) => [
 	{
 		key: "run2",
 		title: "Run 2",
-		textAlign: "end",
+		textAlign: "center",
 		render: (record) => {
 			if (record.runs?.length > 0) {
 				return <>{record?.runs[1]?.result ?? "-"}</>;
@@ -493,7 +492,7 @@ export const FreestyleCol = (title) => [
 	{
 		key: "run3",
 		title: "Run 3",
-		textAlign: "end",
+		textAlign: "center",
 		render: (record) => {
 			if (record.runs?.length > 0) {
 				return <>{record?.runs[2]?.result ?? "-"}</>;
@@ -579,13 +578,13 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 					<div className={styles.index}>
 						{isHistory ? record?.intermediates?.rank : index + 1}.
 					</div>
-					<img
-						className="flag"
-						src={getFlag(record?.athlete?.organisation)}
-						alt="flag"
-						onError={(e) => (e.target.src = "flags/ESP.svg")}
-					/>
 				</div>
+				<img
+					className="flag"
+					src={getFlag(record?.athlete?.organisation)}
+					alt="flag"
+					onError={(e) => (e.target.src = "flags/ESP.svg")}
+				/>
 			</div>
 		);
 	} else {
@@ -593,13 +592,13 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 			<div className={styles.rankingContainer}>
 				<div className={styles.ranking}>
 					<div className={styles.index}>{record?.intermediates?.rank}.</div>
-					<img
-						className="flag"
-						src={getFlag(record.athlete.organisation)}
-						alt="flag"
-						onError={(e) => (e.target.src = "flags/ESP.svg")}
-					/>
 				</div>
+				<img
+					className="flag"
+					src={getFlag(record.athlete.organisation)}
+					alt="flag"
+					onError={(e) => (e.target.src = "flags/ESP.svg")}
+				/>
 			</div>
 		);
 	}
