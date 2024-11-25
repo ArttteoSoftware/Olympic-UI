@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import styles from "./Card.module.css";
 import { motion, Reorder } from "framer-motion";
-import { Divider } from "../../UI/Icons";
+import { BTH, Divider, IHO } from "../../UI/Icons";
 import { convertSportTitle } from "../../enum/Sport";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
@@ -139,7 +139,21 @@ const FrontCard = ({
 		<div className={styles.tableContainer}>
 			{/* <Divider color={color} /> */}
 			{divider}
-			<div className={styles.innerContainer}>{data.map(renderUnit)}</div>
+
+			<div className={styles.innerContainer}>
+				{data?.length > 0 ? (
+					<>{data.map(renderUnit)}</>
+				) : (
+					<div className={styles.placeholderContainer}>
+						<div className={styles.placeholderImg}>
+							<img src={`assets/placeholders/${title}.png`} alt="placeholder" />
+						</div>
+						<div className={styles.placeholderText}>
+							The game is scheduled for tomorrow
+						</div>
+					</div>
+				)}
+			</div>
 		</div>
 	</Reorder.Group>
 );

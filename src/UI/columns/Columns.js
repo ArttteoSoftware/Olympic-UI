@@ -135,7 +135,7 @@ export const BiathlonCol = (title) => [
 	{
 		key: "difference",
 		title: "Diff.",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;
@@ -225,7 +225,7 @@ export const AlpineCol = (title) => [
 	{
 		key: "difference",
 		title: "Diff.",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;
@@ -360,7 +360,7 @@ export const FigureSkatingCol = (title) => [
 	{
 		key: "total",
 		title: "Total",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.score ?? "-"}</>;
@@ -408,7 +408,7 @@ export const CrossCountryCol = (title) => [
 	{
 		key: "time",
 		title: "Time",
-		textAlign: "end",
+		textAlign: "center",
 		windth: 50,
 
 		render: (record) => {
@@ -418,7 +418,7 @@ export const CrossCountryCol = (title) => [
 	{
 		key: "diff",
 		title: "Diff.",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.diff ?? "-"}</>;
@@ -507,7 +507,7 @@ export const FreestyleCol = (title) => [
 	{
 		key: "score",
 		title: "Score",
-		textAlign: "end",
+		textAlign: "center",
 
 		render: (record) => {
 			return <>{record?.intermediates?.result ?? "-"}</>;

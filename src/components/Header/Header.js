@@ -21,7 +21,7 @@ function Header() {
 		<header>
 			<div className={styles.container}>
 				<div onClick={() => navigate("/")} className={styles.logoContainer}>
-					<img className={styles.logo} src="assets/logo/Logo.png" alt="logo" />
+					<img className={styles.logo} src="assets/logo/Logo.svg" alt="logo" />
 				</div>
 				<div className={styles.calendarContainer}>
 					<div className={styles.dateContainer}>

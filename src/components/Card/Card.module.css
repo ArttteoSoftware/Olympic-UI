@@ -148,6 +148,24 @@
 	object-fit: cover;
 }
 
+.placeholderContainer {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+}
+
+.placeholderImg > img {
+	width: 180px;
+}
+
+.placeholderText {
+	color: #2a3342;
+}
+
 @media screen and (max-width: 768px) {
 	.mainContainer,
 	.container,
