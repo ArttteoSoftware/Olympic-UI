@@ -23,6 +23,7 @@ function MainPageSportsGrid() {
 				setLoader(false);
 			}
 		} catch (err) {
+			setLoader(false);
 			console.error("Error while loading Data", err);
 		}
 	}, []);
@@ -49,6 +50,7 @@ function MainPageSportsGrid() {
 							key={item._id}
 							title={item._id}
 							units={item.units}
+							loader={loader}
 						/>
 					</motion.div>
 				);

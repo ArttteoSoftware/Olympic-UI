@@ -11,14 +11,18 @@ const VideoPlayer = ({ onVideoEnd }) => {
 			hls.loadSource("http://localhost:5000/hls/stream.m3u8");
 			hls.attachMedia(videoRef.current);
 			hls.on(Hls.Events.MANIFEST_PARSED, () => {
-				videoRef?.current?.play();
+				if (!videoRef.current.paused) {
+					videoRef.current.play();
+				}
 			});
 		} else if (
 			videoRef?.current?.canPlayType("application/vnd.apple.mpegurl")
 		) {
 			videoRef.current.src = "http://localhost:5000/hls/stream.m3u8";
 			videoRef.current.addEventListener("loadedmetadata", () => {
-				videoRef.current.play();
+				if (!videoRef.current.paused) {
+					videoRef.current.play();
+				}
 			});
 		}
 	}, []);

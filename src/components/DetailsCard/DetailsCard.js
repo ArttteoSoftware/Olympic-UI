@@ -25,17 +25,8 @@ const DetailsCard = ({
 	const [youtube, setYoutube] = useState(false);
 
 	useEffect(() => {
-		// console.log({
-		// 	dataState_unit_code: unitCode,
-		// 	data: initialData,
-		// });
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
-				console.log({
-					dataState_unit_code: unitCode,
-					element_unitCode: element.unit_code,
-					isMatching: unitCode === element.unit_code,
-				});
 				if (element.unitCode === unitCode) {
 					initialData.start_list = dataState.current; //initialData.startList
 					initialData.result_status = dataState.result_status;

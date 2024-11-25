@@ -66,21 +66,24 @@ function Grid({
 	data,
 	rowKey,
 	onRowClick,
-	loading,
 	details,
 	itemName,
 	item_name,
 	unit_code,
+	loading,
 	result_status,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
 	const [status, setStatus] = useState();
+	const [loader, setLoader] = useState(true);
 
 	useEffect(() => {
+		setLoader(true);
 		if (unit_code === unitCode) {
 			setAnimatedData(dataState.current);
 			setStatus(dataState.result_status);
+			setLoader(false);
 		} else {
 			setStatus(result_status);
 
@@ -89,12 +92,13 @@ function Grid({
 			} else {
 				setAnimatedData(data);
 			}
+			setLoader(false);
 		}
 	}, [dataState, data, unitCode, details, item_name]);
 
 	return (
 		<div className={details ? styles.container_details : styles.container}>
-			{loading ? (
+			{loading || loader ? (
 				<div className={styles.loaderContainer}>
 					<Loading />
 				</div>

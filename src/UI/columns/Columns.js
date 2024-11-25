@@ -471,7 +471,6 @@ export const FreestyleCol = (title) => [
 		title: "Run 1",
 		textAlign: "end",
 		render: (record) => {
-			console.log("RUN 1", record);
 			if (record.runs?.length > 0) {
 				return <>{record?.runs[0]?.result ?? "-"}</>;
 			} else {
@@ -496,7 +495,6 @@ export const FreestyleCol = (title) => [
 		title: "Run 3",
 		textAlign: "end",
 		render: (record) => {
-			console.log(record.runs);
 			if (record.runs?.length > 0) {
 				return <>{record?.runs[2]?.result ?? "-"}</>;
 			} else {
@@ -517,8 +515,6 @@ export const FreestyleCol = (title) => [
 
 const AthleteCell = ({ record, showCountry, livescoring }) => {
 	const { dataState } = useSocketStore();
-
-	console.log("FREESTYLE", dataState.item_name);
 
 	const oldIndex = dataState.previous?.findIndex(
 		(item) =>

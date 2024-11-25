@@ -13,9 +13,14 @@ const Card = ({ title, units, divider }) => {
 	const [data, setData] = useState([]);
 	const [isFlipped, setIsFlipped] = useState(false);
 	const { dataState } = useSocketStore();
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setData(units);
+		if (units) {
+			setData(units);
+		}
+
+		setLoading(false);
 	}, [units]);
 
 	const commonStyles = useMemo(
@@ -44,14 +49,14 @@ const Card = ({ title, units, divider }) => {
 		}
 	};
 
-	const renderUnit = (unit) => {
+	const renderUnit = (unit, loading) => {
 		const listData = getListData(unit);
 		if (unit.item_name === dataState.item_name) {
 			return (
 				<>
 					{/* <MarqueeEffect> */}
 					<div key={unit.unit_code}>
-						<UnitHeader item={unit} />
+						<UnitHeader item={unit} loading={loading} />
 						<Grid
 							result_status={unit.result_status}
 							details={false}
@@ -67,7 +72,7 @@ const Card = ({ title, units, divider }) => {
 		} else {
 			return (
 				<div key={unit.unit_code}>
-					<UnitHeader item={unit} />
+					<UnitHeader item={unit} loading={loading} />
 					<Grid
 						result_status={unit.result_status}
 						details={false}
@@ -92,6 +97,7 @@ const Card = ({ title, units, divider }) => {
 				renderUnit={renderUnit}
 				setIsFlipped={setIsFlipped}
 				divider={divider}
+				loading={loading}
 			/>
 			<BackCard
 				commonStyles={commonStyles}
@@ -125,6 +131,7 @@ const FrontCard = ({
 	renderUnit,
 	setIsFlipped,
 	divider,
+	loading,
 }) => (
 	<Reorder.Group
 		style={commonStyles}
@@ -142,16 +149,23 @@ const FrontCard = ({
 
 			<div className={styles.innerContainer}>
 				{data?.length > 0 ? (
-					<>{data.map(renderUnit)}</>
+					<>{data.map((unit) => renderUnit(unit, loading))}</>
 				) : (
-					<div className={styles.placeholderContainer}>
-						<div className={styles.placeholderImg}>
-							<img src={`assets/placeholders/${title}.png`} alt="placeholder" />
-						</div>
-						<div className={styles.placeholderText}>
-							The game is scheduled for tomorrow
-						</div>
-					</div>
+					<>
+						{loading === false && (
+							<div className={styles.placeholderContainer}>
+								<div className={styles.placeholderImg}>
+									<img
+										src={`assets/placeholders/${title}.png`}
+										alt="placeholder"
+									/>
+								</div>
+								<div className={styles.placeholderText}>
+									The game is scheduled for tomorrow
+								</div>
+							</div>
+						)}
+					</>
 				)}
 			</div>
 		</div>
