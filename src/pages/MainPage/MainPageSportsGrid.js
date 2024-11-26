@@ -41,9 +41,11 @@ function MainPageSportsGrid() {
 				return (
 					<motion.div
 						key={item._id}
-						// onClick={() => {
-						// 	navigate(`/${item._id}`);
-						// }}
+						onClick={() => {
+							if (item._id !== "FRS") {
+								navigate(`/${item._id}`);
+							}
+						}}
 					>
 						<Card
 							divider={getDividerColor(item._id)}

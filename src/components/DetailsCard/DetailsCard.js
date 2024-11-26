@@ -5,11 +5,11 @@ import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
 import PlayerInfoModal from "../PlayerInfoModal/PlayerInfoModal";
 import useSocketStore from "../../store/socketStore";
+import { convertSportTitle } from "../../enum/Sport";
 
 const DetailsCard = ({
 	columns,
 	initialData,
-	title,
 	unitNames,
 	setFilterValue,
 	sportKey,
@@ -27,7 +27,10 @@ const DetailsCard = ({
 	useEffect(() => {
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
-				if (element.unitCode === unitCode) {
+				if (
+					element.unitCode === unitCode ||
+					element.item_name === dataState.item_name
+				) {
 					initialData.start_list = dataState.current; //initialData.startList
 					initialData.result_status = dataState.result_status;
 				}
@@ -56,7 +59,7 @@ const DetailsCard = ({
 			<div className={styles.mainContainer}>
 				<div className={styles.cardHeaderContainer}>
 					<div className={styles.liveIndicatorContainer}></div>
-					<CardHeader title={title} />
+					<CardHeader title={convertSportTitle(sportKey)} />
 
 					<div className={styles.liveIndicatorContainer}>
 						{/* TODO : There is a time gap while dataState is loaded */}
@@ -188,6 +191,7 @@ const PlayerInfo = React.forwardRef(
 				item_name={playerInfo.item_name}
 				onClose={onClose}
 				columns={columns}
+				discipline_code={sportKey}
 			/>
 		)
 );

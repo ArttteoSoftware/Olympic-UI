@@ -42,7 +42,6 @@ const VideoPlayer = ({ onVideoEnd }) => {
 		videoElement.addEventListener("error", handleVideoError);
 
 		const handleVideoEnd = () => {
-			console.log("***!");
 			onVideoEnd();
 		};
 

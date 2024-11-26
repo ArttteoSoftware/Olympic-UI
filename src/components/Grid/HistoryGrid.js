@@ -3,7 +3,7 @@ import Loading from "../../UI/Loader/Loading";
 import { memo } from "react";
 
 const PlayerRow = memo(
-	({ record, columns, rowKey, index, details, result_status }) => {
+	({ record, columns, rowKey, index, details, result_status, athlete }) => {
 		return (
 			<tr className={details ? styles.tr_details : styles.tr}>
 				{Array.isArray(columns) &&
@@ -19,7 +19,7 @@ const PlayerRow = memo(
 							className={details ? styles.td_details : styles.td}
 						>
 							{column.render
-								? column.render(record, index, result_status)
+								? column.render(record, index, result_status, false, athlete)
 								: record[column.key]}
 						</td>
 					))}
@@ -35,6 +35,7 @@ function HistoryGrid({
 	details,
 	itemName,
 	result_status,
+	athlete,
 }) {
 	return (
 		<div className={details ? styles.container_details : styles.container}>
@@ -74,6 +75,7 @@ function HistoryGrid({
 									details={details}
 									itemName={itemName}
 									result_status={result_status}
+									athlete={athlete}
 								/>
 							))}
 					</tbody>

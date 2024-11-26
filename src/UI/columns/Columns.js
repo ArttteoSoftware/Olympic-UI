@@ -10,15 +10,26 @@ export const SnowboardCol = (title) => [
 		title: "#",
 		width: 60,
 		textAlign: "center",
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 	{
@@ -26,8 +37,21 @@ export const SnowboardCol = (title) => [
 		title: title ? title : "Athlete",
 		width: 120,
 		textAlign: "start",
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} />;
+		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -89,15 +113,26 @@ export const BiathlonCol = (title) => [
 		title: "#",
 		width: 60,
 		textAlign: "center",
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 
@@ -107,6 +142,17 @@ export const BiathlonCol = (title) => [
 		textAlign: "start",
 		width: 150,
 		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
 			return (
 				<AthleteCell record={record} index={index} livescoring={livescoring} />
 			);
@@ -149,25 +195,40 @@ export const AlpineCol = (title) => [
 		title: "#",
 		textAlign: "center",
 		width: 60,
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 
 	{
 		key: "bib",
 		title: "Bib",
-		textAlign: "start",
+		textAlign: "center",
 		width: 30,
-		render: (record, index) => {
-			return <>{record?.athlete?.bib}</>;
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (record?.athlete) {
+				return <>{record?.athlete?.bib}</>;
+			} else {
+				return <>{athlete.bib}</>;
+			}
 		},
 	},
 
@@ -176,8 +237,21 @@ export const AlpineCol = (title) => [
 		title: title ? title : "Name",
 		textAlign: "start",
 		width: 100,
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} showCou />;
+		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -245,15 +319,26 @@ export const ShortTrackCol = (title) => [
 		title: "#",
 		textAlign: "center",
 		width: 60,
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 
@@ -262,8 +347,12 @@ export const ShortTrackCol = (title) => [
 		title: "Bib",
 		textAlign: "center",
 		width: 50,
-		render: (record, index) => {
-			return <>{record?.athlete?.bib}</>;
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (record?.athlete) {
+				return <>{record?.athlete?.bib}</>;
+			} else {
+				return <>{athlete.bib}</>;
+			}
 		},
 	},
 
@@ -272,8 +361,21 @@ export const ShortTrackCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		// width: 100,
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} showCou />;
+		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -313,15 +415,26 @@ export const FigureSkatingCol = (title) => [
 		title: "#",
 		textAlign: "center",
 		width: 60,
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 
@@ -330,8 +443,21 @@ export const FigureSkatingCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} />;
+		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -341,8 +467,12 @@ export const FigureSkatingCol = (title) => [
 		textAlign: "center",
 		windth: 50,
 
-		render: (record) => {
-			return <>{record?.intermediates?.technicalScore ?? "-"}</>;
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (record?.athlete) {
+				return <>{record?.athlete?.bib}</>;
+			} else {
+				return <>{athlete.bib}</>;
+			}
 		},
 	},
 	{
@@ -379,15 +509,26 @@ export const CrossCountryCol = (title) => [
 		title: "#",
 		textAlign: "center",
 		width: 60,
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 
@@ -396,8 +537,12 @@ export const CrossCountryCol = (title) => [
 		title: "Bib",
 		textAlign: "center",
 		width: 50,
-		render: (record, index) => {
-			return <>{record?.athlete?.bib}</>;
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (record?.athlete) {
+				return <>{record?.athlete?.bib}</>;
+			} else {
+				return <>{athlete.bib}</>;
+			}
 		},
 	},
 
@@ -406,8 +551,21 @@ export const CrossCountryCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
-		render: (record, index) => {
-			return <AthleteCell record={record} index={index} showCou />;
+		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
+			return (
+				<AthleteCell record={record} index={index} livescoring={livescoring} />
+			);
 		},
 	},
 
@@ -438,15 +596,26 @@ export const FreestyleCol = (title) => [
 		title: "#",
 		textAlign: "center",
 		width: 60,
-		render: (record, index, result_status) => {
-			return (
-				<AthleteRanking
-					record={record}
-					index={index}
-					result_status={result_status}
-					isHistory={Boolean(title)}
-				/>
-			);
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (athlete) {
+				return (
+					<AthleteRanking
+						record={{ ...record, athlete }}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			} else {
+				return (
+					<AthleteRanking
+						record={record}
+						index={index}
+						result_status={result_status}
+						isHistory={Boolean(title)}
+					/>
+				);
+			}
 		},
 	},
 
@@ -454,8 +623,12 @@ export const FreestyleCol = (title) => [
 		key: "bib",
 		title: "Bib",
 		textAlign: "center",
-		render: (record, index) => {
-			return <>{record?.athlete?.bib}</>;
+		render: (record, index, result_status, livescoring, athlete) => {
+			if (record?.athlete) {
+				return <>{record?.athlete?.bib}</>;
+			} else {
+				return <>{athlete.bib}</>;
+			}
 		},
 	},
 
@@ -465,6 +638,17 @@ export const FreestyleCol = (title) => [
 		textAlign: "start",
 		width: 90,
 		render: (record, index, result_status, livescoring) => {
+			if (title) {
+				if (
+					result_status === "OFFICIAL" ||
+					result_status === "UNCONFIRMED" ||
+					result_status === "UNOFFICIAL"
+				) {
+					return "Final Standing";
+				} else {
+					return "Current Standing";
+				}
+			}
 			return (
 				<AthleteCell record={record} index={index} livescoring={livescoring} />
 			);
@@ -552,17 +736,16 @@ const AthleteCell = ({ record, showCountry, livescoring }) => {
 				<div className={styles.country}>({record.athlete?.organisation})</div>
 			)}
 			<div className={styles.name}>{modifiedName}</div>
-			{livescoring && (
-				<div>
-					{indx > 0 && <RankingUp className={styles.arrow} />}
-					{indx < 0 && <RankingDown className={styles.arrow} />}
-				</div>
-			)}
+			<div>
+				{indx > 0 && <RankingUp className={styles.arrow} />}
+				{indx < 0 && <RankingDown className={styles.arrow} />}
+			</div>
 		</div>
 	);
 };
 
 const AthleteRanking = ({ record, index, result_status, isHistory }) => {
+	console.log("RANKIG", record);
 	const getRanking = (index) => {
 		switch (index) {
 			case 0:
@@ -577,13 +760,12 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 		}
 	};
 
+	console.log("FFFF", record.rank);
 	if (result_status === "OFFICIAL") {
 		return (
 			<div className={styles.rankingContainer}>
-				<div className={getRanking(record?.intermediates?.rank - 1)}>
-					<div className={styles.index}>
-						{isHistory ? record?.intermediates?.rank : index + 1}.
-					</div>
+				<div className={getRanking(record?.rank - 1)}>
+					<div className={styles.index}>{record?.rank || index + 1}.</div>
 				</div>
 				<img
 					className="flag"
@@ -597,11 +779,11 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 		return (
 			<div className={styles.rankingContainer}>
 				<div className={styles.ranking}>
-					<div className={styles.index}>{record?.intermediates?.rank}.</div>
+					<div className={styles.index}>{record?.rank || "."}</div>
 				</div>
 				<img
 					className="flag"
-					src={getFlag(record.athlete.organisation)}
+					src={getFlag(record.athlete?.organisation)}
 					alt="flag"
 					onError={(e) => (e.target.src = "flags/ESP.svg")}
 				/>

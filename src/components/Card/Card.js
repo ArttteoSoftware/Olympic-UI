@@ -52,6 +52,8 @@ const Card = ({ title, units, divider }) => {
 	const renderUnit = (unit, loading) => {
 		const listData = getListData(unit);
 		if (unit.item_name === dataState.item_name) {
+			console.log(unit);
+
 			return (
 				<>
 					{/* <MarqueeEffect> */}
@@ -63,6 +65,7 @@ const Card = ({ title, units, divider }) => {
 							columns={returnSportColumn(title)}
 							data={listData}
 							className={styles.cardGrid}
+							unit_code={unit.unit_code}
 							item_name={unit.item_name}
 						/>
 					</div>

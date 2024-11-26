@@ -18,6 +18,7 @@ import FormatData from "../../util/FormatData";
 import HistoryGrid from "../Grid/HistoryGrid";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import useSocketStore from "../../store/socketStore";
+import { convertSportTitle } from "../../enum/Sport";
 
 export default function PlayerInfoModal({
 	visible,
@@ -27,11 +28,13 @@ export default function PlayerInfoModal({
 	result_status,
 	sportKey,
 	item_name,
+	discipline_code,
 }) {
 	const [medals, setMedals] = useState([]);
 	const [results, setResults] = useState([]);
 	const { dataState } = useSocketStore();
 
+	console.log(record);
 	const loadData = useCallback(async () => {
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);
@@ -70,7 +73,7 @@ export default function PlayerInfoModal({
 								<Bread
 									routes={[
 										{
-											breadcrumbName: "Biathlon",
+											breadcrumbName: convertSportTitle(discipline_code),
 										},
 										{
 											breadcrumbName: `Olympic Games: ${
@@ -154,6 +157,7 @@ export default function PlayerInfoModal({
 														sportKey,
 														record.item_name
 													)}
+													athlete={record.athlete}
 													data={[record]}
 												/>
 											</div>
@@ -173,6 +177,7 @@ export default function PlayerInfoModal({
 														element.item_name
 													)}
 													data={resultsArr}
+													athlete={record.athlete}
 													result_status={element.status}
 												/>
 											</div>
