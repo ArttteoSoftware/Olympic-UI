@@ -12,14 +12,18 @@ const VideoPlayer = ({ onVideoEnd }) => {
 			hls.loadSource(`${process.env.REACT_APP_API_URL}hls/stream.m3u8`);
 			hls.attachMedia(videoRef.current);
 			hls.on(Hls.Events.MANIFEST_PARSED, () => {
-				videoRef.current.play();
+				videoRef.current.play().catch((error) => {
+					console.error("Error attempting to play:", error);
+				});
 			});
 		} else if (
 			videoRef?.current?.canPlayType("application/vnd.apple.mpegurl")
 		) {
 			videoRef.current.src = `${process.env.REACT_APP_API_URL}hls/stream.m3u8`;
 			videoRef.current.addEventListener("loadedmetadata", () => {
-				videoRef.current.play();
+				videoRef.current.play().catch((error) => {
+					console.error("Error attempting to play:", error);
+				});
 			});
 		}
 
