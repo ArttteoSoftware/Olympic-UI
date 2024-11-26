@@ -207,11 +207,26 @@ export const AlpineCol = (title) => [
 			}
 		},
 	},
+	// {
+	// 	key: "total",
+	// 	title: "Total",
+	// 	textAlign: "center",
+	// 	// width: 50,
+	// 	render: (record) => {
+	// 		if (record.intermediates?.length > 0) {
+	// 			return (
+	// 				<>{record?.intermediates[record?.intermediates?.length - 1]?.diff}</>
+	// 			);
+	// 		} else {
+	// 			return "-";
+	// 		}
+	// 	},
+	// },
 	{
-		key: "total",
-		title: "Total",
+		key: "difference",
+		title: "Diff.",
 		textAlign: "center",
-		// width: 50,
+
 		render: (record) => {
 			if (record.intermediates?.length > 0) {
 				return (
@@ -220,15 +235,6 @@ export const AlpineCol = (title) => [
 			} else {
 				return "-";
 			}
-		},
-	},
-	{
-		key: "difference",
-		title: "Diff.",
-		textAlign: "center",
-
-		render: (record) => {
-			return <>{record?.intermediates?.diff ?? "-"}</>;
 		},
 	},
 ];
@@ -457,7 +463,7 @@ export const FreestyleCol = (title) => [
 		key: "name",
 		title: title ?? "Name",
 		textAlign: "start",
-		width: 80,
+		width: 90,
 		render: (record, index, result_status, livescoring) => {
 			return (
 				<AthleteCell record={record} index={index} livescoring={livescoring} />
