@@ -137,8 +137,8 @@ export const BiathlonCol = (title) => [
 	},
 
 	{
-		key: "description",
-		title: title ? title : "Description",
+		key: "name",
+		title: title ? title : "Name",
 		textAlign: "start",
 		width: 150,
 		render: (record, index, result_status, livescoring) => {

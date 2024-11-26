@@ -63,6 +63,7 @@ export default function PlayerInfoModal({
 		loadResults();
 	}, [loadResults]);
 
+	console.log("****", result_status);
 	return (
 		<div className={styles.modalOverlay}>
 			{visible && (
@@ -123,8 +124,7 @@ export default function PlayerInfoModal({
 								</div>
 							</div>
 
-							<div className={styles.medalsContainer}>
-								{medals?.map((competition, index) => {
+							{/* {medals?.map((competition, index) => {
 									return (
 										<div
 											className={styles.medalContainer}
@@ -138,51 +138,61 @@ export default function PlayerInfoModal({
 											</div>
 										</div>
 									);
-								})}
-							</div>
-						</div>
+								})} */}
 
-						<div className={styles.modalFooter}>
-							<div className={styles.gridContainer}>
-								{dataState?.item_name === item_name &&
-									result_status !== "UNCONFIRMED" &&
-									result_status !== "UNOFFICIAL" &&
-									result_status !== "OFFICIAL" && (
-										<>
-											<span className={styles.modalFooterTitle}>Results</span>
+							{(record.rank === 1 || record.rank === 2 || record.rank === 3) &&
+								result_status === "OFFICIAL" && (
+									<div className={styles.medalContainer}>
+										<div className={styles.competitionContainer}>
+											{record.rank === 1 && <GoldMedal />}
+											{record.rank === 2 && <SilverMedal />}
+											{record.rank === 3 && <BronzeMedal />}
+										</div>
+									</div>
+								)}
 
-											<div className={styles.tableContainer}>
-												<HistoryGrid
-													columns={returnSportColumn(
-														sportKey,
-														record.item_name
-													)}
-													athlete={record.athlete}
-													data={[record]}
-												/>
-											</div>
-										</>
-									)}
+							<div className={styles.modalFooter}>
+								<div className={styles.gridContainer}>
+									{dataState?.item_name === item_name &&
+										result_status !== "UNCONFIRMED" &&
+										result_status !== "UNOFFICIAL" &&
+										result_status !== "OFFICIAL" && (
+											<>
+												<span className={styles.modalFooterTitle}>Results</span>
 
-								{results.length > 0 &&
-									results?.map((element) => {
-										const resultsArr = [];
-										resultsArr.push(element.result);
+												<div className={styles.tableContainer}>
+													<HistoryGrid
+														columns={returnSportColumn(
+															sportKey,
+															record.item_name
+														)}
+														athlete={record.athlete}
+														data={[record]}
+													/>
+												</div>
+											</>
+										)}
 
-										return (
-											<div className={styles.tableContainer} key={element.id}>
-												<HistoryGrid
-													columns={returnSportColumn(
-														sportKey,
-														element.item_name
-													)}
-													data={resultsArr}
-													athlete={record.athlete}
-													result_status={element.status}
-												/>
-											</div>
-										);
-									})}
+									{results.length > 0 &&
+										results?.map((element) => {
+											const resultsArr = [];
+											resultsArr.push(element.result);
+
+											return (
+												<div className={styles.tableContainer} key={element.id}>
+													<HistoryGrid
+														columns={returnSportColumn(
+															sportKey,
+															element.item_name
+														)}
+														data={resultsArr}
+														athlete={record.athlete}
+														result_status={element.status}
+													/>
+												</div>
+											);
+										})}
+								</div>
 							</div>
 						</div>
 					</div>

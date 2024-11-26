@@ -24,6 +24,8 @@ const DetailsCard = ({
 	const { dataState, unitCode } = useSocketStore();
 	const [youtube, setYoutube] = useState(false);
 
+	console.log("INNN", initialData);
+
 	useEffect(() => {
 		if (dataState?.current?.length > 0) {
 			initialData.forEach((element) => {
@@ -54,6 +56,7 @@ const DetailsCard = ({
 		setYoutube(!youtube);
 	};
 
+	console.log("INI", initialData);
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -102,7 +105,7 @@ const DetailsCard = ({
 			<PlayerInfo
 				ref={modalRef}
 				sportKey={sportKey}
-				result_status={initialData?.result_status}
+				result_status={initialData[0]?.result_status}
 				playerInfo={playerInfo}
 				columns={columns}
 				openInfo={openInfo}
@@ -181,7 +184,9 @@ const GridHeader = ({ itemName }) => (
 
 const PlayerInfo = React.forwardRef(
 	({ sportKey, playerInfo, openInfo, onClose, result_status, columns }, ref) =>
-		openInfo && (
+		openInfo &&
+		(console.log("123"),
+		(
 			<PlayerInfoModal
 				record={playerInfo}
 				result_status={result_status}
@@ -193,7 +198,7 @@ const PlayerInfo = React.forwardRef(
 				columns={columns}
 				discipline_code={sportKey}
 			/>
-		)
+		))
 );
 
 export default DetailsCard;
