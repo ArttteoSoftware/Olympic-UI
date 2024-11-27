@@ -34,7 +34,6 @@ export default function PlayerInfoModal({
 	const [results, setResults] = useState([]);
 	const { dataState } = useSocketStore();
 
-	console.log(record);
 	const loadData = useCallback(async () => {
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);
@@ -63,7 +62,6 @@ export default function PlayerInfoModal({
 		loadResults();
 	}, [loadResults]);
 
-	console.log("****", result_status);
 	return (
 		<div className={styles.modalOverlay}>
 			{visible && (
@@ -150,49 +148,43 @@ export default function PlayerInfoModal({
 										</div>
 									</div>
 								)}
+						</div>
 
-							<div className={styles.modalFooter}>
-								<div className={styles.gridContainer}>
-									{dataState?.item_name === item_name &&
-										result_status !== "UNCONFIRMED" &&
-										result_status !== "UNOFFICIAL" &&
-										result_status !== "OFFICIAL" && (
-											<>
-												<span className={styles.modalFooterTitle}>Results</span>
+						<div className={styles.modalFooter}>
+							<div className={styles.gridContainer}>
+								{dataState?.item_name === item_name && (
+									<>
+										<span className={styles.modalFooterTitle}>Results</span>
 
-												<div className={styles.tableContainer}>
-													<HistoryGrid
-														columns={returnSportColumn(
-															sportKey,
-															record.item_name
-														)}
-														athlete={record.athlete}
-														data={[record]}
-													/>
-												</div>
-											</>
-										)}
+										<div className={styles.tableContainer}>
+											<HistoryGrid
+												columns={returnSportColumn(sportKey, record.item_name)}
+												athlete={record.athlete}
+												data={[record]}
+											/>
+										</div>
+									</>
+								)}
 
-									{results.length > 0 &&
-										results?.map((element) => {
-											const resultsArr = [];
-											resultsArr.push(element.result);
+								{results.length > 0 &&
+									results?.map((element) => {
+										const resultsArr = [];
+										resultsArr.push(element.result);
 
-											return (
-												<div className={styles.tableContainer} key={element.id}>
-													<HistoryGrid
-														columns={returnSportColumn(
-															sportKey,
-															element.item_name
-														)}
-														data={resultsArr}
-														athlete={record.athlete}
-														result_status={element.status}
-													/>
-												</div>
-											);
-										})}
-								</div>
+										return (
+											<div className={styles.tableContainer} key={element.id}>
+												<HistoryGrid
+													columns={returnSportColumn(
+														sportKey,
+														element.item_name
+													)}
+													data={resultsArr}
+													athlete={record.athlete}
+													result_status={element.status}
+												/>
+											</div>
+										);
+									})}
 							</div>
 						</div>
 					</div>

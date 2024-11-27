@@ -2,62 +2,82 @@ import React, { useEffect, useRef } from "react";
 import Hls from "hls.js";
 import styles from "./VideoPlayer.module.css";
 
-const VideoPlayer = ({ onVideoEnd }) => {
+const VideoPlayer = ({ onVideoEnd, shouldPlay = false }) => {
 	const videoRef = useRef(null);
+	const hlsRef = useRef(null);
 
 	useEffect(() => {
-		let hls;
 		if (Hls.isSupported()) {
-			hls = new Hls();
-			hls.loadSource(`${process.env.REACT_APP_API_URL}hls/stream.m3u8`);
-			hls.attachMedia(videoRef.current);
-			hls.on(Hls.Events.MANIFEST_PARSED, () => {
-				videoRef.current.play().catch((error) => {
-					console.error("Error attempting to play:", error);
-				});
+			hlsRef.current = new Hls({
+				enableWorker: true,
+				startPosition: 0,
+				maxBufferLength: 30,
+				maxMaxBufferLength: 60,
+				startLevel: -1,
+				autoStartLoad: true,
+				manifestLoadingTimeOut: 10000,
+				manifestLoadingMaxRetry: 3,
+			});
+
+			hlsRef.current.loadSource(
+				`${process.env.REACT_APP_API_URL}hls/stream.m3u8`
+			);
+			hlsRef.current.attachMedia(videoRef.current);
+
+			hlsRef.current.on(Hls.Events.MANIFEST_PARSED, () => {
+				if (videoRef.current) {
+					tryPlayVideo();
+				}
 			});
 		} else if (
 			videoRef?.current?.canPlayType("application/vnd.apple.mpegurl")
 		) {
 			videoRef.current.src = `${process.env.REACT_APP_API_URL}hls/stream.m3u8`;
-			videoRef.current.addEventListener("loadedmetadata", () => {
-				videoRef.current.play().catch((error) => {
-					console.error("Error attempting to play:", error);
-				});
-			});
+			videoRef.current.load();
+			tryPlayVideo();
 		}
 
-		// Cleanup function to destroy HLS instance
-		return () => {
-			if (hls) {
-				hls.destroy();
-			}
-		};
-	}, []);
-
-	useEffect(() => {
-		const videoElement = videoRef?.current;
-
-		const handleVideoError = () => {
-			console.error("Video playback error occurred.");
-			// Handle error (e.g., show a message to the user)
-		};
-
-		videoElement.addEventListener("error", handleVideoError);
+		const videoElement = videoRef.current;
 
 		const handleVideoEnd = () => {
-			onVideoEnd();
+			if (typeof onVideoEnd === "function") {
+				onVideoEnd();
+			}
 		};
 
-		videoElement.addEventListener("ended", handleVideoEnd);
+		if (videoElement) {
+			videoElement.addEventListener("ended", handleVideoEnd);
+		}
 
 		return () => {
-			videoElement.removeEventListener("error", handleVideoError);
-			videoElement.removeEventListener("ended", handleVideoEnd);
+			if (hlsRef.current) {
+				hlsRef.current.destroy();
+			}
+			if (videoElement) {
+				videoElement.removeEventListener("ended", handleVideoEnd);
+			}
 		};
-	}, []);
+	}, [onVideoEnd]);
 
-	return <video className={styles.video} ref={videoRef} muted />;
+	const tryPlayVideo = () => {
+		if (document.visibilityState === "visible") {
+			videoRef.current.play().catch((error) => {
+				console.error("Error attempting to play:", error);
+				// Optionally, prompt user interaction to play
+			});
+		}
+	};
+
+	return (
+		<video
+			className={styles.video}
+			ref={videoRef}
+			muted
+			playsInline
+			autoPlay
+			preload="auto"
+		/>
+	);
 };
 
 export default VideoPlayer;

@@ -52,8 +52,6 @@ const Card = ({ title, units, divider }) => {
 	const renderUnit = (unit, loading) => {
 		const listData = getListData(unit);
 		if (unit.item_name === dataState.item_name) {
-			console.log(unit);
-
 			return (
 				<>
 					{/* <MarqueeEffect> */}
@@ -186,6 +184,7 @@ const BackCard = ({ commonStyles, isFlipped, setIsFlipped }) => (
 			onVideoEnd={() => {
 				setIsFlipped(false);
 			}}
+			shouldPlay={true}
 		/>
 	</motion.div>
 );

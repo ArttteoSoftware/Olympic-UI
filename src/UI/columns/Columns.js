@@ -2,7 +2,6 @@ import styles from "./Columns.module.css";
 import useSocketStore from "../../store/socketStore";
 import { RankingUp, RankingDown } from "../Icons";
 import { getFlag } from "../flags";
-import { useReducer } from "react";
 
 export const SnowboardCol = (title) => [
 	{
@@ -744,15 +743,14 @@ const AthleteCell = ({ record, showCountry, livescoring }) => {
 	);
 };
 
-const AthleteRanking = ({ record, index, result_status, isHistory }) => {
-	console.log("RANKIG", record);
+const AthleteRanking = ({ record, index, result_status }) => {
 	const getRanking = (index) => {
 		switch (index) {
-			case 0:
-				return styles.first_place;
 			case 1:
-				return styles.second_place;
+				return styles.first_place;
 			case 2:
+				return styles.second_place;
+			case 3:
 				return styles.third_place;
 
 			default:
@@ -760,12 +758,21 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 		}
 	};
 
-	console.log("FFFF", record.rank);
 	if (result_status === "OFFICIAL") {
 		return (
 			<div className={styles.rankingContainer}>
-				<div className={getRanking(record?.rank - 1)}>
-					<div className={styles.index}>{record?.rank || index + 1}.</div>
+				<div
+					className={getRanking(
+						Array.isArray(record.intermediates)
+							? record?.rank || "."
+							: record?.intermediates?.rank || "."
+					)}
+				>
+					<div className={styles.index}>
+						{Array.isArray(record.intermediates)
+							? record?.rank || "."
+							: record?.intermediates?.rank || "."}
+					</div>
 				</div>
 				<img
 					className="flag"
@@ -776,10 +783,15 @@ const AthleteRanking = ({ record, index, result_status, isHistory }) => {
 			</div>
 		);
 	} else {
+		console.log(record);
 		return (
 			<div className={styles.rankingContainer}>
 				<div className={styles.ranking}>
-					<div className={styles.index}>{record?.rank || "."}</div>
+					<div className={styles.index}>
+						{Array.isArray(record.intermediates)
+							? record?.rank || "."
+							: record?.intermediates?.rank || "."}
+					</div>
 				</div>
 				<img
 					className="flag"

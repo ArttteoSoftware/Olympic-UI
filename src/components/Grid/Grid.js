@@ -80,9 +80,7 @@ function Grid({
 	useEffect(() => {
 		setLoader(true);
 
-		console.log({ unitCode: unit_code, dataState: unitCode });
 		if (unit_code === unitCode || item_name === dataState.item_name) {
-			console.log("***", dataState.current);
 			setAnimatedData(dataState.current);
 			setStatus(dataState.result_status);
 			setLoader(false);
