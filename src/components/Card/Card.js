@@ -8,6 +8,7 @@ import Grid from "../Grid/Grid";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 import VideoPlayer from "../Videoplayer/VideoPlayer";
+import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 
 const Card = ({ title, units, divider }) => {
 	const [data, setData] = useState([]);
@@ -51,35 +52,40 @@ const Card = ({ title, units, divider }) => {
 
 	const renderUnit = (unit, loading) => {
 		const listData = getListData(unit);
+
+		const isTeam = Boolean(unit.unit_code.includes("TE"));
+
 		if (unit.item_name === dataState.item_name) {
 			return (
-				<>
-					{/* <MarqueeEffect> */}
-					<div key={unit.unit_code}>
-						<UnitHeader item={unit} loading={loading} />
-						<Grid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							unit_code={unit.unit_code}
-							item_name={unit.item_name}
-						/>
-					</div>
-					{/* </MarqueeEffect> */}
-				</>
-			);
-		} else {
-			return (
-				<div key={unit.unit_code}>
+				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
 					<Grid
 						result_status={unit.result_status}
 						details={false}
-						columns={returnSportColumn(title)}
+						columns={
+							isTeam ? returnSportTeamColumn(title) : returnSportColumn(title)
+						}
 						data={listData}
 						className={styles.cardGrid}
+						isTeam={isTeam}
+						unit_code={unit.unit_code}
+						item_name={unit.item_name}
+					/>
+				</div>
+			);
+		} else {
+			return (
+				<div key={`${unit.unit_code}-${unit.item_name}`}>
+					<UnitHeader item={unit} loading={loading} />
+					<Grid
+						result_status={unit.result_status}
+						details={false}
+						columns={
+							isTeam ? returnSportTeamColumn(title) : returnSportColumn(title)
+						}
+						data={listData}
+						className={styles.cardGrid}
+						isTeam={isTeam}
 						item_name={unit.item_name}
 					/>
 				</div>

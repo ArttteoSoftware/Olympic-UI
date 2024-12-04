@@ -6,7 +6,8 @@ import Grid from "../Grid/Grid";
 import PlayerInfoModal from "../PlayerInfoModal/PlayerInfoModal";
 import useSocketStore from "../../store/socketStore";
 import { convertSportTitle } from "../../enum/Sport";
-
+import { returnSportColumn } from "../../UI/columns/Columns";
+import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 const DetailsCard = ({
 	columns,
 	initialData,
@@ -15,6 +16,7 @@ const DetailsCard = ({
 	sportKey,
 	loading,
 	color,
+	isTeam,
 }) => {
 	const modalRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(false);
@@ -93,7 +95,11 @@ const DetailsCard = ({
 					/>
 					<GridSection
 						gridData={gridData}
-						columns={columns}
+						columns={
+							isTeam
+								? returnSportTeamColumn(sportKey)
+								: returnSportColumn(sportKey)
+						}
 						handleRowClick={handleRowClick}
 						loading={loading}
 					/>
@@ -113,7 +119,7 @@ const DetailsCard = ({
 				<div className={styles.overlay} onClick={handleModal}>
 					<iframe
 						className={styles.youtubeIframe}
-						src="https://www.youtube.com/embed/LB25cfAvpqw?si=aNFGvuBb_IzT3jWJ"
+						src="https://eoctv.org/9189d432-8ce2-4853-bb9d-3e78918b9fe0"
 						title="YouTube video player"
 						frameBorder="0"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

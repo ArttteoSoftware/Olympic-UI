@@ -1,0 +1,82 @@
+/* .ranking {
+	border-radius: 6px;
+	width: 52px;
+	padding: 0 4px;
+	height: 32px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 16px;
+	color: #ffffff;
+} */
+
+.first_place,
+.second_place,
+.third_place,
+.ranking {
+	border-radius: 6px;
+	min-width: 32px;
+	min-height: 32px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 16px;
+	border-radius: 50%;
+	color: #ffffff;
+}
+
+.index {
+	display: flex;
+	min-width: 100%;
+	justify-content: center;
+}
+
+.rankingContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	flex-direction: row;
+	gap: 4px;
+}
+
+.ranking {
+	background-color: #7d94a533;
+	color: #7d94a5;
+}
+.first_place {
+	background-color: #e8bc4f;
+}
+
+.second_place {
+	background-color: #95999a;
+}
+
+.third_place {
+	background-color: #db8f5a;
+}
+
+.country {
+	color: #7d94a5;
+}
+
+.nameContainer {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+	overflow: hidden;
+}
+
+.name {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	flex-grow: 1;
+}
+
+.arrow {
+	width: 16px;
+	height: 16px;
+}

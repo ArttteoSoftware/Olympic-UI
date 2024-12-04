@@ -11,6 +11,7 @@ function SportDetail({ columns, title, filter, color, sportKey }) {
 	const [unitNames, setUnitNames] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
+	const [isTeam, setIsTeam] = useState(false);
 	const loadData = useCallback(async () => {
 		setLoading(true);
 		try {
