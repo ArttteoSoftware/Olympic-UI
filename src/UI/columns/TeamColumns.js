@@ -634,26 +634,25 @@ export const HockeyCol = (title) => [
 	},
 
 	{
-		key: "firstQuarter",
+		key: "finalResult",
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.periodScores?.length > 1) {
-				return record?.periodScores[0]?.scores[0].intermediates.result;
-			} else {
-				return "-";
+			if (record.intermediates?.length > 4) {
+				return record?.result;
 			}
 		},
 	},
+
 	{
-		key: "secondQuarter",
+		key: "fourthQuarther",
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.periodScores?.length > 2) {
-				return record?.periodScores[1]?.score;
+			if (record.intermediates?.length === 4) {
+				return record?.intermediates[3]?.intermediates.result;
 			} else {
-				return "-";
+				// return record?.result;
 			}
 		},
 	},
@@ -662,31 +661,32 @@ export const HockeyCol = (title) => [
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.periodScores?.length > 3) {
-				return record?.periodScores[2]?.score;
+			if (record.intermediates?.length > 3) {
+				return record?.intermediates[2]?.intermediates.result;
 			} else {
-				return "-";
+				return record?.result;
 			}
 		},
 	},
 	{
-		key: "afterPenalties",
+		key: "secondQuarter",
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.periodScores?.length > 4) {
-				return record?.periodScores[3]?.score;
-			} else {
-				return "-";
+			if (record.intermediates?.length > 2) {
+				return record?.intermediates[1]?.intermediates.result;
 			}
 		},
 	},
+
 	{
-		key: "finalResult",
+		key: "firstQuarter",
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			return record?.intermediates?.result || "-";
+			if (record.intermediates?.length > 1) {
+				return record?.intermediates[0]?.intermediates.result;
+			}
 		},
 	},
 ];
@@ -694,12 +694,12 @@ export const HockeyCol = (title) => [
 const AthleteCell = ({ record, showCountry, livescoring }) => {
 	return (
 		<div className={styles.nameContainer}>
-			{/* <img
+			<img
 				className="flag"
 				src={getFlag(record?.athlete?.organisation)}
 				alt="flag"
 				onError={(e) => (e.target.src = "flags/ESP.svg")}
-			/> */}
+			/>
 			<div>{record.athlete?.name}</div>
 		</div>
 	);

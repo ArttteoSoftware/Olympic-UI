@@ -1,4 +1,4 @@
-import { AnimatePresence, Reorder } from "framer-motion";
+import { animate, AnimatePresence, Reorder } from "framer-motion";
 import styles from "./Grid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
@@ -36,9 +36,9 @@ const PlayerRow = memo(
 				}}
 			>
 				{Array.isArray(columns) &&
-					columns?.map((column) => (
+					columns?.map((column, index) => (
 						<td
-							key={`${record[rowKey]}-${column.key}`}
+							key={index}
 							style={{
 								width: `${column.width}px`,
 								minWidth: `${column.minWidth}px`,
@@ -72,6 +72,7 @@ function Grid({
 	unit_code,
 	loading,
 	result_status,
+	sportKey,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
@@ -97,6 +98,8 @@ function Grid({
 		}
 	}, [dataState, data, unitCode, result_status, unit_code, details, item_name]);
 
+	console.log("(((", animatedData[0], sportKey);
+
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading || loader ? (
@@ -104,51 +107,63 @@ function Grid({
 					<Loading />
 				</div>
 			) : (
-				<table className={details ? styles.table_details : styles.table}>
-					<thead className={details ? styles.thead_details : styles.thead}>
-						<tr>
-							{Array.isArray(columns) &&
-								columns?.map((column) => (
-									<th
-										key={column.key}
-										style={{
-											width: `${column.width}px`,
-											minWidth: `${column.minWidth}px`,
-											maxWidth: `${column.maxWidth}px`,
-											textAlign: column.textAlign,
-										}}
-									>
-										{column.title}
-									</th>
-								))}
-						</tr>
-					</thead>
-					<Reorder.Group
-						as="tbody"
-						axis="y"
-						values={animatedData || []}
-						onReorder={setAnimatedData}
-						drag={false}
-					>
-						<AnimatePresence>
-							{Array.isArray(animatedData) &&
-								animatedData?.map((record, index) => (
-									<PlayerRow
-										key={record.athlete?.code || index}
-										record={record}
-										columns={columns}
-										rowKey={rowKey}
-										animatedData={animatedData}
-										index={index}
-										details={details}
-										itemName={item_name}
-										onRowClick={onRowClick}
-										result_status={status}
-									/>
-								))}
-						</AnimatePresence>
-					</Reorder.Group>
-				</table>
+				<div
+					style={{ height: "100%", position: "relative", padding: "0 10px" }}
+				>
+					{sportKey === "IHO" && animatedData?.length > 1 && (
+						<div style={{ position: "absolute", top: "30%" }}>
+							{
+								animatedData[0]?.intermediates[
+									animatedData[0]?.intermediates?.length - 1
+								]?.period
+							}
+						</div>
+					)}
+					<table className={details ? styles.table_details : styles.table}>
+						{/* <thead className={details ? styles.thead_details : styles.thead}>
+							<tr>
+								{Array.isArray(columns) &&
+									columns?.map((column) => (
+										<th
+											key={column.key}
+											style={{
+												width: `${column.width}px`,
+												minWidth: `${column.minWidth}px`,
+												maxWidth: `${column.maxWidth}px`,
+												textAlign: column.textAlign,
+											}}
+										></th>
+									))}
+							</tr>
+						</thead> */}
+
+						<Reorder.Group
+							as="tbody"
+							axis="y"
+							values={animatedData || []}
+							onReorder={setAnimatedData}
+							drag={false}
+						>
+							<AnimatePresence>
+								{Array.isArray(animatedData) &&
+									animatedData?.map((record, index) => (
+										<PlayerRow
+											key={record.athlete?.code || index}
+											record={record}
+											columns={columns}
+											rowKey={rowKey}
+											animatedData={animatedData}
+											index={index}
+											details={details}
+											itemName={item_name}
+											onRowClick={onRowClick}
+											result_status={status}
+										/>
+									))}
+							</AnimatePresence>
+						</Reorder.Group>
+					</table>
+				</div>
 			)}
 		</div>
 	);

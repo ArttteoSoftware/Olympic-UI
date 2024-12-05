@@ -919,7 +919,7 @@ export const returnSportColumn = (sportKey, item_name) => {
 		case "FRS":
 			return FreestyleCol(item_name);
 		case "IHO":
-			return HockeyCol(item_name);
+			return [];
 		case "FSK":
 			return FigureSkatingCol(item_name);
 		case "STK":

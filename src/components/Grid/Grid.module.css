@@ -83,6 +83,13 @@ ul {
 	min-height: 300px;
 }
 
+.partContainer {
+	height: calc(100% - 16px);
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
 @media screen and (max-width: 48rem) {
 	.container,
 	.container_details {

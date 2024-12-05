@@ -5,6 +5,7 @@ import { BTH, Divider, IHO } from "../../UI/Icons";
 import { convertSportTitle } from "../../enum/Sport";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
+import TeamGrid from "../Grid/TeamGrid";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 import VideoPlayer from "../Videoplayer/VideoPlayer";
@@ -59,35 +60,59 @@ const Card = ({ title, units, divider }) => {
 			return (
 				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
-					<Grid
-						result_status={unit.result_status}
-						details={false}
-						columns={
-							isTeam ? returnSportTeamColumn(title) : returnSportColumn(title)
-						}
-						data={listData}
-						className={styles.cardGrid}
-						isTeam={isTeam}
-						unit_code={unit.unit_code}
-						item_name={unit.item_name}
-					/>
+					{isTeam ? (
+						<TeamGrid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportTeamColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							isTeam={isTeam}
+							unit_code={unit.unit_code}
+							sportKey={title}
+							item_name={unit.item_name}
+						/>
+					) : (
+						<Grid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							isTeam={isTeam}
+							unit_code={unit.unit_code}
+							sportKey={title}
+							item_name={unit.item_name}
+						/>
+					)}
 				</div>
 			);
 		} else {
 			return (
 				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
-					<Grid
-						result_status={unit.result_status}
-						details={false}
-						columns={
-							isTeam ? returnSportTeamColumn(title) : returnSportColumn(title)
-						}
-						data={listData}
-						className={styles.cardGrid}
-						isTeam={isTeam}
-						item_name={unit.item_name}
-					/>
+
+					{isTeam ? (
+						<TeamGrid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportTeamColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							sportKey={title}
+							item_name={unit.item_name}
+						/>
+					) : (
+						<Grid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							item_name={unit.item_name}
+							sportKey={title}
+						/>
+					)}
 				</div>
 			);
 		}
