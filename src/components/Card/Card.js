@@ -61,29 +61,33 @@ const Card = ({ title, units, divider }) => {
 				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
 					{isTeam ? (
-						<TeamGrid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportTeamColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							isTeam={isTeam}
-							unit_code={unit.unit_code}
-							sportKey={title}
-							item_name={unit.item_name}
-						/>
+						<MarqueeEffect>
+							<TeamGrid
+								result_status={unit.result_status}
+								details={false}
+								columns={returnSportTeamColumn(title)}
+								data={listData}
+								className={styles.cardGrid}
+								isTeam={isTeam}
+								unit_code={unit.unit_code}
+								sportKey={title}
+								item_name={unit.item_name}
+							/>
+						</MarqueeEffect>
 					) : (
-						<Grid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							isTeam={isTeam}
-							unit_code={unit.unit_code}
-							sportKey={title}
-							item_name={unit.item_name}
-						/>
+						<MarqueeEffect>
+							<Grid
+								result_status={unit.result_status}
+								details={false}
+								columns={returnSportColumn(title)}
+								data={listData}
+								className={styles.cardGrid}
+								isTeam={isTeam}
+								unit_code={unit.unit_code}
+								sportKey={title}
+								item_name={unit.item_name}
+							/>
+						</MarqueeEffect>
 					)}
 				</div>
 			);

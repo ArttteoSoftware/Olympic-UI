@@ -34,30 +34,32 @@ function MainPageSportsGrid() {
 
 	return (
 		<div className={styles.container}>
-			{/* {window.innerWidth <= 768 ? ( */}
-			{/* <VerticalCarousel items={data} loader={loader} /> */}
-			{/* ) : ( */}
-			{data.map((item) => {
-				return (
-					<motion.div
-						key={item._id}
-						onClick={() => {
-							if (item._id !== "FRS") {
-								navigate(`/${item._id}`);
-							}
-						}}
-					>
-						<Card
-							divider={getDividerColor(item._id)}
-							key={item._id}
-							title={item._id}
-							units={item.units}
-							loader={loader}
-						/>
-					</motion.div>
-				);
-			})}
-			{/* )} */}
+			{window.innerWidth <= 768 ? (
+				<VerticalCarousel items={data} loader={loader} />
+			) : (
+				<>
+					{data.map((item) => {
+						return (
+							<motion.div
+								key={item._id}
+								onClick={() => {
+									if (item._id !== "FRS") {
+										navigate(`/${item._id}`);
+									}
+								}}
+							>
+								<Card
+									divider={getDividerColor(item._id)}
+									key={item._id}
+									title={item._id}
+									units={item.units}
+									loader={loader}
+								/>
+							</motion.div>
+						);
+					})}
+				</>
+			)}
 		</div>
 	);
 }
