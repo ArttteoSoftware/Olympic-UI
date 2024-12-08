@@ -107,16 +107,19 @@ function Grid({
 					<Loading />
 				</div>
 			) : (
-				<div
-					style={{ height: "100%", position: "relative", padding: "0 10px" }}
-				>
+				<div className={styles.teamTableContainer}>
 					{sportKey === "IHO" && animatedData?.length > 1 && (
-						<div style={{ position: "absolute", top: "30%" }}>
-							{
-								animatedData[0]?.intermediates[
-									animatedData[0]?.intermediates?.length - 1
-								]?.period
-							}
+						<div className={styles.periodTimeContainer}>
+							<div className={styles.periodTimeInnerContainer}>
+								<div>
+									{
+										animatedData[0]?.intermediates[
+											animatedData[0]?.intermediates?.length - 1
+										]?.period
+									}
+								</div>
+								<div>8'</div>
+							</div>
 						</div>
 					)}
 					<table className={details ? styles.table_details : styles.table}>

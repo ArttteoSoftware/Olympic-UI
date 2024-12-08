@@ -616,7 +616,7 @@ export const HockeyCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 30,
-		render: (record, index, result_status, livescoring, athlete) => {
+		render: (_record, index, result_status, livescoring, athlete) => {
 			return <></>;
 		},
 	},
@@ -624,6 +624,7 @@ export const HockeyCol = (title) => [
 		key: "name",
 		title: title ?? "Name",
 		textAlign: "start",
+		width: 150,
 		render: (record, index, result_status, livescoring, athlete) => {
 			return (
 				<>
@@ -685,7 +686,7 @@ export const HockeyCol = (title) => [
 		width: 30,
 		render: (record) => {
 			if (record.intermediates?.length > 1) {
-				return record?.intermediates[0]?.intermediates.result;
+				return <div>{record?.intermediates[0]?.intermediates.result}</div>;
 			}
 		},
 	},
