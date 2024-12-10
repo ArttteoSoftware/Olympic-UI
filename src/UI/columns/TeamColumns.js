@@ -324,7 +324,9 @@ export const FigureSkatingCol = (title) => [
 		textAlign: "center",
 		width: 60,
 		render: (record, index, result_status, livescoring, athlete) => {
-			if (athlete) {
+			console.log("ath", athlete);
+			console.log("re", record);
+			if (record.athlete) {
 				return (
 					<AthleteRanking
 						record={{ ...record, athlete }}
@@ -350,8 +352,9 @@ export const FigureSkatingCol = (title) => [
 		key: "name",
 		title: title ?? "Name",
 		textAlign: "start",
-		width: 100,
+		width: 150,
 		render: (record, index, result_status, livescoring) => {
+			console.log("****", record.athlete.organisation);
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -363,9 +366,8 @@ export const FigureSkatingCol = (title) => [
 					return "Current Standing";
 				}
 			}
-			return (
-				<AthleteCell record={record} index={index} livescoring={livescoring} />
-			);
+			// <AthleteCell record={record} index={index} livescoring={livescoring} />
+			return <>{record.athlete.organisation}</>;
 		},
 	},
 
@@ -674,8 +676,17 @@ export const HockeyCol = (title) => [
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.intermediates?.length > 2) {
-				return record?.intermediates[1]?.intermediates.result;
+			if (record.intermediates?.length > 1) {
+				console.log("record", record.intermediates.length);
+				if (record.intermediates.length === 2) {
+					return <div>{record?.intermediates[1]?.intermediates.result}</div>;
+				} else {
+					return (
+						<div style={{ color: "#2A334299" }}>
+							{record?.intermediates[1]?.intermediates.result}
+						</div>
+					);
+				}
 			}
 		},
 	},
@@ -685,8 +696,16 @@ export const HockeyCol = (title) => [
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.intermediates?.length > 1) {
-				return <div>{record?.intermediates[0]?.intermediates.result}</div>;
+			if (record.intermediates?.length > 0) {
+				if (record.intermediates.length === 1) {
+					return <div>{record?.intermediates[0]?.intermediates.result}</div>;
+				} else {
+					return (
+						<div style={{ color: "#2A334299" }}>
+							{record?.intermediates[0]?.intermediates.result}
+						</div>
+					);
+				}
 			}
 		},
 	},
@@ -706,7 +725,7 @@ const AthleteCell = ({ record, showCountry, livescoring }) => {
 	);
 };
 
-const AthleteRanking = ({ record, index, result_status, isTeam }) => {
+const AthleteRanking = ({ record, index, result_status }) => {
 	const getRanking = (index) => {
 		switch (index) {
 			case 1:
@@ -723,21 +742,19 @@ const AthleteRanking = ({ record, index, result_status, isTeam }) => {
 	if (result_status === "OFFICIAL") {
 		return (
 			<div className={styles.rankingContainer}>
-				{!isTeam && (
-					<div
-						className={getRanking(
-							Array.isArray(record.intermediates)
-								? record?.rank || "."
-								: record?.intermediates?.rank || "."
-						)}
-					>
-						<div className={styles.index}>
-							{Array.isArray(record.intermediates)
-								? record?.rank || "."
-								: record?.intermediates?.rank || "."}
-						</div>
+				<div
+					className={getRanking(
+						Array.isArray(record.intermediates)
+							? record?.rank || "."
+							: record?.intermediates?.rank || "."
+					)}
+				>
+					<div className={styles.index}>
+						{Array.isArray(record.intermediates)
+							? record?.rank || "."
+							: record?.intermediates?.rank || "."}
 					</div>
-				)}
+				</div>
 				<img
 					className="flag"
 					src={getFlag(record?.athlete?.organisation)}
@@ -749,15 +766,13 @@ const AthleteRanking = ({ record, index, result_status, isTeam }) => {
 	} else {
 		return (
 			<div className={styles.rankingContainer}>
-				{!isTeam && (
-					<div className={styles.ranking}>
-						<div className={styles.index}>
-							{Array.isArray(record.intermediates)
-								? record?.rank || "."
-								: record?.intermediates?.rank || "."}
-						</div>
+				<div className={styles.ranking}>
+					<div className={styles.index}>
+						{Array.isArray(record.intermediates)
+							? record?.rank || "."
+							: record?.intermediates?.rank || "."}
 					</div>
-				)}
+				</div>
 
 				<img
 					className="flag"

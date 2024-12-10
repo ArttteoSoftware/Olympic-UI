@@ -115,7 +115,14 @@ function Grid({
 											animatedData[0]?.intermediates?.length - 1
 										]?.period}
 								</div>
-								<div>8'</div>
+								<div>
+									{animatedData[0]?.intermediates?.length > 0 &&
+										`${
+											animatedData[0]?.intermediates[
+												animatedData[0]?.intermediates?.length - 1
+											]?.intermediates.time
+										}'`}
+								</div>
 							</div>
 						</div>
 					)}
