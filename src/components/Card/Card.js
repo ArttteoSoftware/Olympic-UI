@@ -16,6 +16,7 @@ const Card = ({ title, units, divider }) => {
 	const [isFlipped, setIsFlipped] = useState(false);
 	const { dataState } = useSocketStore();
 	const [loading, setLoading] = useState(true);
+	const [play, setPlay] = useState(false);
 
 	useEffect(() => {
 		if (units) {
@@ -24,6 +25,14 @@ const Card = ({ title, units, divider }) => {
 
 		setLoading(false);
 	}, [units]);
+
+	useEffect(() => {
+		if (isFlipped) {
+			setPlay(true);
+		} else {
+			setPlay(false);
+		}
+	}, [isFlipped]);
 
 	const commonStyles = useMemo(
 		() => ({
@@ -139,6 +148,8 @@ const Card = ({ title, units, divider }) => {
 				commonStyles={commonStyles}
 				isFlipped={isFlipped}
 				setIsFlipped={setIsFlipped}
+				play={play}
+				setPlay={setPlay}
 			/>
 		</div>
 	);
@@ -171,6 +182,7 @@ const FrontCard = ({
 }) => (
 	<Reorder.Group
 		style={commonStyles}
+		initial={false}
 		animate={{ rotateY: isFlipped ? 180 : 0 }}
 		transition={{ duration: 0.6 }}
 		values={data}
@@ -208,7 +220,7 @@ const FrontCard = ({
 	</Reorder.Group>
 );
 
-const BackCard = ({ commonStyles, isFlipped, setIsFlipped }) => (
+const BackCard = ({ commonStyles, isFlipped, setIsFlipped, setPlay, play }) => (
 	<motion.div
 		style={commonStyles}
 		initial={{ rotateY: 180 }}
@@ -218,8 +230,11 @@ const BackCard = ({ commonStyles, isFlipped, setIsFlipped }) => (
 		<VideoPlayer
 			onVideoEnd={() => {
 				setIsFlipped(false);
+				setPlay(false);
 			}}
 			shouldPlay={true}
+			play={play}
+			setPlay={setPlay}
 		/>
 	</motion.div>
 );

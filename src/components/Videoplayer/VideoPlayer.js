@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from "react";
 import Hls from "hls.js";
 import styles from "./VideoPlayer.module.css";
 
-const VideoPlayer = ({ onVideoEnd, shouldPlay = false }) => {
+const VideoPlayer = ({ onVideoEnd, play, setPlay }) => {
 	const videoRef = useRef(null);
 	const hlsRef = useRef(null);
 
 	useEffect(() => {
+		if (!play) return;
+
 		if (Hls.isSupported()) {
 			hlsRef.current = new Hls({
 				enableWorker: true,
@@ -40,24 +42,35 @@ const VideoPlayer = ({ onVideoEnd, shouldPlay = false }) => {
 		const videoElement = videoRef.current;
 
 		const handleVideoEnd = () => {
-			if (typeof onVideoEnd === "function") {
-				onVideoEnd();
-			}
+			onVideoEnd();
+			setPlay(false);
 		};
 
 		if (videoElement) {
 			videoElement.addEventListener("ended", handleVideoEnd);
+
+			["play", "pause", "timeupdate", "seeking", "seeked", "ended"].forEach(
+				(eventName) => {
+					videoElement.addEventListener(eventName, () => {
+						console.log(`Video event triggered: ${eventName}`, {
+							currentTime: videoElement.currentTime,
+							duration: videoElement.duration,
+						});
+					});
+				}
+			);
 		}
 
 		return () => {
 			if (hlsRef.current) {
 				hlsRef.current.destroy();
+				setPlay(false);
 			}
 			if (videoElement) {
 				videoElement.removeEventListener("ended", handleVideoEnd);
 			}
 		};
-	}, [onVideoEnd]);
+	}, [onVideoEnd, play, setPlay]);
 
 	const tryPlayVideo = () => {
 		if (document.visibilityState === "visible") {
@@ -74,8 +87,7 @@ const VideoPlayer = ({ onVideoEnd, shouldPlay = false }) => {
 			ref={videoRef}
 			muted
 			playsInline
-			autoPlay
-			preload="auto"
+			onPlay={() => setPlay(true)}
 		/>
 	);
 };

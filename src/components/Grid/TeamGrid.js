@@ -98,8 +98,6 @@ function Grid({
 		}
 	}, [dataState, data, unitCode, result_status, unit_code, details, item_name]);
 
-	console.log("(((", animatedData[0], sportKey);
-
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading || loader ? (
@@ -112,11 +110,10 @@ function Grid({
 						<div className={styles.periodTimeContainer}>
 							<div className={styles.periodTimeInnerContainer}>
 								<div>
-									{
+									{animatedData[0]?.intermediates?.length > 0 &&
 										animatedData[0]?.intermediates[
 											animatedData[0]?.intermediates?.length - 1
-										]?.period
-									}
+										]?.period}
 								</div>
 								<div>8'</div>
 							</div>
