@@ -8,6 +8,7 @@ import useSocketStore from "../../store/socketStore";
 import { convertSportTitle } from "../../enum/Sport";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
+import TeamGrid from "../Grid/TeamGrid";
 const DetailsCard = ({
 	columns,
 	initialData,
@@ -102,6 +103,7 @@ const DetailsCard = ({
 						}
 						handleRowClick={handleRowClick}
 						loading={loading}
+						sportKey={sportKey}
 					/>
 				</div>
 			</div>
@@ -151,27 +153,52 @@ const FilterSection = ({ unitNames, isOpen, setIsOpen, onFilterSelect }) => (
 	</div>
 );
 
-const GridSection = ({ gridData, columns, handleRowClick, loading }) => (
+const GridSection = ({
+	gridData,
+	columns,
+	handleRowClick,
+	loading,
+	sportKey,
+}) => (
 	<>
-		{gridData.map((item) => (
-			<div key={item.item_name}>
-				<GridHeader itemName={item.item_name} />
-				<div className={styles.dataContainer}>
-					<Grid
-						result_status={item.result_status}
-						details={true}
-						columns={columns}
-						data={item}
-						rowKey={(record) => record._id}
-						onRowClick={handleRowClick}
-						loading={loading}
-						item_name={item.item_name}
-						unit_code={item.unit_code}
-						athlete={item.athlete}
-					/>
-				</div>
-			</div>
-		))}
+		{gridData.map(
+			(item) => (
+				console.log(item),
+				(
+					<div key={item.item_name}>
+						<GridHeader itemName={item.item_name} />
+						<div className={styles.dataContainer}>
+							{item.unit_code.includes("TE") ? (
+								<TeamGrid
+									result_status={item?.result_status || ""}
+									details={false}
+									columns={returnSportTeamColumn(sportKey)}
+									data={item.start_list}
+									className={styles.cardGrid}
+									isTeam={true}
+									unit_code={item.unit_code}
+									sportKey={sportKey}
+									item_name={item.item_name}
+								/>
+							) : (
+								<Grid
+									result_status={item.result_status}
+									details={true}
+									columns={columns}
+									data={item}
+									rowKey={(record) => record._id}
+									onRowClick={handleRowClick}
+									loading={loading}
+									item_name={item.item_name}
+									unit_code={item.unit_code}
+									athlete={item.athlete}
+								/>
+							)}
+						</div>
+					</div>
+				)
+			)
+		)}
 	</>
 );
 
