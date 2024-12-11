@@ -89,20 +89,20 @@ const Card = ({ title, units, divider }) => {
 
 						(console.log("DT"),
 						(
-							<MarqueeEffect>
-								<Grid
-									result_status={unit.result_status}
-									details={false}
-									columns={returnSportColumn(title)}
-									data={listData}
-									className={styles.cardGrid}
-									isTeam={isTeam}
-									unit_code={unit.unit_code}
-									sportKey={title}
-									item_name={unit.item_name}
-								/>
-							</MarqueeEffect>
+							// <MarqueeEffect>
+							<Grid
+								result_status={unit.result_status}
+								details={false}
+								columns={returnSportColumn(title)}
+								data={listData}
+								className={styles.cardGrid}
+								isTeam={isTeam}
+								unit_code={unit.unit_code}
+								sportKey={title}
+								item_name={unit.item_name}
+							/>
 						))
+						// </MarqueeEffect>
 					)}
 				</div>
 			);
