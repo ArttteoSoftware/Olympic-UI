@@ -96,13 +96,6 @@ ul {
 	padding: 0 10px;
 }
 
-.periodTimeContainer {
-	position: absolute;
-	top: 20%;
-	color: #ff0000;
-	font-size: clamp(0.75rem, 0.8vw, 1rem);
-}
-
 .periodTimeInnerContainer {
 	display: flex;
 	flex-direction: column;

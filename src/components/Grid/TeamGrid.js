@@ -1,9 +1,9 @@
 import { animate, AnimatePresence, Reorder } from "framer-motion";
-import styles from "./Grid.module.css";
+import styles from "./TeamGrid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
 import { useEffect, useState, memo } from "react";
-import TeamGrid from "./TeamGrid";
+import { isCancel } from "axios";
 
 const PlayerRow = memo(
 	({
@@ -16,6 +16,7 @@ const PlayerRow = memo(
 		itemName,
 		result_status,
 		athlete,
+		isGoal,
 	}) => {
 		const { dataState } = useSocketStore();
 		return (
@@ -52,7 +53,8 @@ const PlayerRow = memo(
 										record,
 										index,
 										result_status,
-										Boolean(itemName === dataState?.item_name)
+										Boolean(itemName === dataState?.item_name),
+										isGoal
 								  )
 								: record[column.key]}
 						</td>
@@ -78,16 +80,32 @@ function Grid({
 	const [animatedData, setAnimatedData] = useState([]);
 	const [status, setStatus] = useState();
 	const [loader, setLoader] = useState(true);
+	const [isGoal, setIsGoal] = useState(false);
 
 	useEffect(() => {
 		setLoader(true);
 
 		if (unit_code === unitCode || item_name === dataState.item_name) {
+			console.log("CURRENT", dataState.current);
 			setAnimatedData(dataState.current);
 			setStatus(dataState.result_status);
+
+			const firstInt = dataState.current[0].intermediates;
+			const secondInt = dataState.current[1].intermediates;
+			if (
+				firstInt[firstInt.length - 1].action === "Goal" ||
+				secondInt[secondInt.length - 1].action === "Goal"
+			) {
+				setIsGoal(true);
+			} else {
+				setIsGoal(false);
+			}
+
 			setLoader(false);
 		} else {
 			setStatus(result_status);
+
+			setIsGoal(false);
 
 			if (details) {
 				setAnimatedData(data.start_list);
@@ -98,6 +116,15 @@ function Grid({
 		}
 	}, [dataState, data, unitCode, result_status, unit_code, details, item_name]);
 
+	const result =
+		animatedData[0]?.intermediates?.length > 0 &&
+		animatedData[0]?.intermediates[animatedData[0]?.intermediates?.length - 1];
+
+	const goalBackground =
+		animatedData[0]?.intermediates?.length > 0 &&
+		animatedData[0]?.intermediates[animatedData[0]?.intermediates?.length - 1];
+
+	console.log("isgOAL", isGoal);
 	return (
 		<div className={details ? styles.container_details : styles.container}>
 			{loading || loader ? (
@@ -109,41 +136,17 @@ function Grid({
 					{sportKey === "IHO" && animatedData?.length > 1 && (
 						<div className={styles.periodTimeContainer}>
 							<div className={styles.periodTimeInnerContainer}>
-								<div>
-									{animatedData[0]?.intermediates?.length > 0 &&
-										animatedData[0]?.intermediates[
-											animatedData[0]?.intermediates?.length - 1
-										]?.period}
-								</div>
-								<div>
-									{animatedData[0]?.intermediates?.length > 0 &&
-										`${
-											animatedData[0]?.intermediates[
-												animatedData[0]?.intermediates?.length - 1
-											]?.intermediates.time
-										}'`}
-								</div>
+								{/* If result_status is official, then return finished, else period */}
+
+								<div>{result.period} </div>
 							</div>
 						</div>
 					)}
-					<table className={details ? styles.table_details : styles.table}>
-						{/* <thead className={details ? styles.thead_details : styles.thead}>
-							<tr>
-								{Array.isArray(columns) &&
-									columns?.map((column) => (
-										<th
-											key={column.key}
-											style={{
-												width: `${column.width}px`,
-												minWidth: `${column.minWidth}px`,
-												maxWidth: `${column.maxWidth}px`,
-												textAlign: column.textAlign,
-											}}
-										></th>
-									))}
-							</tr>
-						</thead> */}
-
+					<table
+						className={`${details ? styles.table_details : styles.table} ${
+							isGoal ? styles.goalContainer : ""
+						}`}
+					>
 						<Reorder.Group
 							as="tbody"
 							axis="y"
@@ -153,20 +156,34 @@ function Grid({
 						>
 							<AnimatePresence>
 								{Array.isArray(animatedData) &&
-									animatedData?.map((record, index) => (
-										<PlayerRow
-											key={record.athlete?.code || index}
-											record={record}
-											columns={columns}
-											rowKey={rowKey}
-											animatedData={animatedData}
-											index={index}
-											details={details}
-											itemName={item_name}
-											onRowClick={onRowClick}
-											result_status={status}
-										/>
-									))}
+									animatedData?.map(
+										(record, index) => (
+											console.log("record", record),
+											(
+												<PlayerRow
+													key={record.athlete?.code || index}
+													record={record}
+													columns={columns}
+													rowKey={rowKey}
+													animatedData={animatedData}
+													index={index}
+													details={details}
+													itemName={item_name}
+													onRowClick={onRowClick}
+													result_status={status}
+													isGoal={
+														dataState.current?.length > 0 &&
+														(record?.athlete?.code ===
+															dataState.current[index]?.athlete?.code &&
+															dataState.current[index].intermediates[
+																dataState.current[index].intermediates.length -
+																	1
+															].action) === "Goal"
+													}
+												/>
+											)
+										)
+									)}
 							</AnimatePresence>
 						</Reorder.Group>
 					</table>

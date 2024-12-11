@@ -70,33 +70,39 @@ const Card = ({ title, units, divider }) => {
 				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
 					{isTeam ? (
-						<MarqueeEffect>
-							<TeamGrid
-								result_status={unit.result_status}
-								details={false}
-								columns={returnSportTeamColumn(title)}
-								data={listData}
-								className={styles.cardGrid}
-								isTeam={isTeam}
-								unit_code={unit.unit_code}
-								sportKey={title}
-								item_name={unit.item_name}
-							/>
-						</MarqueeEffect>
+						// თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
+
+						// <MarqueeEffect>
+						<TeamGrid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportTeamColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							isTeam={isTeam}
+							unit_code={unit.unit_code}
+							sportKey={title}
+							item_name={unit.item_name}
+						/>
 					) : (
-						<MarqueeEffect>
-							<Grid
-								result_status={unit.result_status}
-								details={false}
-								columns={returnSportColumn(title)}
-								data={listData}
-								className={styles.cardGrid}
-								isTeam={isTeam}
-								unit_code={unit.unit_code}
-								sportKey={title}
-								item_name={unit.item_name}
-							/>
-						</MarqueeEffect>
+						// </MarqueeEffect>
+
+						(console.log("DT"),
+						(
+							<MarqueeEffect>
+								<Grid
+									result_status={unit.result_status}
+									details={false}
+									columns={returnSportColumn(title)}
+									data={listData}
+									className={styles.cardGrid}
+									isTeam={isTeam}
+									unit_code={unit.unit_code}
+									sportKey={title}
+									item_name={unit.item_name}
+								/>
+							</MarqueeEffect>
+						))
 					)}
 				</div>
 			);
@@ -106,15 +112,18 @@ const Card = ({ title, units, divider }) => {
 					<UnitHeader item={unit} loading={loading} />
 
 					{isTeam ? (
-						<TeamGrid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportTeamColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							sportKey={title}
-							item_name={unit.item_name}
-						/>
+						(console.log("GRID", unit),
+						(
+							<TeamGrid
+								result_status={unit.result_status}
+								details={false}
+								columns={returnSportTeamColumn(title)}
+								data={listData}
+								className={styles.cardGrid}
+								sportKey={title}
+								item_name={unit.item_name}
+							/>
+						))
 					) : (
 						<Grid
 							result_status={unit.result_status}

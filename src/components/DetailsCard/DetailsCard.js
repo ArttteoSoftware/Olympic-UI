@@ -161,44 +161,39 @@ const GridSection = ({
 	sportKey,
 }) => (
 	<>
-		{gridData.map(
-			(item) => (
-				console.log(item),
-				(
-					<div key={item.item_name}>
-						<GridHeader itemName={item.item_name} />
-						<div className={styles.dataContainer}>
-							{item.unit_code.includes("TE") ? (
-								<TeamGrid
-									result_status={item?.result_status || ""}
-									details={false}
-									columns={returnSportTeamColumn(sportKey)}
-									data={item.start_list}
-									className={styles.cardGrid}
-									isTeam={true}
-									unit_code={item.unit_code}
-									sportKey={sportKey}
-									item_name={item.item_name}
-								/>
-							) : (
-								<Grid
-									result_status={item.result_status}
-									details={true}
-									columns={columns}
-									data={item}
-									rowKey={(record) => record._id}
-									onRowClick={handleRowClick}
-									loading={loading}
-									item_name={item.item_name}
-									unit_code={item.unit_code}
-									athlete={item.athlete}
-								/>
-							)}
-						</div>
-					</div>
-				)
-			)
-		)}
+		{gridData.map((item) => (
+			<div key={item.item_name}>
+				<GridHeader itemName={item.item_name} />
+				<div className={styles.dataContainer}>
+					{item.unit_code.includes("TE") ? (
+						<TeamGrid
+							result_status={item?.result_status || ""}
+							details={false}
+							columns={returnSportTeamColumn(sportKey)}
+							data={item.start_list}
+							className={styles.cardGrid}
+							isTeam={true}
+							unit_code={item.unit_code}
+							sportKey={sportKey}
+							item_name={item.item_name}
+						/>
+					) : (
+						<Grid
+							result_status={item.result_status}
+							details={true}
+							columns={columns}
+							data={item}
+							rowKey={(record) => record._id}
+							onRowClick={handleRowClick}
+							loading={loading}
+							item_name={item.item_name}
+							unit_code={item.unit_code}
+							athlete={item.athlete}
+						/>
+					)}
+				</div>
+			</div>
+		))}
 	</>
 );
 

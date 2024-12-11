@@ -324,8 +324,6 @@ export const FigureSkatingCol = (title) => [
 		textAlign: "center",
 		width: 60,
 		render: (record, index, result_status, livescoring, athlete) => {
-			console.log("ath", athlete);
-			console.log("re", record);
 			if (record.athlete) {
 				return (
 					<AthleteRanking
@@ -354,7 +352,6 @@ export const FigureSkatingCol = (title) => [
 		textAlign: "start",
 		width: 150,
 		render: (record, index, result_status, livescoring) => {
-			console.log("****", record.athlete.organisation);
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -474,7 +471,12 @@ export const CrossCountryCol = (title) => [
 				}
 			}
 			return (
-				<AthleteCell record={record} index={index} livescoring={livescoring} />
+				<AthleteCell
+					showCountry={false}
+					record={record}
+					index={index}
+					livescoring={livescoring}
+				/>
 			);
 		},
 	},
@@ -627,10 +629,10 @@ export const HockeyCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 150,
-		render: (record, index, result_status, livescoring, athlete) => {
+		render: (record, index, result_status, livescoring, isGoal) => {
 			return (
 				<>
-					<AthleteCell record={record} />
+					<AthleteCell record={record} isGoal={isGoal} />
 				</>
 			);
 		},
@@ -664,10 +666,8 @@ export const HockeyCol = (title) => [
 		textAlign: "center",
 		width: 30,
 		render: (record) => {
-			if (record.intermediates?.length > 3) {
+			if (record.intermediates?.length === 3) {
 				return record?.intermediates[2]?.intermediates.result;
-			} else {
-				return record?.result;
 			}
 		},
 	},
@@ -677,7 +677,6 @@ export const HockeyCol = (title) => [
 		width: 30,
 		render: (record) => {
 			if (record.intermediates?.length > 1) {
-				console.log("record", record.intermediates.length);
 				if (record.intermediates.length === 2) {
 					return <div>{record?.intermediates[1]?.intermediates.result}</div>;
 				} else {
@@ -711,16 +710,19 @@ export const HockeyCol = (title) => [
 	},
 ];
 
-const AthleteCell = ({ record, showCountry, livescoring }) => {
+const AthleteCell = ({ record, showCountry = true, livescoring, isGoal }) => {
 	return (
 		<div className={styles.nameContainer}>
-			<img
-				className="flag"
-				src={getFlag(record?.athlete?.organisation)}
-				alt="flag"
-				onError={(e) => (e.target.src = "flags/ESP.svg")}
-			/>
+			{showCountry && (
+				<img
+					className="flag"
+					src={getFlag(record?.athlete?.organisation)}
+					alt="flag"
+					onError={(e) => (e.target.src = "flags/ESP.svg")}
+				/>
+			)}
 			<div>{record.athlete?.name}</div>
+			{isGoal && <div className={styles.goalContainer}>Goal</div>}
 		</div>
 	);
 };

@@ -80,3 +80,11 @@
 	width: 16px;
 	height: 16px;
 }
+
+.goalContainer {
+	background-color: #ff0000;
+	border-radius: 100px;
+	padding: 6px;
+	color: #ffffff;
+	font-weight: 700;
+}
