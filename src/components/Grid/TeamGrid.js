@@ -172,13 +172,14 @@ function Grid({
 													onRowClick={onRowClick}
 													result_status={status}
 													isGoal={
-														dataState?.current?.length > 0 &&
-														(record?.athlete?.code ===
+														dataState &&
+														dataState.current?.length > 0 &&
+														record?.athlete?.code ===
 															dataState.current[index]?.athlete?.code &&
-															dataState.current[index].intermediates[
-																dataState.current[index].intermediates.length -
-																	1
-															].action) === "Goal"
+														dataState.current[index]?.intermediates[
+															dataState.current[index]?.intermediates?.length -
+																1
+														]?.action === "Goal"
 													}
 												/>
 											)
