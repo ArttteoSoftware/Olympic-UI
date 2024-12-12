@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Divider, RedDivider, YellowDivider } from "../../UI/Icons";
+import { Divider, RedDivider } from "../../UI/Icons";
 import Select from "../Select/Select";
 import styles from "./DetailsCard.module.css";
 import Grid from "../Grid/Grid";
@@ -9,6 +9,7 @@ import { convertSportTitle } from "../../enum/Sport";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 import TeamGrid from "../Grid/TeamGrid";
+
 const DetailsCard = ({
 	columns,
 	initialData,
@@ -28,14 +29,13 @@ const DetailsCard = ({
 	const [youtube, setYoutube] = useState(false);
 
 	useEffect(() => {
-		if (dataState?.current?.length > 0) {
+		if (dataState) {
 			initialData.forEach((element) => {
-				if (
-					element.unitCode === unitCode ||
-					element.item_name === dataState.item_name
-				) {
-					initialData.start_list = dataState.current; //initialData.startList
-					initialData.result_status = dataState.result_status;
+				const currentGameData =
+					dataState[element.unitCode]?.[element.item_name];
+				if (currentGameData) {
+					initialData.start_list = currentGameData.current;
+					initialData.result_status = currentGameData.result_status;
 				}
 				setGridData(initialData);
 			});
@@ -63,14 +63,10 @@ const DetailsCard = ({
 				<div className={styles.cardHeaderContainer}>
 					<div className={styles.liveIndicatorContainer}></div>
 					<CardHeader title={convertSportTitle(sportKey)} />
-
 					<div className={styles.liveIndicatorContainer}>
-						{/* TODO : There is a time gap while dataState is loaded */}
 						{initialData.result_status === "LIVE" && (
 							<div
-								onClick={() => {
-									setYoutube(true);
-								}}
+								onClick={() => setYoutube(true)}
 								className={styles.liveIndicator}
 							>
 								Live
@@ -81,7 +77,6 @@ const DetailsCard = ({
 						)}
 					</div>
 				</div>
-
 				<div className={styles.divider}>
 					<RedDivider />
 				</div>
@@ -116,7 +111,6 @@ const DetailsCard = ({
 				openInfo={openInfo}
 				onClose={() => setOpenInfo(false)}
 			/>
-
 			{youtube && (
 				<div className={styles.overlay} onClick={handleModal}>
 					<iframe
@@ -135,9 +129,7 @@ const DetailsCard = ({
 };
 
 const CardHeader = ({ title }) => (
-	<>
-		<div className={styles.cardTitle}>{title}</div>
-	</>
+	<div className={styles.cardTitle}>{title}</div>
 );
 
 const FilterSection = ({ unitNames, isOpen, setIsOpen, onFilterSelect }) => (
@@ -189,6 +181,7 @@ const GridSection = ({
 							item_name={item.item_name}
 							unit_code={item.unit_code}
 							athlete={item.athlete}
+							sportKey={sportKey}
 						/>
 					)}
 				</div>

@@ -69,6 +69,7 @@ const Card = ({ title, units, divider }) => {
 			return (
 				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
+
 					{isTeam ? (
 						// თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
@@ -87,21 +88,19 @@ const Card = ({ title, units, divider }) => {
 					) : (
 						// </MarqueeEffect>
 
-						(console.log("DT"),
-						(
-							// <MarqueeEffect>
-							<Grid
-								result_status={unit.result_status}
-								details={false}
-								columns={returnSportColumn(title)}
-								data={listData}
-								className={styles.cardGrid}
-								isTeam={isTeam}
-								unit_code={unit.unit_code}
-								sportKey={title}
-								item_name={unit.item_name}
-							/>
-						))
+						// <MarqueeEffect>
+						<Grid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportColumn(title)}
+							data={listData}
+							className={styles.cardGrid}
+							isTeam={isTeam}
+							unit_code={unit.unit_code}
+							sportKey={title}
+							item_name={unit.item_name}
+						/>
+
 						// </MarqueeEffect>
 					)}
 				</div>
@@ -112,18 +111,16 @@ const Card = ({ title, units, divider }) => {
 					<UnitHeader item={unit} loading={loading} />
 
 					{isTeam ? (
-						(console.log("GRID", unit),
-						(
-							<TeamGrid
-								result_status={unit.result_status}
-								details={false}
-								columns={returnSportTeamColumn(title)}
-								data={listData}
-								className={styles.cardGrid}
-								sportKey={title}
-								item_name={unit.item_name}
-							/>
-						))
+						<TeamGrid
+							result_status={unit.result_status}
+							details={false}
+							columns={returnSportTeamColumn(title)}
+							data={listData}
+							unit_code={unit.unit_code}
+							className={styles.cardGrid}
+							sportKey={title}
+							item_name={unit.item_name}
+						/>
 					) : (
 						<Grid
 							result_status={unit.result_status}
@@ -131,6 +128,7 @@ const Card = ({ title, units, divider }) => {
 							columns={returnSportColumn(title)}
 							data={listData}
 							className={styles.cardGrid}
+							unit_code={unit.unit_code}
 							item_name={unit.item_name}
 							sportKey={title}
 						/>
