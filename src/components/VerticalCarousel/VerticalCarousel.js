@@ -57,6 +57,7 @@ const VerticalCarousel = ({ items, loader }) => {
 						units={items[currentIndex]?.units}
 					/>
 					<Card
+						className={"blurredCard"}
 						divider={getDividerColor(
 							items[(currentIndex + 1) % items.length]?._id
 						)}
