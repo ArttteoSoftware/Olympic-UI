@@ -90,11 +90,11 @@ function Grid({
 			setAnimatedData(dataState.current);
 			setStatus(dataState.result_status);
 
-			const firstInt = dataState.current[0].intermediates;
-			const secondInt = dataState.current[1].intermediates;
+			const firstInt = dataState.current[0]?.intermediates;
+			const secondInt = dataState.current[1]?.intermediates;
 			if (
-				firstInt[firstInt.length - 1].action === "Goal" ||
-				secondInt[secondInt.length - 1].action === "Goal"
+				(firstInt && firstInt[firstInt.length - 1]?.action === "Goal") ||
+				(secondInt && secondInt[secondInt.length - 1]?.action === "Goal")
 			) {
 				setIsGoal(true);
 			} else {
@@ -172,14 +172,17 @@ function Grid({
 													onRowClick={onRowClick}
 													result_status={status}
 													isGoal={
-														dataState &&
-														dataState.current?.length > 0 &&
-														record?.athlete?.code ===
-															dataState.current[index]?.athlete?.code &&
-														dataState.current[index]?.intermediates[
-															dataState.current[index]?.intermediates?.length -
-																1
-														]?.action === "Goal"
+														(dataState &&
+															dataState.current?.length > 0 &&
+															record?.athlete?.code ===
+																dataState.current[index]?.athlete?.code &&
+															dataState.current[index]?.intermediates?.length >
+																0 &&
+															dataState.current[index]?.intermediates[
+																dataState.current[index]?.intermediates
+																	?.length - 1
+															]?.action === "Goal") ||
+														false
 													}
 												/>
 											)
