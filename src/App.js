@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { AppRoutes } from "./routes/AppRoutes";
 import io from "socket.io-client";
 import useSocketStore from "./store/socketStore";
+
 function App() {
 	const { setData, setStatus, setUnitCode } = useSocketStore();
 
@@ -15,7 +16,11 @@ function App() {
 
 		// Listen for specific events from the server
 		socket.on("DT_RESULT", (newData) => {
-			setData({ data: newData });
+			setData({
+				sport_id: newData.unit_code.substring(0, 3),
+				game_id: newData.unit_code,
+				data: newData,
+			});
 			setUnitCode({ unitCode: newData.unit_code });
 		});
 

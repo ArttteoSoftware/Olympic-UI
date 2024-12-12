@@ -168,9 +168,12 @@
 @media screen and (max-width: 768px) {
 	.mainContainer,
 	.container,
-	.innerContainer,
 	.video {
 		width: 95vw;
 		max-width: 95vw;
+	}
+
+	.innerContainer {
+		max-width: 92vw;
 	}
 }

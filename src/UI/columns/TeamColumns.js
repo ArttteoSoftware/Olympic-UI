@@ -36,7 +36,15 @@ export const SnowboardCol = (title) => [
 		title: title ? title : "Athlete",
 		width: 120,
 		textAlign: "start",
-		render: (record, index, result_status, livescoring) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -49,7 +57,13 @@ export const SnowboardCol = (title) => [
 				}
 			}
 			return (
-				<AthleteCell record={record} index={index} livescoring={livescoring} />
+				<AthleteCell
+					sportKey={sportKey}
+					unit_code={unit_code}
+					record={record}
+					index={index}
+					livescoring={livescoring}
+				/>
 			);
 		},
 	},
@@ -140,7 +154,15 @@ export const BiathlonCol = (title) => [
 		title: title ? title : "Name",
 		textAlign: "start",
 		width: 150,
-		render: (record, index, result_status, livescoring) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -153,7 +175,13 @@ export const BiathlonCol = (title) => [
 				}
 			}
 			return (
-				<AthleteCell record={record} index={index} livescoring={livescoring} />
+				<AthleteCell
+					sportKey={sportKey}
+					unit_code={unit_code}
+					record={record}
+					index={index}
+					livescoring={livescoring}
+				/>
 			);
 		},
 	},
@@ -202,10 +230,23 @@ export const AlpineCol = (title) => [
 		key: "name",
 		title: title ?? "Name",
 		textAlign: "start",
-		render: (record, index, result_status, livescoring, athlete) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			athlete,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			return (
 				<>
-					<AthleteCell record={record} />
+					<AthleteCell
+						sportKey={sportKey}
+						unit_code={unit_code}
+						record={record}
+					/>
 				</>
 			);
 		},
@@ -251,25 +292,19 @@ export const ShortTrackCol = (title) => [
 	},
 
 	{
-		key: "bib",
-		title: "Bib",
-		textAlign: "center",
-		width: 50,
-		render: (record, index, result_status, livescoring, athlete) => {
-			if (record?.athlete) {
-				return <>{record?.athlete?.bib}</>;
-			} else {
-				return <>{athlete.bib}</>;
-			}
-		},
-	},
-
-	{
 		key: "name",
 		title: title ?? "Name",
 		textAlign: "start",
 		// width: 100,
-		render: (record, index, result_status, livescoring) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -282,7 +317,13 @@ export const ShortTrackCol = (title) => [
 				}
 			}
 			return (
-				<AthleteCell record={record} index={index} livescoring={livescoring} />
+				<AthleteCell
+					sportKey={sportKey}
+					unit_code={unit_code}
+					record={record}
+					index={index}
+					livescoring={livescoring}
+				/>
 			);
 		},
 	},
@@ -458,7 +499,15 @@ export const CrossCountryCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 100,
-		render: (record, index, result_status, livescoring) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -472,6 +521,8 @@ export const CrossCountryCol = (title) => [
 			}
 			return (
 				<AthleteCell
+					sportKey={sportKey}
+					unit_code={unit_code}
 					showCountry={false}
 					record={record}
 					index={index}
@@ -549,7 +600,15 @@ export const FreestyleCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 90,
-		render: (record, index, result_status, livescoring) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			if (title) {
 				if (
 					result_status === "OFFICIAL" ||
@@ -562,7 +621,13 @@ export const FreestyleCol = (title) => [
 				}
 			}
 			return (
-				<AthleteCell record={record} index={index} livescoring={livescoring} />
+				<AthleteCell
+					sportKey={sportKey}
+					unit_code={unit_code}
+					record={record}
+					index={index}
+					livescoring={livescoring}
+				/>
 			);
 		},
 	},
@@ -629,10 +694,23 @@ export const HockeyCol = (title) => [
 		title: title ?? "Name",
 		textAlign: "start",
 		width: 150,
-		render: (record, index, result_status, livescoring, isGoal) => {
+		render: (
+			record,
+			index,
+			result_status,
+			livescoring,
+			isGoal,
+			sportKey,
+			unit_code
+		) => {
 			return (
 				<>
-					<AthleteCell record={record} isGoal={isGoal} />
+					<AthleteCell
+						sportKey={sportKey}
+						unit_code={unit_code}
+						record={record}
+						isGoal={isGoal}
+					/>
 				</>
 			);
 		},
@@ -710,7 +788,49 @@ export const HockeyCol = (title) => [
 	},
 ];
 
-const AthleteCell = ({ record, showCountry = true, livescoring, isGoal }) => {
+const AthleteCell = ({
+	record,
+	showCountry = true,
+	livescoring,
+	isGoal,
+	sportKey,
+	unit_code,
+}) => {
+	const { dataState } = useSocketStore();
+
+	// Access the current and previous data for the specific sport and game
+	const currentData = dataState[sportKey]?.[unit_code]?.current;
+	const previousData = dataState[sportKey]?.[unit_code]?.previous;
+
+	const oldIndex = previousData?.findIndex(
+		(item) =>
+			item.athlete?.code === record.athlete?.code &&
+			item.athlete?.bib === record.athlete?.bib
+	);
+
+	const newIndex = currentData?.findIndex(
+		(item) =>
+			item.athlete?.code === record.athlete?.code &&
+			item.athlete?.bib === record.athlete?.bib
+	);
+
+	const indx = oldIndex - newIndex;
+
+	let modifiedName = record.athlete?.name;
+	if (modifiedName && modifiedName.includes("-")) {
+		const lastname = modifiedName.split(". ");
+		const firstName = lastname[0];
+		const parts = lastname[lastname.length - 1];
+
+		const newName = parts.split("-");
+		if (newName.length === 2) {
+			// Ensure there are exactly two parts after splitting
+			modifiedName = `${firstName}. ${newName[0].charAt(0)}-${newName[1]}`;
+		} else {
+			modifiedName = `${firstName}. ${parts}`; // Fallback to original last part
+		}
+	}
+
 	return (
 		<div className={styles.nameContainer}>
 			{showCountry && (
@@ -721,7 +841,7 @@ const AthleteCell = ({ record, showCountry = true, livescoring, isGoal }) => {
 					onError={(e) => (e.target.src = "flags/ESP.svg")}
 				/>
 			)}
-			<div>{record.athlete?.name}</div>
+			<div>{modifiedName}</div>
 			{isGoal && <div className={styles.goalContainer}>Goal</div>}
 		</div>
 	);

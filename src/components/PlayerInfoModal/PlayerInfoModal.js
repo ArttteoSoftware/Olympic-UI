@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./PlayerInfoModal.module.css";
 import {
 	CloseModalIcon,
@@ -12,13 +12,12 @@ import {
 	getMedalsByPlayerId,
 	getResultsByPlayerId,
 } from "../../services/PlayerDetailService";
-import { useCallback, useEffect, useState } from "react";
 import { getFlag } from "../../UI/flags";
 import FormatData from "../../util/FormatData";
 import HistoryGrid from "../Grid/HistoryGrid";
-import { returnSportColumn } from "../../UI/columns/Columns";
 import useSocketStore from "../../store/socketStore";
 import { convertSportTitle } from "../../enum/Sport";
+import { returnSportColumn } from "../../UI/columns/Columns";
 
 export default function PlayerInfoModal({
 	visible,
@@ -33,11 +32,11 @@ export default function PlayerInfoModal({
 	const [medals, setMedals] = useState([]);
 	const [results, setResults] = useState([]);
 	const { dataState } = useSocketStore();
+	const currentGameData = dataState[sportKey]?.[item_name];
 
 	const loadData = useCallback(async () => {
 		try {
 			const { data } = await getMedalsByPlayerId(record.athlete.code);
-
 			setMedals(data.medals);
 		} catch (err) {
 			console.error("Error while loading Data", err);
@@ -47,7 +46,6 @@ export default function PlayerInfoModal({
 	const loadResults = useCallback(async () => {
 		try {
 			const { data } = await getResultsByPlayerId(record.athlete.code);
-
 			setResults(data);
 		} catch (err) {
 			console.error("Error while loading player's result", err);
@@ -152,7 +150,7 @@ export default function PlayerInfoModal({
 
 						<div className={styles.modalFooter}>
 							<div className={styles.gridContainer}>
-								{dataState?.item_name === item_name && (
+								{currentGameData && (
 									<>
 										<span className={styles.modalFooterTitle}>Results</span>
 

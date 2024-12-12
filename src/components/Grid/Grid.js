@@ -15,8 +15,13 @@ const PlayerRow = memo(
 		itemName,
 		result_status,
 		athlete,
+		sportKey,
+		unit_code,
 	}) => {
 		const { dataState } = useSocketStore();
+
+		const currentGameData = dataState[`${sportKey}`]?.[`${unit_code}`];
+
 		return (
 			<Reorder.Item
 				as="tr"
@@ -51,8 +56,10 @@ const PlayerRow = memo(
 										record,
 										index,
 										result_status,
-										Boolean(itemName === dataState?.item_name),
-										athlete
+										Boolean(itemName === currentGameData?.item_name),
+										athlete,
+										sportKey,
+										unit_code
 								  )
 								: record[column.key]}
 						</td>
@@ -72,6 +79,7 @@ function Grid({
 	unit_code,
 	loading,
 	result_status,
+	sportKey,
 }) {
 	const { dataState, unitCode } = useSocketStore();
 	const [animatedData, setAnimatedData] = useState([]);
@@ -81,13 +89,13 @@ function Grid({
 	useEffect(() => {
 		setLoader(true);
 
-		if (unit_code === unitCode || item_name === dataState.item_name) {
-			setAnimatedData(dataState.current);
-			setStatus(dataState.result_status);
+		const currentGameData = dataState[`${sportKey}`]?.[`${unit_code}`];
+		if (unit_code === unitCode || item_name === currentGameData?.item_name) {
+			setAnimatedData(currentGameData.current);
+			setStatus(currentGameData.result_status);
 			setLoader(false);
 		} else {
 			setStatus(result_status);
-
 			if (details) {
 				setAnimatedData(data.start_list);
 			} else {
@@ -146,6 +154,8 @@ function Grid({
 											onRowClick={onRowClick}
 											result_status={status}
 											athlete={record.athlete}
+											sportKey={sportKey}
+											unit_code={unit_code}
 										/>
 									);
 								})}
