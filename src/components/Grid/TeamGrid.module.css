@@ -4,6 +4,7 @@
 	margin: 0 auto;
 }
 
+
 .tableWrapper,
 .tableWrapper_details {
 	overflow-x: auto;
@@ -94,6 +95,7 @@ ul {
 	height: 100%;
 	position: relative;
 	padding: 0 10px;
+	cursor: pointer;
 }
 
 .periodTimeContainer {

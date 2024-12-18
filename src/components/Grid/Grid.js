@@ -91,8 +91,8 @@ function Grid({
 
 		const currentGameData = dataState[`${sportKey}`]?.[`${unit_code}`];
 		if (unit_code === unitCode || item_name === currentGameData?.item_name) {
-			setAnimatedData(currentGameData.current);
-			setStatus(currentGameData.result_status);
+			setAnimatedData(currentGameData?.current);
+			setStatus(currentGameData?.result_status);
 			setLoader(false);
 		} else {
 			setStatus(result_status);

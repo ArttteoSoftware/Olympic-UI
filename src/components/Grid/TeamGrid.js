@@ -33,11 +33,7 @@ const PlayerRow = memo(
 				drag={false}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.3 }}
-				onClick={() => {
-					if (details) {
-						onRowClick(record, itemName, athlete, result_status, columns);
-					}
-				}}
+				
 			>
 				{Array.isArray(columns) &&
 					columns?.map((column, index) => (
@@ -68,6 +64,7 @@ const PlayerRow = memo(
 		);
 	}
 );
+
 
 function Grid({
 	columns,
@@ -111,21 +108,18 @@ function Grid({
 
 			setIsGoal(false);
 
-			if (details) {
-				setAnimatedData(data.start_list);
-			} else {
+			console.log(data)
 				setAnimatedData(data);
-			}
 			setLoader(false);
 		}
-	}, [dataState, data, unitCode, result_status, unit_code, details, item_name]);
+	}, [dataState, data, unitCode, result_status, unit_code, details, item_name, sportKey]);
 	const result =
 		animatedData[0]?.intermediates?.length > 0 &&
 		animatedData[0]?.intermediates[animatedData[0]?.intermediates?.length - 1];
 
-	const goalBackground =
-		animatedData[0]?.intermediates?.length > 0 &&
-		animatedData[0]?.intermediates[animatedData[0]?.intermediates?.length - 1];
+	// const goalBackground =
+	// 	animatedData[0]?.intermediates?.length > 0 &&
+	// 	animatedData[0]?.intermediates[animatedData[0]?.intermediates?.length - 1];
 
 	return (
 		<div className={details ? styles.container_details : styles.container}>
@@ -134,7 +128,11 @@ function Grid({
 					<Loading />
 				</div>
 			) : (
-				<div className={styles.teamTableContainer}>
+				<div className={styles.teamTableContainer} 
+				onClick={() => {
+					onRowClick(data, item_name)
+					console.log('TeamGrid', data)
+				}}>
 					{sportKey === "IHO" && animatedData?.length > 1 && (
 						<div className={styles.periodTimeContainer}>
 							<div className={styles.periodTimeInnerContainer}>
@@ -166,7 +164,6 @@ function Grid({
 											index={index}
 											details={details}
 											itemName={item_name}
-											onRowClick={onRowClick}
 											result_status={status}
 											sportKey={sportKey}
 											unit_code={unit_code}

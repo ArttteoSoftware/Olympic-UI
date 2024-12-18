@@ -9,6 +9,7 @@ import { convertSportTitle } from "../../enum/Sport";
 import { returnSportColumn } from "../../UI/columns/Columns";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 import TeamGrid from "../Grid/TeamGrid";
+import TeamInfoModal from '../PlayerInfoModal/TeamInfoModal'
 
 const DetailsCard = ({
 	columns,
@@ -45,6 +46,7 @@ const DetailsCard = ({
 	}, [dataState, initialData, unitCode]);
 
 	const handleRowClick = (record, unitName) => {
+		
 		setPlayerInfo({ ...record, item_name: unitName });
 		setOpenInfo(true);
 	};
@@ -57,6 +59,7 @@ const DetailsCard = ({
 		setYoutube(!youtube);
 	};
 
+	console.log('Initial',)
 	return (
 		<>
 			<div className={styles.mainContainer}>
@@ -106,6 +109,7 @@ const DetailsCard = ({
 				ref={modalRef}
 				sportKey={sportKey}
 				result_status={initialData[0]?.result_status}
+				isTeam={initialData[0]?.unit_code.includes('TE')}
 				playerInfo={playerInfo}
 				columns={columns}
 				openInfo={openInfo}
@@ -160,10 +164,11 @@ const GridSection = ({
 					{item.unit_code.includes("TE") ? (
 						<TeamGrid
 							result_status={item?.result_status || ""}
-							details={false}
+							details={true}
 							columns={returnSportTeamColumn(sportKey)}
 							data={item.start_list}
 							className={styles.cardGrid}
+							onRowClick={handleRowClick}
 							isTeam={true}
 							unit_code={item.unit_code}
 							sportKey={sportKey}
@@ -201,20 +206,41 @@ const GridHeader = ({ itemName }) => (
 );
 
 const PlayerInfo = React.forwardRef(
-	({ sportKey, playerInfo, openInfo, onClose, result_status, columns }, ref) =>
-		openInfo && (
-			<PlayerInfoModal
-				record={playerInfo}
-				result_status={result_status}
-				modalRef={ref}
-				visible={Boolean(openInfo)}
-				sportKey={sportKey}
-				item_name={playerInfo.item_name}
-				onClose={onClose}
-				columns={columns}
-				discipline_code={sportKey}
-			/>
-		)
+	({ sportKey, playerInfo, openInfo, onClose, result_status, columns, isTeam }, ref) => {
+		return (
+			<>
+				{isTeam ? (
+					openInfo && (
+						<TeamInfoModal
+							record={{ "0": playerInfo[0], "1": playerInfo[1] }}
+							result_status={result_status}
+							modalRef={ref}
+							visible={Boolean(openInfo)}
+							sportKey={sportKey}
+							item_name={playerInfo.item_name}
+							onClose={onClose}
+							columns={columns}
+							discipline_code={sportKey}
+						/>
+					)
+				) : (
+					openInfo && (
+						<PlayerInfoModal
+							record={playerInfo}
+							result_status={result_status}
+							modalRef={ref}
+							visible={Boolean(openInfo)}
+							sportKey={sportKey}
+							item_name={playerInfo.item_name}
+							onClose={onClose}
+							columns={columns}
+							discipline_code={sportKey}
+						/>
+					)
+				)}
+			</>
+		);
+	}
 );
 
 export default DetailsCard;

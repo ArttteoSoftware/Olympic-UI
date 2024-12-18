@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import styles from "./Card.module.css";
-import { motion, Reorder } from "framer-motion";
+import { LayoutGroup, motion, Reorder } from "framer-motion";
 import { BTH, Divider, IHO } from "../../UI/Icons";
 import { convertSportTitle } from "../../enum/Sport";
 import useSocketStore from "../../store/socketStore";
@@ -18,10 +18,14 @@ const Card = ({ className, title, units, divider }) => {
 	const [loading, setLoading] = useState(true);
 	const [play, setPlay] = useState(false);
 
+	const currentGameData = dataState[`${title}`]?.[`${units[0].unit_code}`];
+
+
 	useEffect(() => {
 		if (units) {
 			setData(units);
 		}
+
 
 		setLoading(false);
 	}, [units]);
@@ -47,9 +51,9 @@ const Card = ({ className, title, units, divider }) => {
 		[]
 	);
 	const getListData = (unit) => {
-		if (unit.item_name === dataState.item_name) {
+		if (unit.item_name === currentGameData?.item_name) {
 			const updatedData = data.map((item) =>
-				item.item_name === dataState.item_name
+				item.item_name === currentGameData?.item_name
 					? { ...item, start_list: unit.start_list }
 					: item
 			);
@@ -65,7 +69,10 @@ const Card = ({ className, title, units, divider }) => {
 
 		const isTeam = Boolean(unit.unit_code.includes("TE"));
 
-		if (unit.item_name === dataState.item_name) {
+		console.log('True',{unit:unit.item_name, dataState: currentGameData, isSame:Boolean(unit.item_name === currentGameData?.item_name)});
+
+		if (unit.item_name === currentGameData?.item_name) {
+			console.log('True',true)
 			return (
 				<div key={`${unit.unit_code}-${unit.item_name}`}>
 					<UnitHeader item={unit} loading={loading} />
@@ -73,7 +80,7 @@ const Card = ({ className, title, units, divider }) => {
 					{isTeam ? (
 						// თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-						// <MarqueeEffect>
+						<MarqueeEffect>
 						<TeamGrid
 							result_status={unit.result_status}
 							details={false}
@@ -85,10 +92,11 @@ const Card = ({ className, title, units, divider }) => {
 							sportKey={title}
 							item_name={unit.item_name}
 						/>
-					) : (
-						// </MarqueeEffect>
+						</MarqueeEffect>
 
-						// <MarqueeEffect>
+					) : (
+
+						<MarqueeEffect>
 						<Grid
 							result_status={unit.result_status}
 							details={false}
@@ -101,7 +109,7 @@ const Card = ({ className, title, units, divider }) => {
 							item_name={unit.item_name}
 						/>
 
-						// </MarqueeEffect>
+							 </MarqueeEffect>
 					)}
 				</div>
 			);
