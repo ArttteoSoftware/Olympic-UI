@@ -180,12 +180,43 @@
 }
 .lineUpPlayer {
   width: 100%;
-  padding: 10px;
+  padding: 14px 10px;
+  border-radius: 10px;
 }
 .grayLineUpPlayer {
-  background-color: #f5f5f5;
+  background-color: #f5f7f7;
 }
 
+.teamNamesContainer {
+  display: flex;
+}
+
+.teamNamesContainer > div {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.teamNamesContainer > :first-child {
+  flex-direction: row;
+}
+
+.teamNamesContainer > :last-child {
+  flex-direction: row-reverse;
+}
+
+.flag {
+  width: 54px;
+}
+
+.score {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.live {
+  color: #ff0000;
+}
 @media (max-width: 768px) {
   .modalHeader,
   .modalBody,
