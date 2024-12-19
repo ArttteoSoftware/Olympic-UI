@@ -24,7 +24,6 @@ const MarqueeEffect = ({ children, speed = 40, details }) => {
 						style={{ "--scroll-speed": `${speed}s` }}
 					>
 						{children}
-						{children}
 					</div>
 				</div>
 			) : (

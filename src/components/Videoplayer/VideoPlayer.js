@@ -15,7 +15,7 @@ const VideoPlayer = ({ onVideoEnd, play, setPlay }) => {
 				startPosition: 0,
 				maxBufferLength: 30,
 				maxMaxBufferLength: 60,
-				startLevel: -1,
+				startLevel: -5,
 				autoStartLoad: true,
 				manifestLoadingTimeOut: 10000,
 				manifestLoadingMaxRetry: 3,

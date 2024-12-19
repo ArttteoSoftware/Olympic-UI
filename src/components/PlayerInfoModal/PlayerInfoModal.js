@@ -60,6 +60,7 @@ export default function PlayerInfoModal({
 		loadResults();
 	}, [loadResults]);
 
+
 	return (
 		<div className={styles.modalOverlay}>
 			{visible && (
