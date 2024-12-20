@@ -46,6 +46,12 @@ const DetailsCard = ({
   }, [dataState, initialData, unitCode]);
 
   const handleRowClick = (record, unitName) => {
+    console.log("InitialData", initialData);
+    console.log("recordClick", record);
+
+    // add field to playerInfo may be solution of the problem.
+    // I should be assured that every sports have athlete.
+    // or backend should add unit_code to the same level as unit_item
     setPlayerInfo({ ...record, item_name: unitName });
     setOpenInfo(true);
   };
@@ -58,7 +64,7 @@ const DetailsCard = ({
     setYoutube(!youtube);
   };
 
-  console.log("Initial");
+  console.log("Initial", playerInfo);
   return (
     <>
       <div className={styles.mainContainer}>
@@ -104,6 +110,8 @@ const DetailsCard = ({
           />
         </div>
       </div>
+
+      {/* InitialData should not be used here. I need playerInfo. PlayerInfo is setted during the onRowClicking */}
       <PlayerInfo
         ref={modalRef}
         sportKey={sportKey}

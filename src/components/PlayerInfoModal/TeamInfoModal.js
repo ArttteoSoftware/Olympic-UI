@@ -92,18 +92,46 @@ export default function TeamInfoModal({
 
             <div className={styles.modalBody}>
               <div className={styles.contentContainer}>
-                {Object.keys(record).map((key, i) => (
-                  <div key={i}>
-                    <img
-                      src="image.png"
-                      alt="profile"
-                      width={54}
-                      height={54}
-                      className={styles.avatar}
-                    />
-                  </div>
-                ))}
-                <div></div>
+                <div className={styles.teamNamesContainer}>
+                  {Object.keys(record).map(
+                    (key, i) => (
+                      console.log(
+                        "********************************",
+                        record[key]
+                      ),
+                      (
+                        <>
+                          <div key={i}>
+                            <div>{record[key]?.athlete?.name} </div>
+                            <img
+                              className={styles.flag}
+                              src={getFlag(record[key]?.athlete?.organisation)}
+                              alt="flag"
+                              onError={(e) => (e.target.src = "flags/ESP.svg")}
+                            />
+
+                            {/* Refactoring from Backend. Some sports have record[key].result and some do not. */}
+                            <div className={styles.score}>
+                              {record[key]?.result !== undefined &&
+                              record[key]?.result !== null
+                                ? record[key]?.result
+                                : record[key]?.intermediates?.result}
+                            </div>
+                          </div>
+                          {i < Object.keys(record).length - 1 && (
+                            <div
+                              className={`${styles.score} ${
+                                result_status === "LIVE" ? styles.live : ""
+                              }`}
+                            >
+                              -
+                            </div>
+                          )}
+                        </>
+                      )
+                    )
+                  )}
+                </div>
               </div>
 
               {/* {medals?.map((competition, index) => {
@@ -136,20 +164,21 @@ export default function TeamInfoModal({
 
             <div className={styles.modalFooter}>
               <div className={styles.gridContainer}>
-                {Object.keys(record).map((key, i) => (
-                  <div className={styles.lineUpPlayerContainer} key={i}>
-                    {record[key].athletes.map((athlete, index) => (
-                      <div
-                        className={`${styles.lineUpPlayer} ${
-                          index % 2 === 1 ? styles.grayLineUpPlayer : ""
-                        }`}
-                        key={index}
-                      >
-                        {athlete.name}
-                      </div>
-                    ))}
-                  </div>
-                ))}
+                {record &&
+                  Object.keys(record).map((key, i) => (
+                    <div className={styles.lineUpPlayerContainer} key={i}>
+                      {record[key]?.athletes?.map((athlete, index) => (
+                        <div
+                          className={`${styles.lineUpPlayer} ${
+                            index % 2 === 1 ? styles.grayLineUpPlayer : ""
+                          }`}
+                          key={index}
+                        >
+                          {athlete.name}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
               </div>
             </div>
 

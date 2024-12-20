@@ -180,12 +180,47 @@
 }
 .lineUpPlayer {
   width: 100%;
-  padding: 10px;
+  padding: 14px 10px;
+  border-radius: 10px;
+  font-size: clamp(0.875rem, 2vw, 1rem);
 }
 .grayLineUpPlayer {
-  background-color: #f5f5f5;
+  background-color: #f5f7f7;
 }
 
+.teamNamesContainer {
+  display: flex;
+  width: 100%;
+  gap: clamp(1rem, 3vw, 2rem);
+  justify-content: center;
+}
+
+.teamNamesContainer > div {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.teamNamesContainer > :first-child {
+  flex-direction: row;
+}
+
+.teamNamesContainer > :last-child {
+  flex-direction: row-reverse;
+}
+
+.flag {
+  width: 54px;
+}
+
+.score {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+}
+
+.live {
+  color: #ff0000;
+}
 @media (max-width: 768px) {
   .modalHeader,
   .modalBody,
@@ -197,6 +232,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 2px;
+    min-height: 5vh;
+    justify-content: center;
   }
   .contentContainer {
     flex-direction: column;
@@ -212,5 +249,24 @@
 
   .dob {
     font-size: clamp(0.875rem, 1.5vw, 1rem);
+  }
+
+  .flag {
+    width: 25px;
+  }
+
+  .teamNamesContainer > div {
+    gap: 5px;
+  }
+  .score {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    font-weight: 600;
+  }
+  .gridContainer {
+    gap: 0px;
+  }
+
+  .lineUpPlayer {
+    padding: 10px 0px;
   }
 }
