@@ -104,8 +104,7 @@ export default function TeamInfoModal({
                           <div key={i}>
                             <div>{record[key]?.athlete?.name} </div>
                             <img
-                              width={54}
-                              height={54}
+                              className={styles.flag}
                               src={getFlag(record[key]?.athlete?.organisation)}
                               alt="flag"
                               onError={(e) => (e.target.src = "flags/ESP.svg")}

@@ -1,134 +1,134 @@
 .container,
 .container_details {
-	width: 100%;
-	margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .tableWrapper,
 .tableWrapper_details {
-	overflow-x: auto;
-	width: calc(100% - 0.5rem);
-	margin: 0 0.25rem 0.25rem;
-	border: 1px solid hsla(218, 22%, 21%, 0.149);
-	border-radius: 1rem;
-	background-color: #ffffff;
-	box-shadow: 0 -0.625rem 1.25rem 0 #0c0f300d;
+  overflow-x: auto;
+  width: calc(100% - 0.5rem);
+  margin: 0 0.25rem 0.25rem;
+  border: 1px solid hsla(218, 22%, 21%, 0.149);
+  border-radius: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 -0.625rem 1.25rem 0 #0c0f300d;
 }
 
 .table_details {
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0 10px;
-	table-layout: fixed;
-	min-width: 100%;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  table-layout: fixed;
+  min-width: 100%;
 }
 
 .table {
-	border-spacing: 0 0;
-	border-collapse: collapse;
-	width: 100%;
-	table-layout: fixed;
-	min-width: 100%;
+  border-spacing: 0 0;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  min-width: 100%;
 }
 
 .thead,
 .thead_details {
-	background-color: #f5f7f766;
+  background-color: #f5f7f766;
 }
 
 th,
 .td_details {
-	padding: 8px 4px;
-	text-align: left;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis; /* Added to handle text overflow */
+  padding: 8px 4px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Added to handle text overflow */
 }
 
 .td {
-	padding: 3px 2px;
-	text-align: left;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  padding: 3px 2px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 th {
-	color: #2a3342;
-	opacity: 60%;
-	font-weight: 400;
+  color: #2a3342;
+  opacity: 60%;
+  font-weight: 400;
 }
 
 tr,
 .tr {
-	/* background-color: #ffffff; */
-	cursor: pointer;
-	margin: 0;
+  /* background-color: #ffffff; */
+  cursor: pointer;
+  margin: 0;
 }
 ul {
-	margin: 0;
+  margin: 0;
 }
 
 .tr {
-	display: table-row;
-	vertical-align: inherit;
-	unicode-bidi: isolate;
-	border-color: inherit;
+  display: table-row;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+  border-color: inherit;
 }
 
 .loaderContainer {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
 }
 
 .partContainer {
-	height: calc(100% - 16px);
-	display: flex;
-	align-items: center;
-	flex-direction: row;
+  height: calc(100% - 16px);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
 .teamTableContainer {
-	height: 100%;
-	position: relative;
-	padding: 0 10px;
+  height: 100%;
+  position: relative;
+  padding: 0 10px;
 }
 
 .periodTimeInnerContainer {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 @media screen and (max-width: 48rem) {
-	.container,
-	.container_details {
-		max-width: 90vw;
-		min-width: 20rem;
-		margin: 0 auto;
-	}
+  .container,
+  .container_details {
+    max-width: 90vw;
+    min-width: 20rem;
+    margin: 0 auto;
+  }
 
-	.tableWrapper,
-	.tableWrapper_details {
-		width: 100%;
-	}
+  .tableWrapper,
+  .tableWrapper_details {
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-	.container_forCard {
-		max-width: calc(100vw - 40px); /* Adjust based on your card's padding */
-	}
+  .container_forCard {
+    max-width: calc(100vw - 40px); /* Adjust based on your card's padding */
+  }
 }
 
 @media (max-width: 480px) {
-	.table {
-		font-size: 10px;
-	}
+  .table {
+    font-size: 10px;
+  }
 
-	th,
-	.td_details {
-		padding: 4px 1px;
-	}
+  th,
+  .td_details {
+    padding: 4px 1px;
+  }
 }

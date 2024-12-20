@@ -12,248 +12,240 @@ import VideoPlayer from "../Videoplayer/VideoPlayer";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 
 const Card = ({ className, title, units, divider }) => {
-	const [data, setData] = useState([]);
-	const [isFlipped, setIsFlipped] = useState(false);
-	const { dataState } = useSocketStore();
-	const [loading, setLoading] = useState(true);
-	const [play, setPlay] = useState(false);
+  const [data, setData] = useState([]);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const { dataState, unitCode } = useSocketStore();
+  const [loading, setLoading] = useState(true);
+  const [play, setPlay] = useState(false);
 
-	const currentGameData = dataState[`${title}`]?.[`${units[0].unit_code}`];
+  const currentGameData = dataState[`${title}`]?.[`${unitCode}`];
 
+  useEffect(() => {
+    if (units) {
+      setData(units);
+    }
 
-	useEffect(() => {
-		if (units) {
-			setData(units);
-		}
+    setLoading(false);
+  }, [units]);
 
+  useEffect(() => {
+    if (isFlipped) {
+      setPlay(true);
+    } else {
+      setPlay(false);
+    }
+  }, [isFlipped]);
 
-		setLoading(false);
-	}, [units]);
+  const commonStyles = useMemo(
+    () => ({
+      padding: "0px",
+      position: "absolute",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      backfaceVisibility: "hidden",
+    }),
+    []
+  );
+  const getListData = (unit) => {
+    if (unit.item_name === currentGameData?.item_name) {
+      const updatedData = data.map((item) =>
+        item.item_name === currentGameData?.item_name
+          ? { ...item, start_list: unit.start_list }
+          : item
+      );
 
-	useEffect(() => {
-		if (isFlipped) {
-			setPlay(true);
-		} else {
-			setPlay(false);
-		}
-	}, [isFlipped]);
+      return updatedData[0];
+    } else {
+      return unit.start_list;
+    }
+  };
 
-	const commonStyles = useMemo(
-		() => ({
-			padding: "0px",
-			position: "absolute",
-			display: "flex",
-			alignItems: "center",
-			justifyContent: "center",
-			flexDirection: "column",
-			backfaceVisibility: "hidden",
-		}),
-		[]
-	);
-	const getListData = (unit) => {
-		if (unit.item_name === currentGameData?.item_name) {
-			const updatedData = data.map((item) =>
-				item.item_name === currentGameData?.item_name
-					? { ...item, start_list: unit.start_list }
-					: item
-			);
+  const renderUnit = (unit, loading) => {
+    const listData = getListData(unit);
 
-			return updatedData[0];
-		} else {
-			return unit.start_list;
-		}
-	};
+    const isTeam = Boolean(unit.unit_code.includes("TE"));
 
-	const renderUnit = (unit, loading) => {
-		const listData = getListData(unit);
+    if (unit.item_name === currentGameData?.item_name) {
+      return (
+        <div key={`${unit.unit_code}-${unit.item_name}`}>
+          <UnitHeader item={unit} loading={loading} />
 
-		const isTeam = Boolean(unit.unit_code.includes("TE"));
+          {isTeam ? (
+            // თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-		console.log('True',{unit:unit.item_name, dataState: currentGameData, isSame:Boolean(unit.item_name === currentGameData?.item_name)});
+            <MarqueeEffect>
+              <TeamGrid
+                result_status={unit.result_status}
+                details={false}
+                columns={returnSportTeamColumn(title)}
+                data={listData}
+                className={styles.cardGrid}
+                isTeam={isTeam}
+                unit_code={unit.unit_code}
+                sportKey={title}
+                item_name={unit.item_name}
+              />
+            </MarqueeEffect>
+          ) : (
+            <MarqueeEffect>
+              <Grid
+                result_status={unit.result_status}
+                details={false}
+                columns={returnSportColumn(title)}
+                data={listData}
+                className={styles.cardGrid}
+                isTeam={isTeam}
+                unit_code={unit.unit_code}
+                sportKey={title}
+                item_name={unit.item_name}
+              />
+            </MarqueeEffect>
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div key={`${unit.unit_code}-${unit.item_name}`}>
+          <UnitHeader item={unit} loading={loading} />
 
-		if (unit.item_name === currentGameData?.item_name) {
-			console.log('True',true)
-			return (
-				<div key={`${unit.unit_code}-${unit.item_name}`}>
-					<UnitHeader item={unit} loading={loading} />
+          {isTeam ? (
+            <TeamGrid
+              result_status={unit.result_status}
+              details={false}
+              columns={returnSportTeamColumn(title)}
+              data={listData}
+              unit_code={unit.unit_code}
+              className={styles.cardGrid}
+              sportKey={title}
+              item_name={unit.item_name}
+            />
+          ) : (
+            <Grid
+              result_status={unit.result_status}
+              details={false}
+              columns={returnSportColumn(title)}
+              data={listData}
+              className={styles.cardGrid}
+              unit_code={unit.unit_code}
+              item_name={unit.item_name}
+              sportKey={title}
+            />
+          )}
+        </div>
+      );
+    }
+  };
 
-					{isTeam ? (
-						// თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
-
-						<MarqueeEffect>
-						<TeamGrid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportTeamColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							isTeam={isTeam}
-							unit_code={unit.unit_code}
-							sportKey={title}
-							item_name={unit.item_name}
-						/>
-						</MarqueeEffect>
-
-					) : (
-
-						<MarqueeEffect>
-						<Grid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							isTeam={isTeam}
-							unit_code={unit.unit_code}
-							sportKey={title}
-							item_name={unit.item_name}
-						/>
-
-							 </MarqueeEffect>
-					)}
-				</div>
-			);
-		} else {
-			return (
-				<div key={`${unit.unit_code}-${unit.item_name}`}>
-					<UnitHeader item={unit} loading={loading} />
-
-					{isTeam ? (
-						<TeamGrid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportTeamColumn(title)}
-							data={listData}
-							unit_code={unit.unit_code}
-							className={styles.cardGrid}
-							sportKey={title}
-							item_name={unit.item_name}
-						/>
-					) : (
-						<Grid
-							result_status={unit.result_status}
-							details={false}
-							columns={returnSportColumn(title)}
-							data={listData}
-							className={styles.cardGrid}
-							unit_code={unit.unit_code}
-							item_name={unit.item_name}
-							sportKey={title}
-						/>
-					)}
-				</div>
-			);
-		}
-	};
-
-	return (
-		<div className={styles.mainContainer}>
-			<FrontCard
-				className={className}
-				commonStyles={commonStyles}
-				isFlipped={isFlipped}
-				title={title}
-				data={data}
-				setData={setData}
-				renderUnit={renderUnit}
-				setIsFlipped={setIsFlipped}
-				divider={divider}
-				loading={loading}
-			/>
-			<BackCard
-				commonStyles={commonStyles}
-				isFlipped={isFlipped}
-				setIsFlipped={setIsFlipped}
-				play={play}
-				setPlay={setPlay}
-			/>
-		</div>
-	);
+  return (
+    <div className={styles.mainContainer}>
+      <FrontCard
+        className={className}
+        commonStyles={commonStyles}
+        isFlipped={isFlipped}
+        title={title}
+        data={data}
+        setData={setData}
+        renderUnit={renderUnit}
+        setIsFlipped={setIsFlipped}
+        divider={divider}
+        loading={loading}
+      />
+      <BackCard
+        commonStyles={commonStyles}
+        isFlipped={isFlipped}
+        setIsFlipped={setIsFlipped}
+        play={play}
+        setPlay={setPlay}
+      />
+    </div>
+  );
 };
 
 const UnitHeader = ({ item }) => {
-	if (item?.item_name) {
-		return (
-			<div className={styles.subtitleContainer}>
-				<div className={styles.subtitleInnerContainer}>
-					<div className={styles.dashedLine} />
-					<div className={styles.subtitle}>{item.item_name}</div>
-					<div className={styles.dashedLine} />
-				</div>
-			</div>
-		);
-	}
+  if (item?.item_name) {
+    return (
+      <div className={styles.subtitleContainer}>
+        <div className={styles.subtitleInnerContainer}>
+          <div className={styles.dashedLine} />
+          <div className={styles.subtitle}>{item.item_name}</div>
+          <div className={styles.dashedLine} />
+        </div>
+      </div>
+    );
+  }
 };
 
 const FrontCard = ({
-	commonStyles,
-	isFlipped,
-	title,
-	data,
-	setData,
-	renderUnit,
-	setIsFlipped,
-	divider,
-	loading,
-	className,
+  commonStyles,
+  isFlipped,
+  title,
+  data,
+  setData,
+  renderUnit,
+  setIsFlipped,
+  divider,
+  loading,
+  className,
 }) => (
-	<Reorder.Group
-		style={commonStyles}
-		initial={false}
-		animate={{ rotateY: isFlipped ? 180 : 0 }}
-		transition={{ duration: 0.6 }}
-		values={data}
-		onReorder={setData}
-		onClick={() => setIsFlipped(true)}
-		className={`${styles.container} ${className ? styles[`${className}`] : ""}`}
-	>
-		<div className={styles.title}>{convertSportTitle(title)}</div>
-		<div className={styles.tableContainer}>
-			{divider}
+  <Reorder.Group
+    style={commonStyles}
+    initial={false}
+    animate={{ rotateY: isFlipped ? 180 : 0 }}
+    transition={{ duration: 0.6 }}
+    values={data}
+    onReorder={setData}
+    onClick={() => setIsFlipped(true)}
+    className={`${styles.container} ${className ? styles[`${className}`] : ""}`}
+  >
+    <div className={styles.title}>{convertSportTitle(title)}</div>
+    <div className={styles.tableContainer}>
+      {divider}
 
-			<div className={styles.innerContainer}>
-				{data?.length > 0 ? (
-					<>{data.map((unit) => renderUnit(unit, loading))}</>
-				) : (
-					<>
-						{loading === false && (
-							<div className={styles.placeholderContainer}>
-								<div className={styles.placeholderImg}>
-									<img
-										src={`assets/placeholders/${title}.png`}
-										alt="placeholder"
-										loading="lazy"
-									/>
-								</div>
-								<div className={styles.placeholderText}>
-									The game is scheduled for tomorrow
-								</div>
-							</div>
-						)}
-					</>
-				)}
-			</div>
-		</div>
-	</Reorder.Group>
+      <div className={styles.innerContainer}>
+        {data?.length > 0 ? (
+          <>{data.map((unit) => renderUnit(unit, loading))}</>
+        ) : (
+          <>
+            {loading === false && (
+              <div className={styles.placeholderContainer}>
+                <div className={styles.placeholderImg}>
+                  <img
+                    src={`assets/placeholders/${title}.png`}
+                    alt="placeholder"
+                    loading="lazy"
+                  />
+                </div>
+                <div className={styles.placeholderText}>
+                  The game is scheduled for tomorrow
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  </Reorder.Group>
 );
 
 const BackCard = ({ commonStyles, isFlipped, setIsFlipped, setPlay, play }) => (
-	<motion.div
-		style={commonStyles}
-		initial={{ rotateY: 180 }}
-		animate={{ rotateY: isFlipped ? 0 : 180 }}
-		transition={{ duration: 0.6 }}
-	>
-		<VideoPlayer
-			onVideoEnd={() => {
-				setIsFlipped(false);
-				setPlay(false);
-			}}
-			shouldPlay={true}
-			play={play}
-			setPlay={setPlay}
-		/>
-	</motion.div>
+  <motion.div
+    style={commonStyles}
+    initial={{ rotateY: 180 }}
+    animate={{ rotateY: isFlipped ? 0 : 180 }}
+    transition={{ duration: 0.6 }}
+  >
+    <VideoPlayer
+      onVideoEnd={() => {
+        setIsFlipped(false);
+        setPlay(false);
+      }}
+      shouldPlay={true}
+      play={play}
+      setPlay={setPlay}
+    />
+  </motion.div>
 );
 
 export default Card;
