@@ -75,19 +75,17 @@ const Card = ({ className, title, units, divider }) => {
           {isTeam ? (
             // თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-            <MarqueeEffect>
-              <TeamGrid
-                result_status={unit.result_status}
-                details={false}
-                columns={returnSportTeamColumn(title)}
-                data={listData}
-                className={styles.cardGrid}
-                isTeam={isTeam}
-                unit_code={unit.unit_code}
-                sportKey={title}
-                item_name={unit.item_name}
-              />
-            </MarqueeEffect>
+            <TeamGrid
+              result_status={unit.result_status}
+              details={false}
+              columns={returnSportTeamColumn(title)}
+              data={listData}
+              className={styles.cardGrid}
+              isTeam={isTeam}
+              unit_code={unit.unit_code}
+              sportKey={title}
+              item_name={unit.item_name}
+            />
           ) : (
             <MarqueeEffect>
               <Grid

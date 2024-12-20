@@ -137,7 +137,7 @@ function Grid({
         <div
           className={styles.teamTableContainer}
           onClick={() => {
-            // onRowClick(data, item_name);
+            onRowClick(data, item_name, unit_code, result_status);
             console.log("TeamGrid", data);
           }}
         >

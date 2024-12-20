@@ -39,6 +39,8 @@ export default function TeamInfoModal({
   const currentGameData = dataState[sportKey]?.[item_name];
   console.log(record);
 
+  //
+
   // const loadData = useCallback(async () => {
   // 	try {
   // 		const { data } = await getMedalsByPlayerId(record.athlete.code);

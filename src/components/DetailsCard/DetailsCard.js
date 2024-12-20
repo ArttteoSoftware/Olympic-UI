@@ -45,14 +45,13 @@ const DetailsCard = ({
     }
   }, [dataState, initialData, unitCode]);
 
-  const handleRowClick = (record, unitName) => {
-    console.log("InitialData", initialData);
-    console.log("recordClick", record);
-
-    // add field to playerInfo may be solution of the problem.
-    // I should be assured that every sports have athlete.
-    // or backend should add unit_code to the same level as unit_item
-    setPlayerInfo({ ...record, item_name: unitName });
+  const handleRowClick = (record, unitName, unit_code, result_status) => {
+    setPlayerInfo({
+      ...record,
+      item_name: unitName,
+      unit_code: unit_code,
+      result_status: result_status,
+    });
     setOpenInfo(true);
   };
 
@@ -111,12 +110,11 @@ const DetailsCard = ({
         </div>
       </div>
 
-      {/* InitialData should not be used here. I need playerInfo. PlayerInfo is setted during the onRowClicking */}
       <PlayerInfo
         ref={modalRef}
         sportKey={sportKey}
-        result_status={initialData[0]?.result_status}
-        isTeam={initialData[0]?.unit_code.includes("TE")}
+        result_status={playerInfo?.result_status}
+        isTeam={playerInfo?.unit_code?.includes("TE")}
         playerInfo={playerInfo}
         columns={columns}
         openInfo={openInfo}
