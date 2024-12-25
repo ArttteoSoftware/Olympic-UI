@@ -47,16 +47,14 @@ const VideoPlayer = ({ streamUrl, onVideoEnd, play, setPlay }) => {
     // Add resize event listener
 
     if (videoElement) {
-      ["play", "pause", "timeupdate", "seeking", "seeked", "ended"].forEach(
-        (eventName) => {
-          videoElement.addEventListener(eventName, () => {
-            console.log(`Video event triggered: ${eventName}`, {
-              currentTime: videoElement.currentTime,
-              duration: videoElement.duration,
-            });
+      ["play", "ended"].forEach((eventName) => {
+        videoElement.addEventListener(eventName, () => {
+          console.log(`Video event triggered: ${eventName}`, {
+            currentTime: videoElement.currentTime,
+            duration: videoElement.duration,
           });
-        }
-      );
+        });
+      });
     }
 
     return () => {
@@ -68,15 +66,26 @@ const VideoPlayer = ({ streamUrl, onVideoEnd, play, setPlay }) => {
   }, [onVideoEnd, play, setPlay, streamUrl]);
 
   const tryPlayVideo = () => {
-    if (document.visibilityState === "visible" && videoRef.current) {
+    const playVideo = () => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(console.error);
+      }
+    };
+
+    if (document.visibilityState === "visible") {
       videoRef.current.preload = "auto";
-      videoRef.current.play().catch((error) => {
-        console.error("Error attempting to play:", error);
-        setTimeout(() => {
-          videoRef.current?.play().catch(console.error);
-        }, 1000);
-      });
+      playVideo();
     }
+
+    // Check every second if the video is paused and try to play it
+    const intervalId = setInterval(() => {
+      if (videoRef.current && videoRef.current.paused) {
+        playVideo();
+      }
+    }, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
   };
 
   return (

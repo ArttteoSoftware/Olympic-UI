@@ -159,6 +159,8 @@ const Card = ({ className, title, units, divider }) => {
         setIsFlipped={setIsFlipped}
         divider={divider}
         loading={loading}
+        play={play}
+        setPlay={setPlay}
       />
       <BackCard
         commonStyles={commonStyles}
@@ -197,14 +199,18 @@ const FrontCard = ({
   divider,
   loading,
   className,
+  setPlay,
+  play,
 }) => {
   const { srtData } = useSocketStore();
 
   useEffect(() => {
     if (Boolean(srtData[title])) {
       setIsFlipped(true);
+      setPlay(true);
     }
-  }, [srtData[title]]);
+  }, [srtData[title], play, isFlipped]);
+
   return (
     <Reorder.Group
       style={commonStyles}
@@ -265,6 +271,7 @@ const BackCard = ({
       setPlay(false);
     }
   }, [srtData[title]]);
+
   return (
     <motion.div
       style={commonStyles}
@@ -273,7 +280,7 @@ const BackCard = ({
       transition={{ duration: 0.4 }}
     >
       <VideoPlayer
-        streamUrl={`${process.env.REACT_APP_API_URL}hls/ALP/stream.m3u8`}
+        streamUrl={`${process.env.REACT_APP_API_URL}${srtData[title]}`}
         shouldPlay={true}
         play={play}
         setPlay={setPlay}
