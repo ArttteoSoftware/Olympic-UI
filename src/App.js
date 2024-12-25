@@ -26,6 +26,7 @@ function App() {
     });
 
     socket.on("streamMadePublic", (newData) => {
+      console.log("SRTTT", newData);
       setSrtData({
         disciplineCode: newData.disciplineCode,
         streamUrl: newData.streamUrl,
