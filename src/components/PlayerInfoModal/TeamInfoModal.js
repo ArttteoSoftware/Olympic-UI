@@ -1,25 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import styles from "./TeamInfoModal.module.css";
 import {
   CloseModalIcon,
   SilverMedal,
   GoldMedal,
   BronzeMedal,
-  VerticalDivider,
 } from "../../UI/Icons";
 import Bread from "../Bread/Bread";
-import {
-  getMedalsByPlayerId,
-  getResultsByPlayerId,
-} from "../../services/PlayerDetailService";
 import { getFlag } from "../../UI/flags";
-import FormatData from "../../util/FormatData";
-import HistoryGrid from "../Grid/HistoryGrid";
-import useSocketStore from "../../store/socketStore";
 import { convertSportTitle } from "../../enum/Sport";
-import { returnSportColumn } from "../../UI/columns/Columns";
-import Grid from "../Grid/Grid";
-import { style } from "framer-motion/client";
 
 export default function TeamInfoModal({
   visible,
@@ -30,43 +19,8 @@ export default function TeamInfoModal({
   sportKey,
   item_name,
   discipline_code,
+  vsTeam,
 }) {
-  console.log(record);
-
-  const [medals, setMedals] = useState([]);
-  const [results, setResults] = useState([]);
-  const { dataState } = useSocketStore();
-  const currentGameData = dataState[sportKey]?.[item_name];
-  console.log(record);
-
-  // const loadData = useCallback(async () => {
-  // 	try {
-  // 		const { data } = await getMedalsByPlayerId(record.athlete.code);
-  // 		setMedals(data.medals);
-  // 	} catch (err) {
-  // 		console.error("Error while loading Data", err);
-  // 	}
-  // }, [record.athlete.code]);
-
-  // const loadResults = useCallback(async () => {
-  // 	try {
-  // 		const { data } = await getResultsByPlayerId(record.athlete.code);
-  // 		setResults(data);
-  // 	} catch (err) {
-  // 		console.error("Error while loading player's result", err);
-  // 	}
-  // }, [record.athlete.code]);
-
-  // useEffect(() => {
-  // 	loadData();
-  // }, [loadData]);
-
-  // useEffect(() => {
-  // 	loadResults();
-  // }, [loadResults]);
-
-  console.log("****", record);
-
   return (
     <div className={styles.modalOverlay}>
       {visible && (
@@ -91,47 +45,66 @@ export default function TeamInfoModal({
             </div>
 
             <div className={styles.modalBody}>
-              <div className={styles.contentContainer}>
-                <div className={styles.teamNamesContainer}>
-                  {Object.keys(record).map(
-                    (key, i) => (
-                      console.log(
-                        "********************************",
-                        record[key]
-                      ),
-                      (
-                        <>
-                          <div key={i}>
-                            <div>{record[key]?.athlete?.name} </div>
-                            <img
-                              className={styles.flag}
-                              src={getFlag(record[key]?.athlete?.organisation)}
-                              alt="flag"
-                              onError={(e) => (e.target.src = "flags/ESP.svg")}
-                            />
+              <div
+                className={
+                  Array.isArray(record)
+                    ? styles.contentContainer
+                    : styles.countryContentContainer
+                }
+              >
+                {vsTeam ? (
+                  <div className={styles.teamNamesContainer}>
+                    {Object.keys(record).map((key, i) => (
+                      <>
+                        <div key={i}>
+                          <div>{record[key]?.athlete?.organisation} </div>
+                          <img
+                            className={styles.flag}
+                            src={getFlag(record[key]?.athlete?.organisation)}
+                            alt="flag"
+                            onError={(e) => (e.target.src = "flags/ESP.svg")}
+                          />
 
-                            {/* Refactoring from Backend. Some sports have record[key].result and some do not. */}
-                            <div className={styles.score}>
-                              {record[key]?.result !== undefined &&
-                              record[key]?.result !== null
-                                ? record[key]?.result
-                                : record[key]?.intermediates?.result}
-                            </div>
+                          {/* Refactoring from Backend. Some sports have record[key].result and some do not. */}
+                          <div className={styles.score}>
+                            {record[key]?.result !== undefined &&
+                            record[key]?.result !== null
+                              ? record[key]?.result
+                              : record[key]?.intermediates?.result}
                           </div>
-                          {i < Object.keys(record).length - 1 && (
-                            <div
-                              className={`${styles.score} ${
-                                result_status === "LIVE" ? styles.live : ""
-                              }`}
-                            >
-                              -
-                            </div>
-                          )}
-                        </>
-                      )
-                    )
-                  )}
-                </div>
+                        </div>
+                        {i < Object.keys(record).length - 1 && (
+                          <div
+                            className={`${styles.score} ${
+                              result_status === "LIVE" ? styles.live : ""
+                            }`}
+                          >
+                            -
+                          </div>
+                        )}
+                      </>
+                    ))}
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <img
+                        className={styles.flag}
+                        src={getFlag(record.athlete?.organisation)}
+                        alt="flag"
+                        onError={(e) => (e.target.src = "flags/ESP.svg")}
+                      />
+                    </div>
+                    <div className={styles.countryNameContainer}>
+                      <div className={styles.fullName}>
+                        {record.athlete.name}
+                      </div>
+                      <span className={styles.label}>
+                        ({record.athlete.organisation})
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
 
               {/* {medals?.map((competition, index) => {
@@ -175,6 +148,11 @@ export default function TeamInfoModal({
                           key={index}
                         >
                           {athlete.name}
+                          {Array.from({ length: athlete.scoreCount }).map(
+                            (_, i) => (
+                              <>***</>
+                            )
+                          )}
                         </div>
                       ))}
                     </div>

@@ -7,12 +7,12 @@ const useSocketStore = create((set) => ({
     // Example: sport_id: { game_id: { current: null, previous: null, item_name: null, result_status: null } }
     // No need to define sport_id and game_id here; they will be used in setData
   },
+  srtData: {},
   unitCode: null,
   status: "Disconnected",
   setData: (newData) => {
     const { sport_id, game_id, data } = newData;
     if (!sport_id || !game_id) return;
-    console.log("SOCKET", { sport: sport_id, game_id: game_id, data: data });
     set((state) => ({
       dataState: {
         ...state.dataState,
@@ -24,6 +24,18 @@ const useSocketStore = create((set) => ({
             result_status: data.result_status,
           },
         },
+      },
+    }));
+  },
+
+  setSrtData: (newData) => {
+    const { disciplineCode, streamUrl } = newData;
+    if (!disciplineCode) return;
+
+    set((state) => ({
+      srtData: {
+        ...state.srtData,
+        [disciplineCode]: streamUrl,
       },
     }));
   },

@@ -45,14 +45,13 @@ const DetailsCard = ({
     }
   }, [dataState, initialData, unitCode]);
 
-  const handleRowClick = (record, unitName) => {
-    console.log("InitialData", initialData);
-    console.log("recordClick", record);
-
-    // add field to playerInfo may be solution of the problem.
-    // I should be assured that every sports have athlete.
-    // or backend should add unit_code to the same level as unit_item
-    setPlayerInfo({ ...record, item_name: unitName });
+  const handleRowClick = (record, unitName, unit_code, result_status) => {
+    setPlayerInfo({
+      ...record,
+      item_name: unitName,
+      unit_code: unit_code,
+      result_status: result_status,
+    });
     setOpenInfo(true);
   };
 
@@ -64,7 +63,6 @@ const DetailsCard = ({
     setYoutube(!youtube);
   };
 
-  console.log("Initial", playerInfo);
   return (
     <>
       <div className={styles.mainContainer}>
@@ -111,12 +109,14 @@ const DetailsCard = ({
         </div>
       </div>
 
-      {/* InitialData should not be used here. I need playerInfo. PlayerInfo is setted during the onRowClicking */}
       <PlayerInfo
         ref={modalRef}
         sportKey={sportKey}
-        result_status={initialData[0]?.result_status}
-        isTeam={initialData[0]?.unit_code.includes("TE")}
+        result_status={playerInfo?.result_status}
+        isTeam={Boolean(
+          (playerInfo?.unit_code && playerInfo?.unit_code?.includes("TE")) ||
+            playerInfo?.unit_code?.includes("RELAY")
+        )}
         playerInfo={playerInfo}
         columns={columns}
         openInfo={openInfo}
@@ -168,7 +168,7 @@ const GridSection = ({
       <div key={item.item_name}>
         <GridHeader itemName={item.item_name} />
         <div className={styles.dataContainer}>
-          {item.unit_code.includes("TE") ? (
+          {item.unit_code.includes("TE") || item.unit_code.includes("RELAY") ? (
             <TeamGrid
               result_status={item?.result_status || ""}
               details={true}
@@ -180,6 +180,13 @@ const GridSection = ({
               unit_code={item.unit_code}
               sportKey={sportKey}
               item_name={item.item_name}
+              vsTeam={Boolean(
+                (item.start_list[0]?.intermediates?.result !== undefined &&
+                  item.start_list[0]?.intermediates?.result !== null) ||
+                  (item.start_list[0]?.result !== undefined &&
+                    item.start_list[0]?.result !== null) ||
+                  false
+              )}
             />
           ) : (
             <Grid
@@ -217,22 +224,40 @@ const PlayerInfo = React.forwardRef(
     { sportKey, playerInfo, openInfo, onClose, result_status, columns, isTeam },
     ref
   ) => {
+    const getValueByKey = (obj, key) => {
+      return obj && obj[key] ? obj[key] : null;
+    };
+
+    const firstTeam = getValueByKey(playerInfo, 0);
+
+    const vsTeam =
+      Boolean(
+        (firstTeam?.intermediates?.result !== undefined &&
+          firstTeam?.intermediates?.result !== null) ||
+          (firstTeam?.intermediates[0]?.result !== undefined &&
+            firstTeam?.intermediates[0]?.result !== null)
+      ) ||
+      (firstTeam?.result !== undefined && firstTeam?.result !== null) ||
+      false;
+
     return (
       <>
         {isTeam
           ? openInfo && (
-              // <TeamInfoModal
-              // 	record={{ "0": playerInfo[0], "1": playerInfo[1] }}
-              // 	result_status={result_status}
-              // 	modalRef={ref}
-              // 	visible={Boolean(openInfo)}
-              // 	sportKey={sportKey}
-              // 	item_name={playerInfo.item_name}
-              // 	onClose={onClose}
-              // 	columns={columns}
-              // 	discipline_code={sportKey}
-              // />
-              <></>
+              <TeamInfoModal
+                record={
+                  vsTeam ? { 0: playerInfo[0], 1: playerInfo[1] } : playerInfo
+                }
+                result_status={result_status}
+                modalRef={ref}
+                visible={Boolean(openInfo)}
+                sportKey={sportKey}
+                item_name={playerInfo.item_name}
+                onClose={onClose}
+                columns={columns}
+                discipline_code={sportKey}
+                vsTeam={vsTeam}
+              />
             )
           : openInfo && (
               <PlayerInfoModal

@@ -72,7 +72,14 @@
   justify-content: center;
 }
 
-.country,
+.countryContentContainer {
+  width: 100%;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .label {
   color: #7d94a5;
 }
@@ -221,6 +228,11 @@
 .live {
   color: #ff0000;
 }
+.countryNameContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 @media (max-width: 768px) {
   .modalHeader,
   .modalBody,
@@ -238,6 +250,7 @@
   .contentContainer {
     flex-direction: column;
     text-align: center;
+    width: 100%;
   }
   .tableContainer {
     width: 100%;

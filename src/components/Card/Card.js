@@ -10,7 +10,6 @@ import { returnSportColumn } from "../../UI/columns/Columns";
 import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 import VideoPlayer from "../Videoplayer/VideoPlayer";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
-
 const Card = ({ className, title, units, divider }) => {
   const [data, setData] = useState([]);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -65,7 +64,17 @@ const Card = ({ className, title, units, divider }) => {
   const renderUnit = (unit, loading) => {
     const listData = getListData(unit);
 
-    const isTeam = Boolean(unit.unit_code.includes("TE"));
+    const isTeam = Boolean(
+      unit.unit_code.includes("TE") || unit.unit_code.includes("RELAY")
+    );
+
+    const vsTeam = Boolean(
+      (unit.start_list[0]?.intermediates?.result !== undefined &&
+        unit.start_list[0]?.intermediates?.result !== null) ||
+        (unit.start_list[0]?.result !== undefined &&
+          unit.start_list[0]?.result !== null) ||
+        false
+    );
 
     if (unit.item_name === currentGameData?.item_name) {
       return (
@@ -75,19 +84,18 @@ const Card = ({ className, title, units, divider }) => {
           {isTeam ? (
             // თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-            <MarqueeEffect>
-              <TeamGrid
-                result_status={unit.result_status}
-                details={false}
-                columns={returnSportTeamColumn(title)}
-                data={listData}
-                className={styles.cardGrid}
-                isTeam={isTeam}
-                unit_code={unit.unit_code}
-                sportKey={title}
-                item_name={unit.item_name}
-              />
-            </MarqueeEffect>
+            <TeamGrid
+              result_status={unit.result_status}
+              details={false}
+              columns={returnSportTeamColumn(title)}
+              data={listData}
+              className={styles.cardGrid}
+              isTeam={isTeam}
+              vsTeam={vsTeam}
+              unit_code={unit.unit_code}
+              sportKey={title}
+              item_name={unit.item_name}
+            />
           ) : (
             <MarqueeEffect>
               <Grid
@@ -155,6 +163,7 @@ const Card = ({ className, title, units, divider }) => {
       <BackCard
         commonStyles={commonStyles}
         isFlipped={isFlipped}
+        title={title}
         setIsFlipped={setIsFlipped}
         play={play}
         setPlay={setPlay}
@@ -188,64 +197,89 @@ const FrontCard = ({
   divider,
   loading,
   className,
-}) => (
-  <Reorder.Group
-    style={commonStyles}
-    initial={false}
-    animate={{ rotateY: isFlipped ? 180 : 0 }}
-    transition={{ duration: 0.6 }}
-    values={data}
-    onReorder={setData}
-    onClick={() => setIsFlipped(true)}
-    className={`${styles.container} ${className ? styles[`${className}`] : ""}`}
-  >
-    <div className={styles.title}>{convertSportTitle(title)}</div>
-    <div className={styles.tableContainer}>
-      {divider}
+}) => {
+  const { srtData } = useSocketStore();
 
-      <div className={styles.innerContainer}>
-        {data?.length > 0 ? (
-          <>{data.map((unit) => renderUnit(unit, loading))}</>
-        ) : (
-          <>
-            {loading === false && (
-              <div className={styles.placeholderContainer}>
-                <div className={styles.placeholderImg}>
-                  <img
-                    src={`assets/placeholders/${title}.png`}
-                    alt="placeholder"
-                    loading="lazy"
-                  />
+  useEffect(() => {
+    if (Boolean(srtData[title])) {
+      setIsFlipped(true);
+    }
+  }, [srtData[title]]);
+  return (
+    <Reorder.Group
+      style={commonStyles}
+      initial={false}
+      animate={{ rotateY: isFlipped ? 180 : 0 }}
+      transition={{ duration: 0.4 }}
+      values={data}
+      onReorder={setData}
+      onClick={() => setIsFlipped(true)}
+      className={`${styles.container} ${
+        className ? styles[`${className}`] : ""
+      }`}
+    >
+      <div className={styles.title}>{convertSportTitle(title)}</div>
+      <div className={styles.tableContainer}>
+        {divider}
+
+        <div className={styles.innerContainer}>
+          {data?.length > 0 ? (
+            <>{data.map((unit) => renderUnit(unit, loading))}</>
+          ) : (
+            <>
+              {loading === false && (
+                <div className={styles.placeholderContainer}>
+                  <div className={styles.placeholderImg}>
+                    <img
+                      src={`assets/placeholders/${title}.png`}
+                      alt="placeholder"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className={styles.placeholderText}>
+                    The game is scheduled for tomorrow
+                  </div>
                 </div>
-                <div className={styles.placeholderText}>
-                  The game is scheduled for tomorrow
-                </div>
-              </div>
-            )}
-          </>
-        )}
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
-  </Reorder.Group>
-);
+    </Reorder.Group>
+  );
+};
 
-const BackCard = ({ commonStyles, isFlipped, setIsFlipped, setPlay, play }) => (
-  <motion.div
-    style={commonStyles}
-    initial={{ rotateY: 180 }}
-    animate={{ rotateY: isFlipped ? 0 : 180 }}
-    transition={{ duration: 0.6 }}
-  >
-    <VideoPlayer
-      onVideoEnd={() => {
-        setIsFlipped(false);
-        setPlay(false);
-      }}
-      shouldPlay={true}
-      play={play}
-      setPlay={setPlay}
-    />
-  </motion.div>
-);
+const BackCard = ({
+  title,
+  commonStyles,
+  isFlipped,
+  setIsFlipped,
+  setPlay,
+  play,
+}) => {
+  const { srtData } = useSocketStore();
+
+  useEffect(() => {
+    if (!Boolean(srtData[title])) {
+      setIsFlipped(false);
+      setPlay(false);
+    }
+  }, [srtData[title]]);
+  return (
+    <motion.div
+      style={commonStyles}
+      initial={{ rotateY: 180 }}
+      animate={{ rotateY: isFlipped ? 0 : 180 }}
+      transition={{ duration: 0.4 }}
+    >
+      <VideoPlayer
+        streamUrl={`${process.env.REACT_APP_API_URL}hls/ALP/stream.m3u8`}
+        shouldPlay={true}
+        play={play}
+        setPlay={setPlay}
+      />
+    </motion.div>
+  );
+};
 
 export default Card;
