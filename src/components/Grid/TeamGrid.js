@@ -1,4 +1,4 @@
-import { animate, AnimatePresence, Reorder } from "framer-motion";
+import { AnimatePresence, Reorder } from "framer-motion";
 import styles from "./TeamGrid.module.css";
 import Loading from "../../UI/Loader/Loading";
 import useSocketStore from "../../store/socketStore";
@@ -18,6 +18,7 @@ const PlayerRow = memo(
     isGoal,
     sportKey,
     unit_code,
+    vsTeam,
   }) => {
     const { dataState } = useSocketStore();
     const currentGameData = dataState[`${sportKey}`]?.[`${unit_code}`];
@@ -33,6 +34,11 @@ const PlayerRow = memo(
         drag={false}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
+        onClick={() => {
+          if (!vsTeam && details) {
+            onRowClick(record, itemName, unit_code, result_status);
+          }
+        }}
       >
         {Array.isArray(columns) &&
           columns?.map((column, index) => (
@@ -75,6 +81,7 @@ function Grid({
   loading,
   result_status,
   sportKey,
+  vsTeam,
 }) {
   const { dataState, unitCode } = useSocketStore();
   const [animatedData, setAnimatedData] = useState([]);
@@ -136,10 +143,11 @@ function Grid({
       ) : (
         <div
           className={styles.teamTableContainer}
-          onClick={() => {
-            onRowClick(data, item_name, unit_code, result_status);
-            console.log("TeamGrid", data);
-          }}
+          // onClick={() => {
+          //   if (vsTeam && details) {
+          //     onRowClick(data, item_name, unit_code, result_status);
+          //   }
+          // }}
         >
           {sportKey === "IHO" && animatedData?.length > 1 && (
             <div className={styles.periodTimeContainer}>
@@ -175,6 +183,8 @@ function Grid({
                       result_status={status}
                       sportKey={sportKey}
                       unit_code={unit_code}
+                      vsTeam={vsTeam}
+                      onRowClick={onRowClick}
                       isGoal={
                         dataState &&
                         dataState.current?.length > 0 &&

@@ -63,7 +63,6 @@ const DetailsCard = ({
     setYoutube(!youtube);
   };
 
-  console.log("Initial", playerInfo);
   return (
     <>
       <div className={styles.mainContainer}>
@@ -114,7 +113,10 @@ const DetailsCard = ({
         ref={modalRef}
         sportKey={sportKey}
         result_status={playerInfo?.result_status}
-        isTeam={playerInfo?.unit_code?.includes("TE")}
+        isTeam={Boolean(
+          (playerInfo?.unit_code && playerInfo?.unit_code?.includes("TE")) ||
+            playerInfo?.unit_code?.includes("RELAY")
+        )}
         playerInfo={playerInfo}
         columns={columns}
         openInfo={openInfo}
@@ -166,7 +168,7 @@ const GridSection = ({
       <div key={item.item_name}>
         <GridHeader itemName={item.item_name} />
         <div className={styles.dataContainer}>
-          {item.unit_code.includes("TE") ? (
+          {item.unit_code.includes("TE") || item.unit_code.includes("RELAY") ? (
             <TeamGrid
               result_status={item?.result_status || ""}
               details={true}
@@ -178,6 +180,13 @@ const GridSection = ({
               unit_code={item.unit_code}
               sportKey={sportKey}
               item_name={item.item_name}
+              vsTeam={Boolean(
+                (item.start_list[0]?.intermediates?.result !== undefined &&
+                  item.start_list[0]?.intermediates?.result !== null) ||
+                  (item.start_list[0]?.result !== undefined &&
+                    item.start_list[0]?.result !== null) ||
+                  false
+              )}
             />
           ) : (
             <Grid
@@ -215,12 +224,30 @@ const PlayerInfo = React.forwardRef(
     { sportKey, playerInfo, openInfo, onClose, result_status, columns, isTeam },
     ref
   ) => {
+    const getValueByKey = (obj, key) => {
+      return obj && obj[key] ? obj[key] : null;
+    };
+
+    const firstTeam = getValueByKey(playerInfo, 0);
+
+    const vsTeam =
+      Boolean(
+        (firstTeam?.intermediates?.result !== undefined &&
+          firstTeam?.intermediates?.result !== null) ||
+          (firstTeam?.intermediates[0]?.result !== undefined &&
+            firstTeam?.intermediates[0]?.result !== null)
+      ) ||
+      (firstTeam?.result !== undefined && firstTeam?.result !== null) ||
+      false;
+
     return (
       <>
         {isTeam
           ? openInfo && (
               <TeamInfoModal
-                record={{ 0: playerInfo[0], 1: playerInfo[1] }}
+                record={
+                  vsTeam ? { 0: playerInfo[0], 1: playerInfo[1] } : playerInfo
+                }
                 result_status={result_status}
                 modalRef={ref}
                 visible={Boolean(openInfo)}
@@ -229,6 +256,7 @@ const PlayerInfo = React.forwardRef(
                 onClose={onClose}
                 columns={columns}
                 discipline_code={sportKey}
+                vsTeam={vsTeam}
               />
             )
           : openInfo && (

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Hls from "hls.js";
 import styles from "./VideoPlayer.module.css";
+import useSocketStore from "../../store/socketStore";
 
-const VideoPlayer = ({ onVideoEnd, play, setPlay }) => {
+const VideoPlayer = ({ streamUrl, onVideoEnd, play, setPlay }) => {
   const videoRef = useRef(null);
   const hlsRef = useRef(null);
 
@@ -25,9 +26,7 @@ const VideoPlayer = ({ onVideoEnd, play, setPlay }) => {
         backBufferLength: 30,
       });
 
-      hlsRef.current.loadSource(
-        `${process.env.REACT_APP_API_URL}hls/stream.m3u8`
-      );
+      hlsRef.current.loadSource(streamUrl);
       hlsRef.current.attachMedia(videoRef.current);
 
       hlsRef.current.on(Hls.Events.MANIFEST_PARSED, () => {
@@ -38,21 +37,16 @@ const VideoPlayer = ({ onVideoEnd, play, setPlay }) => {
     } else if (
       videoRef?.current?.canPlayType("application/vnd.apple.mpegurl")
     ) {
-      videoRef.current.src = `${process.env.REACT_APP_API_URL}hls/stream.m3u8`;
+      videoRef.current.src = streamUrl;
       videoRef.current.load();
       tryPlayVideo();
     }
 
     const videoElement = videoRef.current;
 
-    const handleVideoEnd = () => {
-      onVideoEnd();
-      setPlay(false);
-    };
+    // Add resize event listener
 
     if (videoElement) {
-      videoElement.addEventListener("ended", handleVideoEnd);
-
       ["play", "pause", "timeupdate", "seeking", "seeked", "ended"].forEach(
         (eventName) => {
           videoElement.addEventListener(eventName, () => {
@@ -70,11 +64,8 @@ const VideoPlayer = ({ onVideoEnd, play, setPlay }) => {
         hlsRef.current.destroy();
         setPlay(false);
       }
-      if (videoElement) {
-        videoElement.removeEventListener("ended", handleVideoEnd);
-      }
     };
-  }, [onVideoEnd, play, setPlay]);
+  }, [onVideoEnd, play, setPlay, streamUrl]);
 
   const tryPlayVideo = () => {
     if (document.visibilityState === "visible" && videoRef.current) {

@@ -6,48 +6,63 @@ import io from "socket.io-client";
 import useSocketStore from "./store/socketStore";
 
 function App() {
-	const { setData, setStatus, setUnitCode } = useSocketStore();
+  const { setData, setStatus, setUnitCode, setSrtData, srtData } =
+    useSocketStore();
 
-	useEffect(() => {
-		// Connect to the server
-		const socket = io(process.env.REACT_APP_API_URL);
+  useEffect(() => {
+    // Connect to the server
+    const socket = io(process.env.REACT_APP_API_URL);
 
-		setStatus("Connected");
+    setStatus("Connected");
 
-		// Listen for specific events from the server
-		socket.on("DT_RESULT", (newData) => {
-			setData({
-				sport_id: newData.unit_code.substring(0, 3),
-				game_id: newData.unit_code,
-				data: newData,
-			});
-			setUnitCode({ unitCode: newData.unit_code });
-		});
+    // Listen for specific events from the server
+    socket.on("DT_RESULT", (newData) => {
+      setData({
+        sport_id: newData.unit_code.substring(0, 3),
+        game_id: newData.unit_code,
+        data: newData,
+      });
+      setUnitCode({ unitCode: newData.unit_code });
+    });
 
-		// Handle server connection error
-		socket.on("connect_error", (err) => {
-			setStatus("Connection error");
-		});
+    socket.on("streamMadePublic", (newData) => {
+      setSrtData({
+        disciplineCode: newData.disciplineCode,
+        streamUrl: newData.streamUrl,
+      });
+    });
 
-		// Clean up the socket connection when the component is unmounted
-		return () => {
-			socket.disconnect();
-			setStatus("Disconnected");
-		};
-	}, [setData, setStatus, setUnitCode]);
+    socket.on("streamRemovedFromPublic", (newData) => {
+      setSrtData({
+        disciplineCode: newData.disciplineCode,
+        streamUrl: false,
+      });
+    });
 
-	return (
-		<div className="outerContainer">
-			<img
-				className="background"
-				alt="background"
-				src="assets/background/background.png"
-			/>
-			<Header />
+    // Handle server connection error
+    socket.on("connect_error", (err) => {
+      setStatus("Connection error");
+    });
 
-			<AppRoutes />
-		</div>
-	);
+    // Clean up the socket connection when the component is unmounted
+    return () => {
+      socket.disconnect();
+      setStatus("Disconnected");
+    };
+  }, [setData, setStatus, setUnitCode]);
+
+  return (
+    <div className="outerContainer">
+      <img
+        className="background"
+        alt="background"
+        src="assets/background/background.png"
+      />
+      <Header />
+
+      <AppRoutes />
+    </div>
+  );
 }
 
 export default App;
