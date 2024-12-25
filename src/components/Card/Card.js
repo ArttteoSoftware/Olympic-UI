@@ -219,7 +219,6 @@ const FrontCard = ({
       transition={{ duration: 0.4 }}
       values={data}
       onReorder={setData}
-      onClick={() => setIsFlipped(true)}
       className={`${styles.container} ${
         className ? styles[`${className}`] : ""
       }`}
