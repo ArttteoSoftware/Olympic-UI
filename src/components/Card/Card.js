@@ -1,78 +1,81 @@
-import React, { useState, useMemo, useEffect } from 'react'
-import styles from './Card.module.css'
-import { LayoutGroup, motion, Reorder } from 'framer-motion'
-import { BTH, Divider, IHO } from '../../UI/Icons'
-import { convertSportTitle } from '../../enum/Sport'
-import useSocketStore from '../../store/socketStore'
-import Grid from '../Grid/Grid'
-import TeamGrid from '../Grid/TeamGrid'
-import { returnSportColumn } from '../../UI/columns/Columns'
-import MarqueeEffect from '../MarqueeEffect/MarqueeEffect'
-import VideoPlayer from '../Videoplayer/VideoPlayer'
-import { returnSportTeamColumn } from '../../UI/columns/TeamColumns'
-import FormatData from '../../util/FormatData'
+import React, { useState, useMemo, useEffect } from "react";
+import styles from "./Card.module.css";
+import { LayoutGroup, motion, Reorder } from "framer-motion";
+import { BTH, Divider, IHO } from "../../UI/Icons";
+import { convertSportTitle } from "../../enum/Sport";
+import useSocketStore from "../../store/socketStore";
+import Grid from "../Grid/Grid";
+import TeamGrid from "../Grid/TeamGrid";
+import { returnSportColumn } from "../../UI/columns/Columns";
+import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
+import VideoPlayer from "../Videoplayer/VideoPlayer";
+import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
+import FormatData from "../../util/FormatData";
 const Card = ({ className, title, units, divider }) => {
-  const [data, setData] = useState([])
-  const [isFlipped, setIsFlipped] = useState(false)
-  const { dataState, unitCode } = useSocketStore()
-  const [loading, setLoading] = useState(true)
-  const [play, setPlay] = useState(false)
+  const [data, setData] = useState([]);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const { dataState, unitCode } = useSocketStore();
+  const [loading, setLoading] = useState(true);
+  const [play, setPlay] = useState(false);
 
-  const currentGameData = dataState[`${title}`]?.[`${unitCode}`]
+  const currentGameData = dataState[`${title}`]?.[`${unitCode}`];
 
   useEffect(() => {
     if (units && units.length > 0) {
-      setData(units)
+      setData(units);
     }
 
-    setLoading(false)
-  }, [units])
+    setLoading(false);
+  }, [units]);
 
   useEffect(() => {
     if (isFlipped) {
-      setPlay(true)
+      setPlay(true);
     } else {
-      setPlay(false)
+      setPlay(false);
     }
-  }, [isFlipped])
+  }, [isFlipped]);
 
   const commonStyles = useMemo(
     () => ({
-      padding: '0px',
-      position: 'absolute',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      backfaceVisibility: 'hidden'
+      padding: "0px",
+      position: "absolute",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      backfaceVisibility: "hidden",
     }),
     []
-  )
+  );
   const getListData = (unit) => {
     if (unit.item_name === currentGameData?.item_name) {
       const updatedData = data.map((item) =>
         item.item_name === currentGameData?.item_name
           ? { ...item, start_list: unit.start_list }
           : item
-      )
+      );
 
-      return updatedData[0]
+      return updatedData[0];
     } else {
-      return unit.start_list
+      return unit.start_list;
     }
-  }
+  };
 
   const renderUnit = (unit, loading) => {
-    const listData = getListData(unit)
+    const listData = getListData(unit);
 
-    const isTeam = Boolean(unit.unit_code.includes('TE') || unit.unit_code.includes('RELAY'))
+    const isTeam = Boolean(
+      unit.unit_code.includes("TE") || unit.unit_code.includes("RELAY")
+    );
 
     const vsTeam = Boolean(
       (unit.start_list[0]?.intermediates?.result !== undefined &&
         unit.start_list[0]?.intermediates?.result !== null) ||
-        (unit.start_list[0]?.result !== undefined && unit.start_list[0]?.result !== null) ||
+        (unit.start_list[0]?.result !== undefined &&
+          unit.start_list[0]?.result !== null) ||
         false
-    )
+    );
 
     if (unit.item_name === currentGameData?.item_name) {
       return (
@@ -112,7 +115,7 @@ const Card = ({ className, title, units, divider }) => {
             </MarqueeEffect>
           )}
         </div>
-      )
+      );
     } else {
       return (
         <div key={`${unit.unit_code}-${unit.item_name}`}>
@@ -146,9 +149,9 @@ const Card = ({ className, title, units, divider }) => {
             </MarqueeEffect>
           )}
         </div>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className={styles.mainContainer}>
@@ -175,8 +178,8 @@ const Card = ({ className, title, units, divider }) => {
         setPlay={setPlay}
       />
     </div>
-  )
-}
+  );
+};
 
 const UnitHeader = ({ item }) => {
   if (item?.item_name) {
@@ -185,7 +188,7 @@ const UnitHeader = ({ item }) => {
         <div className={styles.subtitleInnerContainer}>
           <div className={styles.dashedLine} />
           <div className={styles.subtitle}>
-            {item.item_name}{' '}
+            {item.item_name}{" "}
             <span className={styles.startDateContainer}>
               {FormatData.formatUTCTime(item.start_date)}
             </span>
@@ -193,9 +196,9 @@ const UnitHeader = ({ item }) => {
           <div className={styles.dashedLine} />
         </div>
       </div>
-    )
+    );
   }
-}
+};
 
 const FrontCard = ({
   commonStyles,
@@ -209,16 +212,16 @@ const FrontCard = ({
   loading,
   className,
   setPlay,
-  play
+  play,
 }) => {
-  const { srtData } = useSocketStore()
+  const { srtData } = useSocketStore();
 
   useEffect(() => {
     if (Boolean(srtData[title])) {
-      setIsFlipped(true)
-      setPlay(true)
+      setIsFlipped(true);
+      setPlay(true);
     }
-  }, [srtData[title], play, isFlipped])
+  }, [srtData[title], play, isFlipped]);
   return (
     <Reorder.Group
       style={commonStyles}
@@ -227,7 +230,9 @@ const FrontCard = ({
       transition={{ duration: 0.4 }}
       values={data}
       onReorder={setData}
-      className={`${styles.container} ${className ? styles[`${className}`] : ''}`}
+      className={`${styles.container} ${
+        className ? styles[`${className}`] : ""
+      }`}
     >
       <div className={styles.title}>{convertSportTitle(title)}</div>
       <div className={styles.tableContainer}>
@@ -247,7 +252,9 @@ const FrontCard = ({
                       loading="lazy"
                     />
                   </div>
-                  <div className={styles.placeholderText}>The game is scheduled for tomorrow</div>
+                  <div className={styles.placeholderText}>
+                    The game is scheduled for tomorrow
+                  </div>
                 </div>
               )}
             </>
@@ -255,18 +262,25 @@ const FrontCard = ({
         </div>
       </div>
     </Reorder.Group>
-  )
-}
+  );
+};
 
-const BackCard = ({ title, commonStyles, isFlipped, setIsFlipped, setPlay, play }) => {
-  const { srtData } = useSocketStore()
+const BackCard = ({
+  title,
+  commonStyles,
+  isFlipped,
+  setIsFlipped,
+  setPlay,
+  play,
+}) => {
+  const { srtData } = useSocketStore();
 
   useEffect(() => {
     if (!Boolean(srtData[title])) {
-      setIsFlipped(false)
-      setPlay(false)
+      setIsFlipped(false);
+      setPlay(false);
     }
-  }, [srtData[title]])
+  }, [srtData[title]]);
 
   return (
     <motion.div
@@ -282,7 +296,7 @@ const BackCard = ({ title, commonStyles, isFlipped, setIsFlipped, setPlay, play 
         setPlay={setPlay}
       />
     </motion.div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

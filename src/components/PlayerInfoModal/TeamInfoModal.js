@@ -1,10 +1,15 @@
-import React from 'react'
-import styles from './TeamInfoModal.module.css'
-import { CloseModalIcon, SilverMedal, GoldMedal, BronzeMedal } from '../../UI/Icons'
-import Bread from '../Bread/Bread'
-import { getFlag } from '../../UI/flags'
-import { convertSportTitle } from '../../enum/Sport'
-import { GoalIcon } from '../../UI/Icons'
+import React from "react";
+import styles from "./TeamInfoModal.module.css";
+import {
+  CloseModalIcon,
+  SilverMedal,
+  GoldMedal,
+  BronzeMedal,
+} from "../../UI/Icons";
+import Bread from "../Bread/Bread";
+import { getFlag } from "../../UI/flags";
+import { convertSportTitle } from "../../enum/Sport";
+import { GoalIcon } from "../../UI/Icons";
 
 export default function TeamInfoModal({
   visible,
@@ -15,7 +20,7 @@ export default function TeamInfoModal({
   sportKey,
   item_name,
   discipline_code,
-  vsTeam
+  vsTeam,
 }) {
   return (
     <div className={styles.modalOverlay}>
@@ -27,11 +32,11 @@ export default function TeamInfoModal({
                 <Bread
                   routes={[
                     {
-                      breadcrumbName: convertSportTitle(discipline_code)
+                      breadcrumbName: convertSportTitle(discipline_code),
                     },
                     {
-                      breadcrumbName: `Olympic Games: ${item_name || ''}`
-                    }
+                      breadcrumbName: `Olympic Games: ${item_name || ""}`,
+                    },
                   ]}
                 />
               </div>
@@ -58,7 +63,7 @@ export default function TeamInfoModal({
                             className={styles.flag}
                             src={getFlag(record[key]?.athlete?.organisation)}
                             alt="flag"
-                            onError={(e) => (e.target.src = 'flags/ESP.svg')}
+                            onError={(e) => (e.target.src = "flags/ESP.svg")}
                           />
 
                           {/* Refactoring from Backend. Some sports have record[key].result and some do not. */}
@@ -68,14 +73,15 @@ export default function TeamInfoModal({
                               ? record[key]?.result
                               : record[key]?.intermediates?.result} */}
 
-                            {record[key]?.intermediates[record[key]?.intermediates?.length - 1]
-                              .intermediates.result ?? record[key]?.result}
+                            {record[key]?.intermediates[
+                              record[key]?.intermediates?.length - 1
+                            ].intermediates.result ?? record[key]?.result}
                           </div>
                         </div>
                         {i < Object.keys(record).length - 1 && (
                           <div
                             className={`${styles.score} ${
-                              result_status === 'LIVE' ? styles.live : ''
+                              result_status === "LIVE" ? styles.live : ""
                             }`}
                           >
                             -
@@ -91,12 +97,16 @@ export default function TeamInfoModal({
                         className={styles.flag}
                         src={getFlag(record.athlete?.organisation)}
                         alt="flag"
-                        onError={(e) => (e.target.src = 'flags/ESP.svg')}
+                        onError={(e) => (e.target.src = "flags/ESP.svg")}
                       />
                     </div>
                     <div className={styles.countryNameContainer}>
-                      <div className={styles.fullName}>{record.athlete.name}</div>
-                      <span className={styles.label}>({record.athlete.organisation})</span>
+                      <div className={styles.fullName}>
+                        {record.athlete.name}
+                      </div>
+                      <span className={styles.label}>
+                        ({record.athlete.organisation})
+                      </span>
                     </div>
                   </>
                 )}
@@ -119,7 +129,7 @@ export default function TeamInfoModal({
 								})} */}
 
               {(record.rank === 1 || record.rank === 2 || record.rank === 3) &&
-                result_status === 'OFFICIAL' && (
+                result_status === "OFFICIAL" && (
                   <div className={styles.medalContainer}>
                     <div className={styles.competitionContainer}>
                       {record.rank === 1 && <GoldMedal />}
@@ -138,16 +148,18 @@ export default function TeamInfoModal({
                       {record[key]?.athletes?.map((athlete, index) => (
                         <div
                           className={`${styles.lineUpPlayer} ${
-                            index % 2 === 1 ? styles.grayLineUpPlayer : ''
+                            index % 2 === 1 ? styles.grayLineUpPlayer : ""
                           }`}
                           key={athlete.code}
                         >
                           {athlete.name}
-                          {Array.from({ length: athlete.scoreCount }).map((_, i) => (
-                            <span style={{ padding: '5px' }} key={i}>
-                              <GoalIcon color="black" />
-                            </span>
-                          ))}
+                          {Array.from({ length: athlete.scoreCount }).map(
+                            (_, i) => (
+                              <span style={{ padding: "5px" }} key={i}>
+                                <GoalIcon color="black" />
+                              </span>
+                            )
+                          )}
                         </div>
                       ))}
                     </div>
@@ -196,5 +208,5 @@ export default function TeamInfoModal({
         </div>
       )}
     </div>
-  )
+  );
 }

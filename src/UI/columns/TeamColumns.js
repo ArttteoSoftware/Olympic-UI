@@ -1,17 +1,25 @@
-import styles from './TeamColumns.module.css'
-import useSocketStore from '../../store/socketStore'
-import { RankingUp, RankingDown } from '../Icons'
-import { GoalIcon } from '../Icons'
-import { getFlag } from '../flags'
-import FormatData from '../../util/FormatData'
+import styles from "./TeamColumns.module.css";
+import useSocketStore from "../../store/socketStore";
+import { RankingUp, RankingDown } from "../Icons";
+import { GoalIcon } from "../Icons";
+import { getFlag } from "../flags";
+import FormatData from "../../util/FormatData";
 
 export const SnowboardCol = (title) => [
   {
-    key: '_id',
-    title: '#',
+    key: "_id",
+    title: "#",
     width: 60,
-    textAlign: 'center',
-    render: (record, index, result_status, livescoring, athlete, sportKey, unit_code) => {
+    textAlign: "center",
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -21,7 +29,7 @@ export const SnowboardCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       } else {
         return (
           <AthleteRanking
@@ -31,25 +39,33 @@ export const SnowboardCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       }
-    }
+    },
   },
   {
-    key: 'athlete',
-    title: title ? title : 'Athlete',
+    key: "athlete",
+    title: title ? title : "Athlete",
     width: 120,
-    textAlign: 'start',
-    render: (record, index, result_status, livescoring, isGoal, sportKey, unit_code) => {
+    textAlign: "start",
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       if (title) {
         if (
-          result_status === 'OFFICIAL' ||
-          result_status === 'UNCONFIRMED' ||
-          result_status === 'UNOFFICIAL'
+          result_status === "OFFICIAL" ||
+          result_status === "UNCONFIRMED" ||
+          result_status === "UNOFFICIAL"
         ) {
-          return 'Final Standing'
+          return "Final Standing";
         } else {
-          return 'Current Standing'
+          return "Current Standing";
         }
       }
       return (
@@ -60,69 +76,77 @@ export const SnowboardCol = (title) => [
           index={index}
           livescoring={livescoring}
         />
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'run1',
-    title: 'Run1',
-    textAlign: 'center',
+    key: "run1",
+    title: "Run1",
+    textAlign: "center",
     // width: 50,
 
     render: (record) => {
       if (record?.intermediates?.length > 0) {
-        return <>{record?.intermediates[0]?.result || '-'}</>
+        return <>{record?.intermediates[0]?.result || "-"}</>;
       } else {
-        return '-'
+        return "-";
       }
-    }
+    },
   },
   {
-    key: 'run2',
-    title: 'Run2',
-    textAlign: 'center',
+    key: "run2",
+    title: "Run2",
+    textAlign: "center",
     // width: 50,
     render: (record) => {
       if (record?.intermediates?.length > 1) {
-        return <>{record?.intermediates[1]?.result || '-'}</>
+        return <>{record?.intermediates[1]?.result || "-"}</>;
       } else {
-        return <>{'-'}</>
+        return <>{"-"}</>;
       }
-    }
+    },
   },
   {
-    key: 'run3',
-    title: 'Run3',
-    textAlign: 'center',
+    key: "run3",
+    title: "Run3",
+    textAlign: "center",
     // width: 50,
 
     render: (record) => {
       if (record?.intermediates?.length > 2) {
-        return <>{record?.intermediates[2]?.result || '-'}</>
+        return <>{record?.intermediates[2]?.result || "-"}</>;
       } else {
-        return <>{'-'}</>
+        return <>{"-"}</>;
       }
-    }
+    },
   },
   {
-    key: 'score',
-    title: 'Score',
-    textAlign: 'center',
+    key: "score",
+    title: "Score",
+    textAlign: "center",
     // width: 50,
     render: (record) => {
-      return <>{record.result}</>
-    }
-  }
-]
+      return <>{record.result}</>;
+    },
+  },
+];
 
 export const BiathlonCol = (title) => [
   {
-    key: '_id',
-    title: '#',
+    key: "_id",
+    title: "#",
     width: 60,
-    textAlign: 'center',
-    render: (record, index, result_status, livescoring, athlete, sportKey, unit_code) => {
+    textAlign: "center",
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -132,7 +156,7 @@ export const BiathlonCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       } else {
         return (
           <AthleteRanking
@@ -142,26 +166,34 @@ export const BiathlonCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       }
-    }
+    },
   },
 
   {
-    key: 'name',
-    title: title ? title : 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ? title : "Name",
+    textAlign: "start",
     width: 150,
-    render: (record, index, result_status, livescoring, isGoal, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       if (title) {
         if (
-          result_status === 'OFFICIAL' ||
-          result_status === 'UNCONFIRMED' ||
-          result_status === 'UNOFFICIAL'
+          result_status === "OFFICIAL" ||
+          result_status === "UNCONFIRMED" ||
+          result_status === "UNOFFICIAL"
         ) {
-          return 'Final Standing'
+          return "Final Standing";
         } else {
-          return 'Current Standing'
+          return "Current Standing";
         }
       }
       return (
@@ -172,80 +204,101 @@ export const BiathlonCol = (title) => [
           index={index}
           livescoring={livescoring}
         />
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'shooting',
-    title: 'Shooting',
-    textAlign: 'center',
+    key: "shooting",
+    title: "Shooting",
+    textAlign: "center",
     windth: 100,
     render: (record) => {
-      return <>{record?.shootingResults?.value || '-'}</>
-    }
+      return <>{record?.shootingResults?.value || "-"}</>;
+    },
   },
   {
-    key: 'time',
-    title: 'Time',
-    textAlign: 'center',
+    key: "time",
+    title: "Time",
+    textAlign: "center",
     windth: 50,
 
     render: (record) => {
-      return <>{record?.intermediates?.value ?? '-'}</>
-    }
+      return <>{record?.intermediates?.value ?? "-"}</>;
+    },
   },
   {
-    key: 'difference',
-    title: 'Diff.',
-    textAlign: 'center',
+    key: "difference",
+    title: "Diff.",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.diff ?? '-'}</>
-    }
-  }
-]
+      return <>{record?.intermediates?.diff ?? "-"}</>;
+    },
+  },
+];
 
 export const AlpineCol = (title) => [
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     width: 30,
     render: (record, index, result_status, livescoring, athlete) => {
-      return <></>
-    }
+      return <></>;
+    },
   },
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
-    render: (record, index, result_status, livescoring, athlete, isGoal, sportKey, unit_code) => {
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       return (
         <>
-          <AthleteCell sportKey={sportKey} unit_code={unit_code} record={record} />
+          <AthleteCell
+            sportKey={sportKey}
+            unit_code={unit_code}
+            record={record}
+          />
         </>
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'run1',
-    textAlign: 'center',
+    key: "run1",
+    textAlign: "center",
     width: 30,
     render: (record) => {
-      return record?.intermediates?.result
-    }
-  }
-]
+      return record?.intermediates?.result;
+    },
+  },
+];
 
 export const ShortTrackCol = (title) => [
   {
-    key: '_id',
-    title: '#',
-    textAlign: 'center',
+    key: "_id",
+    title: "#",
+    textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -255,7 +308,7 @@ export const ShortTrackCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       } else {
         return (
           <AthleteRanking
@@ -265,26 +318,34 @@ export const ShortTrackCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       }
-    }
+    },
   },
 
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     // width: 100,
-    render: (record, index, result_status, livescoring, isGoal, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       if (title) {
         if (
-          result_status === 'OFFICIAL' ||
-          result_status === 'UNCONFIRMED' ||
-          result_status === 'UNOFFICIAL'
+          result_status === "OFFICIAL" ||
+          result_status === "UNCONFIRMED" ||
+          result_status === "UNOFFICIAL"
         ) {
-          return 'Final Standing'
+          return "Final Standing";
         } else {
-          return 'Current Standing'
+          return "Current Standing";
         }
       }
       return (
@@ -296,47 +357,55 @@ export const ShortTrackCol = (title) => [
           showCountry={false}
           livescoring={livescoring}
         />
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'lap/9',
-    title: 'Lap/9',
-    textAlign: 'center',
+    key: "lap/9",
+    title: "Lap/9",
+    textAlign: "center",
     windth: 50,
     render: (record) => {
-      return <>{record?.intermediates?.pos || '-'}</>
-    }
+      return <>{record?.intermediates?.pos || "-"}</>;
+    },
   },
   {
-    key: 'lap_sec',
-    title: 'Lap Sec.',
-    textAlign: 'center',
+    key: "lap_sec",
+    title: "Lap Sec.",
+    textAlign: "center",
     windth: 50,
 
     render: (record) => {
-      return <>{record?.intermediates?.value2 ?? '-'}</>
-    }
+      return <>{record?.intermediates?.value2 ?? "-"}</>;
+    },
   },
   {
-    key: 'total',
-    title: 'Total',
-    textAlign: 'center',
+    key: "total",
+    title: "Total",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.value ?? '-'}</>
-    }
-  }
-]
+      return <>{record?.intermediates?.value ?? "-"}</>;
+    },
+  },
+];
 
 export const FigureSkatingCol = (title) => [
   {
-    key: '_id',
-    title: '#',
-    textAlign: 'center',
+    key: "_id",
+    title: "#",
+    textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (record.athlete) {
         return (
           <AthleteRanking
@@ -346,7 +415,7 @@ export const FigureSkatingCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       } else {
         return (
           <AthleteRanking
@@ -356,82 +425,90 @@ export const FigureSkatingCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       }
-    }
+    },
   },
 
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     width: 80,
     render: (record, index, result_status, livescoring) => {
       if (title) {
         if (
-          result_status === 'OFFICIAL' ||
-          result_status === 'UNCONFIRMED' ||
-          result_status === 'UNOFFICIAL'
+          result_status === "OFFICIAL" ||
+          result_status === "UNCONFIRMED" ||
+          result_status === "UNOFFICIAL"
         ) {
-          return 'Final Standing'
+          return "Final Standing";
         } else {
-          return 'Current Standing'
+          return "Current Standing";
         }
       }
       // <AthleteCell record={record} index={index} livescoring={livescoring} />
-      return <>{record.athlete.organisation}</>
-    }
+      return <>{record.athlete.organisation}</>;
+    },
   },
 
   {
-    key: 'techel',
-    title: 'Tech El.',
-    textAlign: 'center',
+    key: "techel",
+    title: "Tech El.",
+    textAlign: "center",
     windth: 50,
 
     render: (record, index, result_status, livescoring, athlete) => {
       if (record?.athlete) {
-        return <>{record?.athlete?.bib}</>
+        return <>{record?.athlete?.bib}</>;
       } else {
-        return <>{athlete.bib}</>
+        return <>{athlete.bib}</>;
       }
-    }
+    },
   },
   {
-    key: 'comps',
-    title: 'Comps',
-    textAlign: 'center',
+    key: "comps",
+    title: "Comps",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.componentScore ?? '-'}</>
-    }
+      return <>{record?.intermediates?.componentScore ?? "-"}</>;
+    },
   },
   {
-    key: 'deduct',
-    title: 'Deduct.',
-    textAlign: 'center',
+    key: "deduct",
+    title: "Deduct.",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.deductions ?? '-'}</>
-    }
+      return <>{record?.intermediates?.deductions ?? "-"}</>;
+    },
   },
   {
-    key: 'total',
-    title: 'Total',
-    textAlign: 'center',
+    key: "total",
+    title: "Total",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.score ?? '-'}</>
-    }
-  }
-]
+      return <>{record?.intermediates?.score ?? "-"}</>;
+    },
+  },
+];
 export const CrossCountryCol = (title) => [
   {
-    key: '_id',
-    title: '#',
-    textAlign: 'center',
+    key: "_id",
+    title: "#",
+    textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -441,7 +518,7 @@ export const CrossCountryCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       } else {
         return (
           <AthleteRanking
@@ -451,40 +528,48 @@ export const CrossCountryCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       }
-    }
+    },
   },
 
   {
-    key: 'bib',
-    title: 'Bib',
-    textAlign: 'center',
+    key: "bib",
+    title: "Bib",
+    textAlign: "center",
     width: 50,
     render: (record, index, result_status, livescoring, athlete) => {
       if (record?.athlete) {
-        return <>{record?.athlete?.bib}</>
+        return <>{record?.athlete?.bib}</>;
       } else {
-        return <>{athlete.bib}</>
+        return <>{athlete.bib}</>;
       }
-    }
+    },
   },
 
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     width: 100,
-    render: (record, index, result_status, livescoring, isGoal, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       if (title) {
         if (
-          result_status === 'OFFICIAL' ||
-          result_status === 'UNCONFIRMED' ||
-          result_status === 'UNOFFICIAL'
+          result_status === "OFFICIAL" ||
+          result_status === "UNCONFIRMED" ||
+          result_status === "UNOFFICIAL"
         ) {
-          return 'Final Standing'
+          return "Final Standing";
         } else {
-          return 'Current Standing'
+          return "Current Standing";
         }
       }
       return (
@@ -496,38 +581,46 @@ export const CrossCountryCol = (title) => [
           index={index}
           livescoring={livescoring}
         />
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'time',
-    title: 'Time',
-    textAlign: 'center',
+    key: "time",
+    title: "Time",
+    textAlign: "center",
     windth: 50,
 
     render: (record) => {
-      return <>{record?.intermediates?.value ?? '-'}</>
-    }
+      return <>{record?.intermediates?.value ?? "-"}</>;
+    },
   },
   {
-    key: 'diff',
-    title: 'Diff.',
-    textAlign: 'center',
+    key: "diff",
+    title: "Diff.",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.diff ?? '-'}</>
-    }
-  }
-]
+      return <>{record?.intermediates?.diff ?? "-"}</>;
+    },
+  },
+];
 
 export const FreestyleCol = (title) => [
   {
-    key: '_id',
-    title: '#',
-    textAlign: 'center',
+    key: "_id",
+    title: "#",
+    textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -537,7 +630,7 @@ export const FreestyleCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       } else {
         return (
           <AthleteRanking
@@ -547,39 +640,47 @@ export const FreestyleCol = (title) => [
             isHistory={Boolean(title)}
             unit_code={unit_code}
           />
-        )
+        );
       }
-    }
+    },
   },
 
   {
-    key: 'bib',
-    title: 'Bib',
-    textAlign: 'center',
+    key: "bib",
+    title: "Bib",
+    textAlign: "center",
     render: (record, index, result_status, livescoring, athlete) => {
       if (record?.athlete) {
-        return <>{record?.athlete?.bib}</>
+        return <>{record?.athlete?.bib}</>;
       } else {
-        return <>{athlete.bib}</>
+        return <>{athlete.bib}</>;
       }
-    }
+    },
   },
 
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     width: 90,
-    render: (record, index, result_status, livescoring, isGoal, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       if (title) {
         if (
-          result_status === 'OFFICIAL' ||
-          result_status === 'UNCONFIRMED' ||
-          result_status === 'UNOFFICIAL'
+          result_status === "OFFICIAL" ||
+          result_status === "UNCONFIRMED" ||
+          result_status === "UNOFFICIAL"
         ) {
-          return 'Final Standing'
+          return "Final Standing";
         } else {
-          return 'Current Standing'
+          return "Current Standing";
         }
       }
       return (
@@ -590,184 +691,206 @@ export const FreestyleCol = (title) => [
           index={index}
           livescoring={livescoring}
         />
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'run1',
-    title: 'Run 1',
-    textAlign: 'center',
+    key: "run1",
+    title: "Run 1",
+    textAlign: "center",
     render: (record) => {
       if (record.runs?.length > 0) {
-        return <>{record?.runs[0]?.result ?? '-'}</>
+        return <>{record?.runs[0]?.result ?? "-"}</>;
       } else {
-        return '-'
+        return "-";
       }
-    }
+    },
   },
   {
-    key: 'run2',
-    title: 'Run 2',
-    textAlign: 'center',
+    key: "run2",
+    title: "Run 2",
+    textAlign: "center",
     render: (record) => {
       if (record.runs?.length > 0) {
-        return <>{record?.runs[1]?.result ?? '-'}</>
+        return <>{record?.runs[1]?.result ?? "-"}</>;
       } else {
-        return '-'
+        return "-";
       }
-    }
+    },
   },
   {
-    key: 'run3',
-    title: 'Run 3',
-    textAlign: 'center',
+    key: "run3",
+    title: "Run 3",
+    textAlign: "center",
     render: (record) => {
       if (record.runs?.length > 0) {
-        return <>{record?.runs[2]?.result ?? '-'}</>
+        return <>{record?.runs[2]?.result ?? "-"}</>;
       } else {
-        return '-'
+        return "-";
       }
-    }
+    },
   },
   {
-    key: 'score',
-    title: 'Score',
-    textAlign: 'center',
+    key: "score",
+    title: "Score",
+    textAlign: "center",
 
     render: (record) => {
-      return <>{record?.intermediates?.result ?? '-'}</>
-    }
-  }
-]
+      return <>{record?.intermediates?.result ?? "-"}</>;
+    },
+  },
+];
 
 export const HockeyCol = (title) => [
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     width: 30,
     render: (_record, index, result_status, livescoring, athlete) => {
-      return <></>
-    }
+      return <></>;
+    },
   },
   {
-    key: 'name',
-    title: title ?? 'Name',
-    textAlign: 'start',
+    key: "name",
+    title: title ?? "Name",
+    textAlign: "start",
     width: 150,
-    render: (record, index, result_status, livescoring, isGoal, sportKey, unit_code) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      isGoal,
+      sportKey,
+      unit_code
+    ) => {
       return (
         <>
-          <AthleteCell sportKey={sportKey} unit_code={unit_code} record={record} isGoal={isGoal} />
+          <AthleteCell
+            sportKey={sportKey}
+            unit_code={unit_code}
+            record={record}
+            isGoal={isGoal}
+          />
         </>
-      )
-    }
+      );
+    },
   },
 
   {
-    key: 'finalResult',
-    textAlign: 'center',
+    key: "finalResult",
+    textAlign: "center",
     width: 30,
     render: (record) => {
       if (record.intermediates?.length > 4) {
-        return record?.result
+        return record?.result;
       }
-    }
+    },
   },
 
   {
-    key: 'fourthQuarther',
-    textAlign: 'center',
+    key: "fourthQuarther",
+    textAlign: "center",
     width: 30,
     render: (record) => {
       if (record.intermediates?.length === 4) {
-        return record?.intermediates[3]?.intermediates.result
+        return record?.intermediates[3]?.intermediates.result;
       } else {
         // return record?.result;
       }
-    }
+    },
   },
   {
-    key: 'thirdQuarter',
-    textAlign: 'center',
+    key: "thirdQuarter",
+    textAlign: "center",
     width: 30,
     render: (record) => {
       if (record.intermediates?.length === 3) {
-        return record?.intermediates[2]?.intermediates.result
+        return record?.intermediates[2]?.intermediates.result;
       }
-    }
+    },
   },
   {
-    key: 'secondQuarter',
-    textAlign: 'center',
+    key: "secondQuarter",
+    textAlign: "center",
     width: 30,
     render: (record) => {
       if (record.intermediates?.length > 1) {
         if (record.intermediates.length === 2) {
-          return <div>{record?.intermediates[1]?.intermediates.result}</div>
+          return <div>{record?.intermediates[1]?.intermediates.result}</div>;
         } else {
           return (
-            <div style={{ color: '#2A334299' }}>
+            <div style={{ color: "#2A334299" }}>
               {record?.intermediates[1]?.intermediates.result}
             </div>
-          )
+          );
         }
       }
-    }
+    },
   },
 
   {
-    key: 'firstQuarter',
-    textAlign: 'center',
+    key: "firstQuarter",
+    textAlign: "center",
     width: 30,
     render: (record) => {
       if (record.intermediates?.length > 0) {
         if (record.intermediates.length === 1) {
-          return <div>{record?.intermediates[0]?.intermediates.result}</div>
+          return <div>{record?.intermediates[0]?.intermediates.result}</div>;
         } else {
           return (
-            <div style={{ color: '#2A334299' }}>
+            <div style={{ color: "#2A334299" }}>
               {record?.intermediates[0]?.intermediates.result}
             </div>
-          )
+          );
         }
       }
-    }
-  }
-]
+    },
+  },
+];
 
-const AthleteCell = ({ record, showCountry = true, livescoring, isGoal, sportKey, unit_code }) => {
-  const { dataState } = useSocketStore()
+const AthleteCell = ({
+  record,
+  showCountry = true,
+  livescoring,
+  isGoal,
+  sportKey,
+  unit_code,
+}) => {
+  const { dataState } = useSocketStore();
 
   // Access the current and previous data for the specific sport and game
-  const currentData = dataState[sportKey]?.[unit_code]?.current
-  const previousData = dataState[sportKey]?.[unit_code]?.previous
+  const currentData = dataState[sportKey]?.[unit_code]?.current;
+  const previousData = dataState[sportKey]?.[unit_code]?.previous;
 
   const oldIndex = previousData?.findIndex(
     (item) =>
-      item.athlete?.code === record.athlete?.code && item.athlete?.bib === record.athlete?.bib
-  )
+      item.athlete?.code === record.athlete?.code &&
+      item.athlete?.bib === record.athlete?.bib
+  );
 
   const newIndex = currentData?.findIndex(
     (item) =>
-      item.athlete?.code === record.athlete?.code && item.athlete?.bib === record.athlete?.bib
-  )
+      item.athlete?.code === record.athlete?.code &&
+      item.athlete?.bib === record.athlete?.bib
+  );
 
-  const indx = oldIndex - newIndex
+  const indx = oldIndex - newIndex;
 
-  let modifiedName = record.athlete?.name
-  if (modifiedName && modifiedName.includes('-')) {
-    const lastname = modifiedName.split('. ')
-    const firstName = lastname[0]
-    const parts = lastname[lastname.length - 1]
+  let modifiedName = record.athlete?.name;
+  if (modifiedName && modifiedName.includes("-")) {
+    const lastname = modifiedName.split(". ");
+    const firstName = lastname[0];
+    const parts = lastname[lastname.length - 1];
 
-    const newName = parts.split('-')
+    const newName = parts.split("-");
     if (newName.length === 2) {
       // Ensure there are exactly two parts after splitting
-      modifiedName = `${firstName}. ${newName[0].charAt(0)}-${newName[1]}`
+      modifiedName = `${firstName}. ${newName[0].charAt(0)}-${newName[1]}`;
     } else {
-      modifiedName = `${firstName}. ${parts}` // Fallback to original last part
+      modifiedName = `${firstName}. ${parts}`; // Fallback to original last part
     }
   }
 
@@ -778,70 +901,70 @@ const AthleteCell = ({ record, showCountry = true, livescoring, isGoal, sportKey
           className="flag"
           src={getFlag(record?.athlete?.organisation)}
           alt="flag"
-          onError={(e) => (e.target.src = 'flags/ESP.svg')}
+          onError={(e) => (e.target.src = "flags/ESP.svg")}
         />
       )}
       <div>{modifiedName}</div>
       {isGoal && (
         <div className={styles.goalContainer}>
-          {' '}
+          {" "}
           <span>
-            {' '}
+            {" "}
             <GoalIcon color="white" />
           </span>
           Goal
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 const AthleteRanking = ({ record, index, result_status, unit_code }) => {
   const getRanking = (index) => {
     switch (index) {
       case 1:
-        return styles.first_place
+        return styles.first_place;
       case 2:
-        return styles.second_place
+        return styles.second_place;
       case 3:
-        return styles.third_place
+        return styles.third_place;
 
       default:
-        return styles.ranking
+        return styles.ranking;
     }
-  }
-  if (result_status === 'OFFICIAL' && FormatData.isFinal(unit_code)) {
+  };
+  if (result_status === "OFFICIAL" && FormatData.isFinal(unit_code)) {
     return (
       <div className={styles.rankingContainer}>
         <div
           className={getRanking(
             Array.isArray(record.intermediates)
-              ? record?.rank || '.'
-              : record?.intermediates?.rank || '.'
+              ? record?.rank || "."
+              : record?.intermediates?.rank || "."
           )}
         >
           <div className={styles.index}>
             {Array.isArray(record.intermediates)
-              ? record?.rank || '.'
-              : record?.intermediates?.rank || '.'}
+              ? record?.rank || "."
+              : record?.intermediates?.rank || "."}
           </div>
         </div>
         <img
           className="flag"
           src={getFlag(record?.athlete?.organisation)}
           alt="flag"
-          onError={(e) => (e.target.src = 'flags/ESP.svg')}
+          onError={(e) => (e.target.src = "flags/ESP.svg")}
         />
       </div>
-    )
+    );
   } else {
     return (
       <div className={styles.rankingContainer}>
         <div className={styles.ranking}>
           <div className={styles.index}>
             {Array.isArray(record.intermediates)
-              ? record?.rank || '.'
-              : record?.intermediates?.rank || '.'}
+              ? record?.rank || "."
+              : record?.intermediates?.rank || "."}
           </div>
         </div>
 
@@ -849,32 +972,32 @@ const AthleteRanking = ({ record, index, result_status, unit_code }) => {
           className="flag"
           src={getFlag(record.athlete?.organisation)}
           alt="flag"
-          onError={(e) => (e.target.src = 'flags/ESP.svg')}
+          onError={(e) => (e.target.src = "flags/ESP.svg")}
         />
       </div>
-    )
+    );
   }
-}
+};
 
 export const returnSportTeamColumn = (sportKey, item_name) => {
   switch (sportKey) {
-    case 'SBD':
-      return HockeyCol(item_name)
-    case 'ALP':
-      return AlpineCol(item_name)
-    case 'BTH':
-      return HockeyCol(item_name)
-    case 'CCS':
-      return CrossCountryCol(item_name)
-    case 'FRS':
-      return FreestyleCol(item_name)
-    case 'IHO':
-      return HockeyCol(item_name)
-    case 'FSK':
-      return FigureSkatingCol(item_name)
-    case 'STK':
-      return ShortTrackCol(item_name)
+    case "SBD":
+      return HockeyCol(item_name);
+    case "ALP":
+      return AlpineCol(item_name);
+    case "BTH":
+      return HockeyCol(item_name);
+    case "CCS":
+      return CrossCountryCol(item_name);
+    case "FRS":
+      return FreestyleCol(item_name);
+    case "IHO":
+      return HockeyCol(item_name);
+    case "FSK":
+      return FigureSkatingCol(item_name);
+    case "STK":
+      return ShortTrackCol(item_name);
     default:
-      return []
+      return [];
   }
-}
+};
