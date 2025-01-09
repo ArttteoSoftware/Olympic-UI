@@ -97,8 +97,8 @@ function Grid({
       setAnimatedData(currentGameData.current);
       setStatus(currentGameData.result_status);
 
-      const firstInt = currentGameData.current[0].intermediates;
-      const secondInt = currentGameData.current[1].intermediates;
+      const firstInt = currentGameData?.current[0].intermediates;
+      const secondInt = currentGameData?.current[1].intermediates;
       if (
         (firstInt && firstInt[firstInt.length - 1]?.action === "Goal") ||
         (secondInt && secondInt[secondInt.length - 1]?.action === "Goal")
@@ -170,32 +170,38 @@ function Grid({
             >
               <AnimatePresence>
                 {Array.isArray(animatedData) &&
-                  animatedData?.map((record, index) => (
-                    <PlayerRow
-                      key={record.athlete?.code || index}
-                      record={record}
-                      columns={columns}
-                      rowKey={rowKey}
-                      animatedData={animatedData}
-                      index={index}
-                      details={details}
-                      itemName={item_name}
-                      result_status={status}
-                      sportKey={sportKey}
-                      unit_code={unit_code}
-                      vsTeam={vsTeam}
-                      onRowClick={onRowClick}
-                      isGoal={
-                        dataState &&
-                        dataState.current?.length > 0 &&
-                        record?.athlete?.code ===
-                          dataState.current[index]?.athlete?.code &&
-                        dataState.current[index]?.intermediates[
-                          dataState.current[index]?.intermediates?.length - 1
-                        ]?.action === "Goal"
-                      }
-                    />
-                  ))}
+                  animatedData?.map((record, index) => {
+                    const currentGameData =
+                      dataState[`${sportKey}`]?.[`${unit_code}`];
+
+
+                    return (
+                      <PlayerRow
+                        key={record.athlete?.code || index}
+                        record={record}
+                        columns={columns}
+                        rowKey={rowKey}
+                        animatedData={animatedData}
+                        index={index}
+                        details={details}
+                        itemName={item_name}
+                        result_status={status}
+                        sportKey={sportKey}
+                        unit_code={unit_code}
+                        vsTeam={vsTeam}
+                        onRowClick={onRowClick}
+                        isGoal={Boolean(
+                          currentGameData?.current?.length > 0 &&
+                            record?.athlete?.code ===
+                              currentGameData?.current[index]?.athlete?.code &&
+                            currentGameData?.current[index]?.intermediates[
+                              currentGameData?.current[index]?.intermediates
+                                ?.length - 1
+                            ]?.intermediates?.action === "Goal"
+                        )}
+                      />
+                    );
+                  })}
               </AnimatePresence>
             </Reorder.Group>
           </table>

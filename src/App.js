@@ -50,7 +50,7 @@ function App() {
       socket.disconnect();
       setStatus("Disconnected");
     };
-  }, [setData, setStatus, setUnitCode]);
+  }, [setData, setStatus, setUnitCode, setSrtData]);
 
   return (
     <div className="outerContainer">
