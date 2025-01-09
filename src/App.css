@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "FiraGo";
-  src: url("./fonts/FiraGO-Regular.otf") format("opentype");
+  font-family: 'FiraGo';
+  src: url('./fonts/FiraGO-Regular.otf') format('opentype');
   font-style: normal;
   font-display: swap;
 }
@@ -15,7 +15,7 @@ body,
 body {
   margin: 0;
   padding: 0;
-  font-family: "FiraGo";
+  font-family: 'FiraGo';
 }
 
 .background {
@@ -39,6 +39,7 @@ body {
   justify-content: center;
   display: flex;
 }
+
 
 @media (max-width: 768px) {
   .outerContainer {

@@ -10,6 +10,7 @@ import { returnSportColumn } from "../../UI/columns/Columns";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 import TeamGrid from "../Grid/TeamGrid";
 import TeamInfoModal from "../PlayerInfoModal/TeamInfoModal";
+import FormatData from "../../util/FormatData";
 
 const DetailsCard = ({
   columns,
@@ -162,11 +163,13 @@ const GridSection = ({
   handleRowClick,
   loading,
   sportKey,
+  
 }) => (
+  console.log('GridData' ,gridData),
   <>
     {gridData.map((item) => (
       <div key={item.item_name}>
-        <GridHeader itemName={item.item_name} />
+        <GridHeader itemName={item.item_name} startDate={item.start_date}/>
         <div className={styles.dataContainer}>
           {item.unit_code.includes("TE") || item.unit_code.includes("RELAY") ? (
             <TeamGrid
@@ -209,11 +212,11 @@ const GridSection = ({
   </>
 );
 
-const GridHeader = ({ itemName }) => (
+const GridHeader = ({ itemName, startDate }) => (
   <div className={styles.cardSubtitleContainer}>
     <div className={styles.cardSubtitleInnerContainer}>
       <div className={styles.dashedLine} />
-      <div className={styles.subtitle}>{itemName}</div>
+      <div className={styles.subtitle}>{itemName} <span className={styles.startDateContainer}>{FormatData.formatTime(startDate)}</span></div>
       <div className={styles.dashedLine} />
     </div>
   </div>

@@ -1,36 +1,35 @@
-import Card from "../../components/Card/Card";
-import styles from "./MainPageSportsGrid.module.css";
-import { getAllMatches } from "../../services/MainPageService";
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import VideoPlayer from "../../components/Videoplayer/VideoPlayer";
-import { motion } from "framer-motion";
-import { getDividerColor } from "../../enum/Divider";
-import VerticalCarousel from "../../components/VerticalCarousel/VerticalCarousel";
-import Loading from "../../UI/Loader/Loading";
+import Card from '../../components/Card/Card'
+import styles from './MainPageSportsGrid.module.css'
+import { getAllMatches } from '../../services/MainPageService'
+import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { getDividerColor } from '../../enum/Divider'
 
 function MainPageSportsGrid() {
-  const navigate = useNavigate();
-  const [data, setData] = useState([]);
-  const [loader, setLoader] = useState(false);
+  const navigate = useNavigate()
+  const [data, setData] = useState([])
+  const [loader, setLoader] = useState(false)
+
 
   const loadData = useCallback(async () => {
     try {
-      setLoader(true);
-      const { data } = await getAllMatches();
+      setLoader(true)
+      const { data } = await getAllMatches()
+
       if (data) {
-        setData(data.units);
-        setLoader(false);
+        setData(data.units)
+        setLoader(false)
       }
     } catch (err) {
-      setLoader(false);
-      console.error("Error while loading Data", err);
+      setLoader(false)
+      console.error('Error while loading Data', err)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    loadData()
+  }, [loadData])
 
   return (
     <div className={styles.container}>
@@ -39,9 +38,7 @@ function MainPageSportsGrid() {
           <motion.div
             key={item._id}
             onClick={() => {
-              if (item._id !== "FRS") {
-                navigate(`/${item._id}`);
-              }
+              navigate(`/${item._id}`)
             }}
           >
             <Card
@@ -52,10 +49,11 @@ function MainPageSportsGrid() {
               loader={loader}
             />
           </motion.div>
-        );
+        )
       })}
+
     </div>
-  );
+  )
 }
 
-export default MainPageSportsGrid;
+export default MainPageSportsGrid

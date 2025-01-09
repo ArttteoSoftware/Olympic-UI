@@ -141,6 +141,13 @@
 	animation: pulse 1s infinite;
 }
 
+
+.startDateContainer{
+	background-color: #7D94A51A;
+	border: 1px solid #7D94A51A;
+	padding: 4px 10px;
+	border-radius: 4px;
+}
 @keyframes pulse {
 	0% {
 		transform: scale(1);

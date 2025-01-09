@@ -151,7 +151,7 @@ export default function TeamInfoModal({
                           {athlete.name}
                           {Array.from({ length: athlete.scoreCount }).map(
                             (_, i) => (
-                              <div key={i}><GoalIcon color="black"/></div>
+                              <span style={{padding:'5px'}} key={i}><GoalIcon color="black"/></span>
                             )
                           )}
                         </div>
