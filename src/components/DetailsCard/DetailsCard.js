@@ -217,7 +217,7 @@ const GridHeader = ({ itemName, startDate }) => (
       <div className={styles.subtitle}>
         {itemName}{" "}
         <span className={styles.startDateContainer}>
-          {FormatData.formatTime(startDate)}
+          {FormatData.formatUTCTime(startDate)}
         </span>
       </div>
       <div className={styles.dashedLine} />

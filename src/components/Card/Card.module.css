@@ -164,11 +164,11 @@
 .placeholderText {
   color: #2a3342;
 }
-.startDateContainer{
-	background-color: #7D94A51A;
-	border: 1px solid #7D94A51A;
-	padding: 4px 10px;
-	border-radius: 4px;
+.startDateContainer {
+  background-color: #7d94a51a;
+  border: 1px solid #7d94a51a;
+  padding: 4px 10px;
+  border-radius: 4px;
 }
 
 @media screen and (max-width: 768px) {
@@ -181,5 +181,6 @@
 
   .innerContainer {
     max-width: 92vw;
+    height: 21rem;
   }
 }
