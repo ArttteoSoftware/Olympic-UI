@@ -3,6 +3,7 @@ import useSocketStore from "../../store/socketStore";
 import { RankingUp, RankingDown } from "../Icons";
 import { GoalIcon } from "../Icons";
 import { getFlag } from "../flags";
+import FormatData from "../../util/FormatData";
 
 export const SnowboardCol = (title) => [
   {
@@ -10,7 +11,15 @@ export const SnowboardCol = (title) => [
     title: "#",
     width: 60,
     textAlign: "center",
-    render: (record, index, result_status, livescoring, athlete) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -18,6 +27,7 @@ export const SnowboardCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       } else {
@@ -27,6 +37,7 @@ export const SnowboardCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       }
@@ -127,7 +138,15 @@ export const BiathlonCol = (title) => [
     title: "#",
     width: 60,
     textAlign: "center",
-    render: (record, index, result_status, livescoring, athlete) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -135,6 +154,7 @@ export const BiathlonCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       } else {
@@ -144,6 +164,7 @@ export const BiathlonCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       }
@@ -269,7 +290,15 @@ export const ShortTrackCol = (title) => [
     title: "#",
     textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -277,6 +306,7 @@ export const ShortTrackCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       } else {
@@ -286,6 +316,7 @@ export const ShortTrackCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       }
@@ -366,7 +397,15 @@ export const FigureSkatingCol = (title) => [
     title: "#",
     textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (record.athlete) {
         return (
           <AthleteRanking
@@ -374,6 +413,7 @@ export const FigureSkatingCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       } else {
@@ -383,6 +423,7 @@ export const FigureSkatingCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       }
@@ -393,7 +434,7 @@ export const FigureSkatingCol = (title) => [
     key: "name",
     title: title ?? "Name",
     textAlign: "start",
-    width: 150,
+    width: 80,
     render: (record, index, result_status, livescoring) => {
       if (title) {
         if (
@@ -459,7 +500,15 @@ export const CrossCountryCol = (title) => [
     title: "#",
     textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -467,6 +516,7 @@ export const CrossCountryCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       } else {
@@ -476,6 +526,7 @@ export const CrossCountryCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       }
@@ -561,7 +612,15 @@ export const FreestyleCol = (title) => [
     title: "#",
     textAlign: "center",
     width: 60,
-    render: (record, index, result_status, livescoring, athlete) => {
+    render: (
+      record,
+      index,
+      result_status,
+      livescoring,
+      athlete,
+      sportKey,
+      unit_code
+    ) => {
       if (athlete) {
         return (
           <AthleteRanking
@@ -569,6 +628,7 @@ export const FreestyleCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       } else {
@@ -578,6 +638,7 @@ export const FreestyleCol = (title) => [
             index={index}
             result_status={result_status}
             isHistory={Boolean(title)}
+            unit_code={unit_code}
           />
         );
       }
@@ -844,14 +905,21 @@ const AthleteCell = ({
         />
       )}
       <div>{modifiedName}</div>
-      {  isGoal && <div className={styles.goalContainer}> <span> <GoalIcon color="white"/></span>Goal</div>
-      
-    }
+      {isGoal && (
+        <div className={styles.goalContainer}>
+          {" "}
+          <span>
+            {" "}
+            <GoalIcon color="white" />
+          </span>
+          Goal
+        </div>
+      )}
     </div>
   );
 };
 
-const AthleteRanking = ({ record, index, result_status }) => {
+const AthleteRanking = ({ record, index, result_status, unit_code }) => {
   const getRanking = (index) => {
     switch (index) {
       case 1:
@@ -865,7 +933,7 @@ const AthleteRanking = ({ record, index, result_status }) => {
         return styles.ranking;
     }
   };
-  if (result_status === "OFFICIAL") {
+  if (result_status === "OFFICIAL" && FormatData.isFinal(unit_code)) {
     return (
       <div className={styles.rankingContainer}>
         <div

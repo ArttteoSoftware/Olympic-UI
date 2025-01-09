@@ -145,9 +145,9 @@ function Grid({
           className={styles.teamTableContainer}
           onClick={() => {
             if (vsTeam && details) {
-               onRowClick(data, item_name, unit_code, result_status);
-             }
-           }}
+              onRowClick(data, item_name, unit_code, result_status);
+            }
+          }}
         >
           {sportKey === "IHO" && animatedData?.length > 1 && (
             <div className={styles.periodTimeContainer}>
@@ -173,7 +173,6 @@ function Grid({
                   animatedData?.map((record, index) => {
                     const currentGameData =
                       dataState[`${sportKey}`]?.[`${unit_code}`];
-
 
                     return (
                       <PlayerRow

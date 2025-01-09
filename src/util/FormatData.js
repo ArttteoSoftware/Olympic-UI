@@ -35,4 +35,9 @@ export default class FormatData {
 
     return match ? parseFloat(match[0]) : null;
   }
+
+  static isFinal = (unit_code) => {
+    const match = unit_code.match(/.*-(\w{3})-/);
+    return match ? match[1] === "FNL" : false;
+  };
 }

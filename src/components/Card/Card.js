@@ -85,18 +85,20 @@ const Card = ({ className, title, units, divider }) => {
           {isTeam ? (
             // თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-            <TeamGrid
-              result_status={unit.result_status}
-              details={false}
-              columns={returnSportTeamColumn(title)}
-              data={listData}
-              className={styles.cardGrid}
-              isTeam={isTeam}
-              vsTeam={vsTeam}
-              unit_code={unit.unit_code}
-              sportKey={title}
-              item_name={unit.item_name}
-            />
+            <MarqueeEffect shouldAnimate={listData?.length > 7}>
+              <TeamGrid
+                result_status={unit.result_status}
+                details={false}
+                columns={returnSportTeamColumn(title)}
+                data={listData}
+                className={styles.cardGrid}
+                isTeam={isTeam}
+                vsTeam={vsTeam}
+                unit_code={unit.unit_code}
+                sportKey={title}
+                item_name={unit.item_name}
+              />
+            </MarqueeEffect>
           ) : (
             <MarqueeEffect shouldAnimate={listData?.length > 7}>
               <Grid
@@ -120,16 +122,18 @@ const Card = ({ className, title, units, divider }) => {
           <UnitHeader item={unit} loading={loading} />
 
           {isTeam ? (
-            <TeamGrid
-              result_status={unit.result_status}
-              details={false}
-              columns={returnSportTeamColumn(title)}
-              data={listData}
-              unit_code={unit.unit_code}
-              className={styles.cardGrid}
-              sportKey={title}
-              item_name={unit.item_name}
-            />
+            <MarqueeEffect shouldAnimate={listData?.length > 7}>
+              <TeamGrid
+                result_status={unit.result_status}
+                details={false}
+                columns={returnSportTeamColumn(title)}
+                data={listData}
+                unit_code={unit.unit_code}
+                className={styles.cardGrid}
+                sportKey={title}
+                item_name={unit.item_name}
+              />
+            </MarqueeEffect>
           ) : (
             <MarqueeEffect shouldAnimate={listData?.length > 7}>
               <Grid

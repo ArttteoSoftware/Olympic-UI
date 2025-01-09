@@ -68,10 +68,14 @@ export default function TeamInfoModal({
 
                           {/* Refactoring from Backend. Some sports have record[key].result and some do not. */}
                           <div className={styles.score}>
-                            {record[key]?.result !== undefined &&
+                            {/* {record[key]?.result !== undefined &&
                             record[key]?.result !== null
                               ? record[key]?.result
-                              : record[key]?.intermediates?.result}
+                              : record[key]?.intermediates?.result} */}
+
+                            {record[key]?.intermediates[
+                              record[key]?.intermediates?.length - 1
+                            ].intermediates.result ?? record[key]?.result}
                           </div>
                         </div>
                         {i < Object.keys(record).length - 1 && (
@@ -151,7 +155,9 @@ export default function TeamInfoModal({
                           {athlete.name}
                           {Array.from({ length: athlete.scoreCount }).map(
                             (_, i) => (
-                              <span style={{padding:'5px'}} key={i}><GoalIcon color="black"/></span>
+                              <span style={{ padding: "5px" }} key={i}>
+                                <GoalIcon color="black" />
+                              </span>
                             )
                           )}
                         </div>
