@@ -143,11 +143,11 @@ function Grid({
       ) : (
         <div
           className={styles.teamTableContainer}
-          // onClick={() => {
-          //   if (vsTeam && details) {
-          //     onRowClick(data, item_name, unit_code, result_status);
-          //   }
-          // }}
+          onClick={() => {
+            if (vsTeam && details) {
+               onRowClick(data, item_name, unit_code, result_status);
+             }
+           }}
         >
           {sportKey === "IHO" && animatedData?.length > 1 && (
             <div className={styles.periodTimeContainer}>
