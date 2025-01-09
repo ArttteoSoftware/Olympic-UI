@@ -34,10 +34,6 @@ function MainPageSportsGrid() {
 
   return (
     <div className={styles.container}>
-      {/* {window.innerWidth <= 768 ? (
-				<VerticalCarousel items={data} loader={loader} />
-			) : (
-				<> */}
       {data.map((item) => {
         return (
           <motion.div
@@ -58,8 +54,6 @@ function MainPageSportsGrid() {
           </motion.div>
         );
       })}
-      {/* </> */}
-      {/* )} */}
     </div>
   );
 }

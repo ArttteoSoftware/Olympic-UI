@@ -1,6 +1,7 @@
 import styles from "./TeamColumns.module.css";
 import useSocketStore from "../../store/socketStore";
 import { RankingUp, RankingDown } from "../Icons";
+import { GoalIcon } from "../Icons";
 import { getFlag } from "../flags";
 
 export const SnowboardCol = (title) => [
@@ -843,7 +844,9 @@ const AthleteCell = ({
         />
       )}
       <div>{modifiedName}</div>
-      {isGoal && <div className={styles.goalContainer}>Goal</div>}
+      {  isGoal && <div className={styles.goalContainer}> <span> <GoalIcon color="white"/></span>Goal</div>
+      
+    }
     </div>
   );
 };

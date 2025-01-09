@@ -9,6 +9,7 @@ import {
 import Bread from "../Bread/Bread";
 import { getFlag } from "../../UI/flags";
 import { convertSportTitle } from "../../enum/Sport";
+import { GoalIcon } from "../../UI/Icons";
 
 export default function TeamInfoModal({
   visible,
@@ -47,7 +48,7 @@ export default function TeamInfoModal({
             <div className={styles.modalBody}>
               <div
                 className={
-                  Array.isArray(record)
+                  Boolean(Array.isArray(record))
                     ? styles.contentContainer
                     : styles.countryContentContainer
                 }
@@ -145,12 +146,12 @@ export default function TeamInfoModal({
                           className={`${styles.lineUpPlayer} ${
                             index % 2 === 1 ? styles.grayLineUpPlayer : ""
                           }`}
-                          key={index}
+                          key={athlete.code}
                         >
                           {athlete.name}
                           {Array.from({ length: athlete.scoreCount }).map(
                             (_, i) => (
-                              <>***</>
+                              <div key={i}><GoalIcon color="black"/></div>
                             )
                           )}
                         </div>
