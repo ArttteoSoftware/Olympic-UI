@@ -5,36 +5,36 @@ import { CalendarIcon } from "../../UI/Icons";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setDate(new Date());
-		}, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDate(new Date());
+    }, 1000);
 
-		return () => clearInterval(interval);
-	}, []);
+    return () => clearInterval(interval);
+  }, []);
 
-	return (
-		<header>
-			<div className={styles.container}>
-				<div onClick={() => navigate("/")} className={styles.logoContainer}>
-					<img className={styles.logo} src="assets/logo/Logo.svg" alt="logo" />
-				</div>
-				<div className={styles.calendarContainer}>
-					<div className={styles.dateContainer}>
-						<div className={styles.date}>{FormatData.formatDate(date)}</div>
-						<div className={styles.time}>{FormatData.formatTime(date)}</div>
-					</div>
-					<div>
-						<CalendarIcon className={styles.calendarIcon} />
-					</div>
-				</div>
-			</div>
-		</header>
-	);
+  return (
+    <header>
+      <div className={styles.container}>
+        <div onClick={() => navigate("/")} className={styles.logoContainer}>
+          <img className={styles.logo} src="assets/logo/Logo.svg" alt="logo" />
+        </div>
+        <div className={styles.calendarContainer}>
+          <div className={styles.dateContainer}>
+            <div className={styles.date}>{FormatData.formatDate(date)}</div>
+            <div className={styles.time}>{FormatData.formatTime(date)}</div>
+          </div>
+          <div>
+            <CalendarIcon className={styles.calendarIcon} />
+          </div>
+        </div>
+      </div>
+    </header>
+  );
 }
 
 export default Header;
