@@ -163,13 +163,11 @@ const GridSection = ({
   handleRowClick,
   loading,
   sportKey,
-  
 }) => (
-  console.log('GridData' ,gridData),
   <>
     {gridData.map((item) => (
       <div key={item.item_name}>
-        <GridHeader itemName={item.item_name} startDate={item.start_date}/>
+        <GridHeader itemName={item.item_name} startDate={item.start_date} />
         <div className={styles.dataContainer}>
           {item.unit_code.includes("TE") || item.unit_code.includes("RELAY") ? (
             <TeamGrid
@@ -216,7 +214,12 @@ const GridHeader = ({ itemName, startDate }) => (
   <div className={styles.cardSubtitleContainer}>
     <div className={styles.cardSubtitleInnerContainer}>
       <div className={styles.dashedLine} />
-      <div className={styles.subtitle}>{itemName} <span className={styles.startDateContainer}>{FormatData.formatTime(startDate)}</span></div>
+      <div className={styles.subtitle}>
+        {itemName}{" "}
+        <span className={styles.startDateContainer}>
+          {FormatData.formatTime(startDate)}
+        </span>
+      </div>
       <div className={styles.dashedLine} />
     </div>
   </div>
