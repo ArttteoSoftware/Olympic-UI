@@ -1,28 +1,34 @@
-import Card from '../../components/Card/Card'
-import styles from './MainPageSportsGrid.module.css'
-import { getAllMatches } from '../../services/MainPageService'
-import { useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { getDividerColor } from '../../enum/Divider'
-import DatePicker from 'react-datepicker'
+import Card from "../../components/Card/Card";
+import styles from "./MainPageSportsGrid.module.css";
+import { getAllMatches } from "../../services/MainPageService";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { getDividerColor } from "../../enum/Divider";
+// import DatePicker from "react-datepicker";
 
 function MainPageSportsGrid() {
-  const navigate = useNavigate()
-  const [data, setData] = useState([])
-  const [loader, setLoader] = useState(false)
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   // Initialize with current UTC date but 2022 year
   const [selectedDate, setSelectedDate] = useState(() => {
-    const today = new Date()
+    const today = new Date();
     return new Date(
-      Date.UTC(2022, 1, today.getUTCDate(), today.getUTCHours(), today.getUTCMinutes())
-    )
-  })
+      Date.UTC(
+        2022,
+        1,
+        today.getUTCDate(),
+        today.getUTCHours(),
+        today.getUTCMinutes()
+      )
+    );
+  });
 
   const loadData = useCallback(async () => {
     try {
-      setLoader(true)
+      setLoader(true);
       // Convert to UTC before sending to API
       const utcDate = new Date(
         Date.UTC(
@@ -32,21 +38,21 @@ function MainPageSportsGrid() {
           selectedDate.getUTCHours(),
           selectedDate.getUTCMinutes()
         )
-      )
-      const { data } = await getAllMatches(utcDate)
+      );
+      const { data } = await getAllMatches(utcDate);
       if (data) {
-        setData(data.units)
+        setData(data.units);
       }
     } catch (err) {
-      console.error('Error while loading Data', err)
+      console.error("Error while loading Data", err);
     } finally {
-      setLoader(false)
+      setLoader(false);
     }
-  }, [selectedDate])
+  }, [selectedDate]);
 
   useEffect(() => {
-    loadData()
-  }, [loadData])
+    loadData();
+  }, [loadData]);
 
   const handleDateChange = (date) => {
     // Convert the selected date to UTC
@@ -58,9 +64,9 @@ function MainPageSportsGrid() {
         date.getHours(),
         date.getMinutes()
       )
-    )
-    setSelectedDate(utcDate)
-  }
+    );
+    setSelectedDate(utcDate);
+  };
 
   return (
     <div className={styles.container}>
@@ -75,7 +81,7 @@ function MainPageSportsGrid() {
           />
         </motion.div>
       ))}
-      <DatePicker
+      {/* <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
         showTimeSelect
@@ -85,9 +91,9 @@ function MainPageSportsGrid() {
         className={styles.datePicker}
         // Use UTC timezone for DatePicker
         utcOffset={0}
-      />
+      /> */}
     </div>
-  )
+  );
 }
 
-export default MainPageSportsGrid
+export default MainPageSportsGrid;
