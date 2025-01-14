@@ -1,60 +1,76 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import styles from "./VideoPlayer.module.css";
 import useSocketStore from "../../store/socketStore";
+import Loading from "../../UI/Loader/Loading";
 
 const VideoPlayer = ({ streamUrl, onVideoEnd, play, setPlay }) => {
   const videoRef = useRef(null);
   const hlsRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!play) return;
+    if (!play || !streamUrl) return;
+    setIsLoading(true);
 
-    if (Hls.isSupported()) {
+    const initializeHls = () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+      }
+
       hlsRef.current = new Hls({
         enableWorker: true,
-        startPosition: 0,
-        maxBufferLength: 10,
-        maxMaxBufferLength: 30,
-        startLevel: 0,
+        startPosition: -1,
+        maxBufferLength: 5,
+        maxMaxBufferLength: 15,
+        startLevel: -1,
         autoStartLoad: true,
-        manifestLoadingTimeOut: 10000,
-        manifestLoadingMaxRetry: 3,
-        maxBufferSize: 15000000,
-        maxBufferHole: 0.5,
+        manifestLoadingTimeOut: 5000,
+        manifestLoadingMaxRetry: 2,
+        maxBufferSize: 5000000,
+        maxBufferHole: 0.3,
         lowLatencyMode: true,
-        backBufferLength: 30,
+        backBufferLength: 15,
+        debug: false,
       });
 
-      hlsRef.current.loadSource(streamUrl);
-      hlsRef.current.attachMedia(videoRef.current);
+      hlsRef.current.on(Hls.Events.ERROR, (event, data) => {
+        console.error("HLS Error:", data);
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              initializeHls();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              hlsRef.current.recoverMediaError();
+              break;
+            default:
+              initializeHls();
+              break;
+          }
+        }
+      });
 
       hlsRef.current.on(Hls.Events.MANIFEST_PARSED, () => {
         if (videoRef.current) {
           tryPlayVideo();
+          setIsLoading(false);
         }
       });
+
+      hlsRef.current.loadSource(streamUrl);
+      hlsRef.current.attachMedia(videoRef.current);
+    };
+
+    if (Hls.isSupported()) {
+      initializeHls();
     } else if (
       videoRef?.current?.canPlayType("application/vnd.apple.mpegurl")
     ) {
       videoRef.current.src = streamUrl;
       videoRef.current.load();
       tryPlayVideo();
-    }
-
-    const videoElement = videoRef.current;
-
-    // Add resize event listener
-
-    if (videoElement) {
-      ["play", "ended"].forEach((eventName) => {
-        videoElement.addEventListener(eventName, () => {
-          console.log(`Video event triggered: ${eventName}`, {
-            currentTime: videoElement.currentTime,
-            duration: videoElement.duration,
-          });
-        });
-      });
+      setIsLoading(false);
     }
 
     return () => {
@@ -63,40 +79,36 @@ const VideoPlayer = ({ streamUrl, onVideoEnd, play, setPlay }) => {
         setPlay(false);
       }
     };
-  }, [onVideoEnd, play, setPlay, streamUrl]);
+  }, [play, setPlay, streamUrl]);
 
-  const tryPlayVideo = () => {
-    const playVideo = () => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(console.error);
-      }
-    };
+  const tryPlayVideo = async () => {
+    if (!videoRef.current) return;
 
-    if (document.visibilityState === "visible") {
-      videoRef.current.preload = "auto";
-      playVideo();
+    try {
+      await videoRef.current.play();
+      setPlay(true);
+    } catch (error) {
+      console.error("Playback failed:", error);
+      setTimeout(tryPlayVideo, 1000);
     }
-
-    // Check every second if the video is paused and try to play it
-    const intervalId = setInterval(() => {
-      if (videoRef.current && videoRef.current.paused) {
-        playVideo();
-      }
-    }, 1000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(intervalId);
   };
 
   return (
-    <video
-      className={styles.video}
-      ref={videoRef}
-      muted
-      playsInline
-      preload="auto"
-      onPlay={() => setPlay(true)}
-    />
+    <>
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <Loading />
+        </div>
+      )}
+      <video
+        className={`${styles.video} ${isLoading ? styles.hidden : ""}`}
+        ref={videoRef}
+        muted
+        playsInline
+        preload="auto"
+        onError={(e) => console.error("Video Error:", e)}
+      />
+    </>
   );
 };
 

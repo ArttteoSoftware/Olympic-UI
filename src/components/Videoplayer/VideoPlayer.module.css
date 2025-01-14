@@ -1,12 +1,23 @@
 .video {
-	width: 437px;
-	height: 426px;
-	border-radius: 1.25rem;
-	object-fit: cover;
+  width: 437px;
+  height: 426px;
+  border-radius: 1.25rem;
+  object-fit: cover;
+}
+
+.loadingOverlay {
+  position: absolute;
+  width: 437px;
+  height: 426px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.25rem;
+  background-color: #fff;
 }
 
 @media screen and (max-width: 768px) {
-	.video {
-		width: 95vw;
-	}
+  .video {
+    width: 95vw;
+  }
 }

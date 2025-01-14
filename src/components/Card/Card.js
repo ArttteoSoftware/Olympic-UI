@@ -284,19 +284,25 @@ const BackCard = ({
   }, [srtData[title]]);
 
   return (
-    <motion.div
-      style={commonStyles}
-      initial={{ rotateY: 180 }}
-      animate={{ rotateY: isFlipped ? 0 : 180 }}
-      transition={{ duration: 0.4 }}
-    >
-      <VideoPlayer
-        streamUrl={`${process.env.REACT_APP_API_URL}${srtData[title]}`}
-        shouldPlay={true}
-        play={play}
-        setPlay={setPlay}
-      />
-    </motion.div>
+    <div className={styles.backCardContainer}>
+      <motion.div
+        style={{
+          ...commonStyles,
+          borderRadius: "1.25rem",
+          backgroundColor: "#fff",
+        }}
+        initial={{ rotateY: 180 }}
+        animate={{ rotateY: isFlipped ? 0 : 180 }}
+        transition={{ duration: 0.4 }}
+      >
+        <VideoPlayer
+          streamUrl={`${process.env.REACT_APP_API_URL}${srtData[title]}`}
+          shouldPlay={true}
+          play={play}
+          setPlay={setPlay}
+        />
+      </motion.div>
+    </div>
   );
 };
 
