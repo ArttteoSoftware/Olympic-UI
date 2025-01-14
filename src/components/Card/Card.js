@@ -11,7 +11,7 @@ import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 import VideoPlayer from "../Videoplayer/VideoPlayer";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 import FormatData from "../../util/FormatData";
-const Card = ({ className, title, units, divider }) => {
+const Card = ({ className, title, units, divider, item }) => {
   const [data, setData] = useState([]);
   const [isFlipped, setIsFlipped] = useState(false);
   const { dataState, unitCode } = useSocketStore();
@@ -85,21 +85,21 @@ const Card = ({ className, title, units, divider }) => {
           {isTeam ? (
             // თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-            <MarqueeEffect shouldAnimate={listData?.length > 7}>
-              <TeamGrid
-                result_status={unit.result_status}
-                details={false}
-                columns={returnSportTeamColumn(title)}
-                data={listData}
-                className={styles.cardGrid}
-                isTeam={isTeam}
-                vsTeam={vsTeam}
-                unit_code={unit.unit_code}
-                sportKey={title}
-                item_name={unit.item_name}
-              />
-            </MarqueeEffect>
+            // <MarqueeEffect shouldAnimate={listData?.length > 7}>
+            <TeamGrid
+              result_status={unit.result_status}
+              details={false}
+              columns={returnSportTeamColumn(title)}
+              data={listData}
+              className={styles.cardGrid}
+              isTeam={isTeam}
+              vsTeam={vsTeam}
+              unit_code={unit.unit_code}
+              sportKey={title}
+              item_name={unit.item_name}
+            />
           ) : (
+            // </MarqueeEffect>
             <MarqueeEffect shouldAnimate={listData?.length > 7}>
               <Grid
                 result_status={unit.result_status}
@@ -122,19 +122,19 @@ const Card = ({ className, title, units, divider }) => {
           <UnitHeader item={unit} loading={loading} />
 
           {isTeam ? (
-            <MarqueeEffect shouldAnimate={listData?.length > 7}>
-              <TeamGrid
-                result_status={unit.result_status}
-                details={false}
-                columns={returnSportTeamColumn(title)}
-                data={listData}
-                unit_code={unit.unit_code}
-                className={styles.cardGrid}
-                sportKey={title}
-                item_name={unit.item_name}
-              />
-            </MarqueeEffect>
+            // <MarqueeEffect shouldAnimate={listData?.length > 7}>
+            <TeamGrid
+              result_status={unit.result_status}
+              details={false}
+              columns={returnSportTeamColumn(title)}
+              data={listData}
+              unit_code={unit.unit_code}
+              className={styles.cardGrid}
+              sportKey={title}
+              item_name={unit.item_name}
+            />
           ) : (
+            // </MarqueeEffect>
             <MarqueeEffect shouldAnimate={listData?.length > 7}>
               <Grid
                 result_status={unit.result_status}
@@ -240,7 +240,8 @@ const FrontCard = ({
 
         <div className={styles.innerContainer}>
           {data?.length > 0 ? (
-            <>{data.map((unit) => renderUnit(unit, loading))}</>
+            (console.log("DDATA", data),
+            (<>{data.map((unit) => renderUnit(unit, loading))}</>))
           ) : (
             <>
               {loading === false && (

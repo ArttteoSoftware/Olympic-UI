@@ -193,6 +193,8 @@ function Grid({
                           currentGameData?.current?.length > 0 &&
                             record?.athlete?.code ===
                               currentGameData?.current[index]?.athlete?.code &&
+                            currentGameData?.current[index]?.intermediates
+                              ?.length > 0 &&
                             currentGameData?.current[index]?.intermediates[
                               currentGameData?.current[index]?.intermediates
                                 ?.length - 1
