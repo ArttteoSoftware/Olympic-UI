@@ -105,65 +105,71 @@ function Grid({
     }
   }, [dataState, data, unitCode, result_status, unit_code, details, item_name]);
 
+  console.log("***", sportKey, data);
+
   return (
-    <div className={details ? styles.container_details : styles.container}>
-      {loading || loader ? (
-        <div className={styles.loaderContainer}>
-          <Loading />
+    <>
+      {data.length > 0 && (
+        <div className={details ? styles.container_details : styles.container}>
+          {loading || loader ? (
+            <div className={styles.loaderContainer}>
+              <Loading />
+            </div>
+          ) : (
+            <table className={details ? styles.table_details : styles.table}>
+              <thead className={details ? styles.thead_details : styles.thead}>
+                <tr>
+                  {Array.isArray(columns) &&
+                    columns?.map((column) => (
+                      <th
+                        key={column.key}
+                        style={{
+                          width: `${column.width}px`,
+                          minWidth: `${column.minWidth}px`,
+                          maxWidth: `${column.maxWidth}px`,
+                          textAlign: column.textAlign,
+                        }}
+                      >
+                        {column.title}
+                      </th>
+                    ))}
+                </tr>
+              </thead>
+              <Reorder.Group
+                as="tbody"
+                axis="y"
+                values={animatedData || []}
+                onReorder={setAnimatedData}
+                drag={false}
+              >
+                <AnimatePresence>
+                  {Array.isArray(animatedData) &&
+                    animatedData?.map((record, index) => {
+                      return (
+                        <PlayerRow
+                          key={record.athlete?.code || index}
+                          record={record}
+                          columns={columns}
+                          rowKey={rowKey}
+                          animatedData={animatedData}
+                          index={index}
+                          details={details}
+                          itemName={item_name}
+                          onRowClick={onRowClick}
+                          result_status={status}
+                          athlete={record.athlete}
+                          sportKey={sportKey}
+                          unit_code={unit_code}
+                        />
+                      );
+                    })}
+                </AnimatePresence>
+              </Reorder.Group>
+            </table>
+          )}
         </div>
-      ) : (
-        <table className={details ? styles.table_details : styles.table}>
-          <thead className={details ? styles.thead_details : styles.thead}>
-            <tr>
-              {Array.isArray(columns) &&
-                columns?.map((column) => (
-                  <th
-                    key={column.key}
-                    style={{
-                      width: `${column.width}px`,
-                      minWidth: `${column.minWidth}px`,
-                      maxWidth: `${column.maxWidth}px`,
-                      textAlign: column.textAlign,
-                    }}
-                  >
-                    {column.title}
-                  </th>
-                ))}
-            </tr>
-          </thead>
-          <Reorder.Group
-            as="tbody"
-            axis="y"
-            values={animatedData || []}
-            onReorder={setAnimatedData}
-            drag={false}
-          >
-            <AnimatePresence>
-              {Array.isArray(animatedData) &&
-                animatedData?.map((record, index) => {
-                  return (
-                    <PlayerRow
-                      key={record.athlete?.code || index}
-                      record={record}
-                      columns={columns}
-                      rowKey={rowKey}
-                      animatedData={animatedData}
-                      index={index}
-                      details={details}
-                      itemName={item_name}
-                      onRowClick={onRowClick}
-                      result_status={status}
-                      athlete={record.athlete}
-                      sportKey={sportKey}
-                      unit_code={unit_code}
-                    />
-                  );
-                })}
-            </AnimatePresence>
-          </Reorder.Group>
-        </table>
       )}
-    </div>
+    </>
   );
 }
 

@@ -71,18 +71,23 @@ function MainPageSportsGrid() {
 
   return (
     <div className={styles.container}>
-      {data.map((item) => (
-        <motion.div key={item._id} onClick={() => navigate(`/${item._id}`)}>
-          <Card
-            divider={getDividerColor(item._id)}
-            key={item._id}
-            title={item._id}
-            units={item.units}
-            item={item}
-            loader={loader}
-          />
-        </motion.div>
-      ))}
+      {data.map(
+        (item) => (
+          console.log("item", item),
+          (
+            <motion.div key={item._id} onClick={() => navigate(`/${item._id}`)}>
+              <Card
+                divider={getDividerColor(item._id)}
+                key={item._id}
+                title={item._id}
+                units={item.units}
+                item={item}
+                loader={loader}
+              />
+            </motion.div>
+          )
+        )
+      )}
       <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}

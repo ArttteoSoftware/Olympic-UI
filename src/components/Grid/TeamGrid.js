@@ -135,80 +135,83 @@ function Grid({
   // 	animatedData[0]?.intermediates[animatedData[0]?.intermediates?.length - 1];
 
   return (
-    <div className={details ? styles.container_details : styles.container}>
-      {loading || loader ? (
-        <div className={styles.loaderContainer}>
-          <Loading />
-        </div>
-      ) : (
-        <div
-          className={styles.teamTableContainer}
-          onClick={() => {
-            if (vsTeam && details) {
-              onRowClick(data, item_name, unit_code, result_status);
-            }
-          }}
-        >
-          {sportKey === "IHO" && animatedData?.length > 1 && (
-            <div className={styles.periodTimeContainer}>
-              <div className={styles.periodTimeInnerContainer}>
-                <div>{result?.period} </div>
-              </div>
+    <>
+      {data.length > 0 && (
+        <div className={details ? styles.container_details : styles.container}>
+          {loading || loader ? (
+            <div className={styles.loaderContainer}>
+              <Loading />
+            </div>
+          ) : (
+            <div
+              className={styles.teamTableContainer}
+              onClick={() => {
+                if (vsTeam && details) {
+                  onRowClick(data, item_name, unit_code, result_status);
+                }
+              }}
+            >
+              {sportKey === "IHO" && animatedData?.length > 1 && (
+                <div className={styles.periodTimeContainer}>
+                  <div className={styles.periodTimeInnerContainer}>
+                    <div>{result?.period} </div>
+                  </div>
+                </div>
+              )}
+              <table
+                className={`${details ? styles.table_details : styles.table} ${
+                  isGoal ? styles.goalContainer : ""
+                }`}
+              >
+                <Reorder.Group
+                  as="tbody"
+                  axis="y"
+                  values={animatedData || []}
+                  onReorder={setAnimatedData}
+                  drag={false}
+                >
+                  <AnimatePresence>
+                    {Array.isArray(animatedData) &&
+                      animatedData?.map((record, index) => {
+                        const currentGameData =
+                          dataState[`${sportKey}`]?.[`${unit_code}`];
+
+                        return (
+                          <PlayerRow
+                            key={record.athlete?.code || index}
+                            record={record}
+                            columns={columns}
+                            rowKey={rowKey}
+                            animatedData={animatedData}
+                            index={index}
+                            details={details}
+                            itemName={item_name}
+                            result_status={status}
+                            sportKey={sportKey}
+                            unit_code={unit_code}
+                            vsTeam={vsTeam}
+                            onRowClick={onRowClick}
+                            isGoal={Boolean(
+                              currentGameData?.current?.length > 0 &&
+                                record?.athlete?.code ===
+                                  currentGameData?.current[index]?.athlete
+                                    ?.code &&
+                                currentGameData?.current[index]?.intermediates[
+                                  currentGameData?.current[index]?.intermediates
+                                    ?.length - 1
+                                ]?.intermediates?.action === "Goal"
+                            )}
+                          />
+                        );
+                      })}
+                  </AnimatePresence>
+                </Reorder.Group>
+              </table>
             </div>
           )}
-          <table
-            className={`${details ? styles.table_details : styles.table} ${
-              isGoal ? styles.goalContainer : ""
-            }`}
-          >
-            <Reorder.Group
-              as="tbody"
-              axis="y"
-              values={animatedData || []}
-              onReorder={setAnimatedData}
-              drag={false}
-            >
-              <AnimatePresence>
-                {Array.isArray(animatedData) &&
-                  animatedData?.map((record, index) => {
-                    const currentGameData =
-                      dataState[`${sportKey}`]?.[`${unit_code}`];
-
-                    return (
-                      <PlayerRow
-                        key={record.athlete?.code || index}
-                        record={record}
-                        columns={columns}
-                        rowKey={rowKey}
-                        animatedData={animatedData}
-                        index={index}
-                        details={details}
-                        itemName={item_name}
-                        result_status={status}
-                        sportKey={sportKey}
-                        unit_code={unit_code}
-                        vsTeam={vsTeam}
-                        onRowClick={onRowClick}
-                        isGoal={Boolean(
-                          currentGameData?.current?.length > 0 &&
-                            record?.athlete?.code ===
-                              currentGameData?.current[index]?.athlete?.code &&
-                            currentGameData?.current[index]?.intermediates
-                              ?.length > 0 &&
-                            currentGameData?.current[index]?.intermediates[
-                              currentGameData?.current[index]?.intermediates
-                                ?.length - 1
-                            ]?.intermediates?.action === "Goal"
-                        )}
-                      />
-                    );
-                  })}
-              </AnimatePresence>
-            </Reorder.Group>
-          </table>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
