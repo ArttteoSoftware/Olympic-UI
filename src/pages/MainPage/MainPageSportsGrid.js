@@ -83,7 +83,7 @@ function MainPageSportsGrid() {
           />
         </motion.div>
       ))}
-      {/* <DatePicker
+      <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
         showTimeSelect
@@ -93,7 +93,7 @@ function MainPageSportsGrid() {
         className={styles.datePicker}
         // Use UTC timezone for DatePicker
         utcOffset={0}
-      /> */}
+      />
     </div>
   );
 }

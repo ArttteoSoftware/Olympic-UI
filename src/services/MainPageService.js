@@ -7,9 +7,9 @@ export const getAllMatches = async (selectedDate) => {
 
   const formattedDate = selectedDate.toISOString();
 
-  // const url = `${process.env.REACT_APP_API_URL}/next?date=${formattedDate}`;
+  const url = `${process.env.REACT_APP_API_URL}/next?date=${formattedDate}`;
 
-  const url = `${process.env.REACT_APP_API_URL}/session/by/time`;
+  // const url = `${process.env.REACT_APP_API_URL}/session/by/time`;
 
   return await axios.get(url);
 };
