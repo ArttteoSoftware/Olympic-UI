@@ -285,16 +285,15 @@ const FrontCard = ({
           ) : (
             <>
               {loading === false && (
-                <div className={styles.placeholderContainer}>
-                  <div className={styles.placeholderImg}>
+                <div>
+                  <div className={styles.mascotContainer}>
                     <img
-                      src={`assets/placeholders/${title}.png`}
-                      alt="placeholder"
-                      loading="lazy"
+                      src={`/assets/placeholders/2.png`}
+                      className={styles.mascot}
                     />
                   </div>
                   <div className={styles.placeholderText}>
-                    The game is scheduled for tomorrow
+                    Olympic Competition Complete
                   </div>
                 </div>
               )}

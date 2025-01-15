@@ -162,7 +162,9 @@
 }
 
 .placeholderText {
-  color: #2a3342;
+  color: #7d94a5;
+  text-align: center;
+  font-size: clamp(0.75rem, 1.25vw, 0.85rem);
 }
 .startDateContainer {
   background-color: #7d94a51a;
