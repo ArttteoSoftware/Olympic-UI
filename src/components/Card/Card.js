@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import styles from "./Card.module.css";
-import { LayoutGroup, motion, Reorder } from "framer-motion";
-import { BTH, Divider, IHO } from "../../UI/Icons";
+import { motion, Reorder } from "framer-motion";
 import { convertSportTitle } from "../../enum/Sport";
 import useSocketStore from "../../store/socketStore";
 import Grid from "../Grid/Grid";
@@ -11,13 +10,15 @@ import MarqueeEffect from "../MarqueeEffect/MarqueeEffect";
 import VideoPlayer from "../Videoplayer/VideoPlayer";
 import { returnSportTeamColumn } from "../../UI/columns/TeamColumns";
 import FormatData from "../../util/FormatData";
-const Card = ({ className, title, units, divider, item }) => {
+import { getTodaysMatches } from "../../services/MainPageService";
+
+const Card = ({ className, title, units, divider, hasStartList }) => {
   const [data, setData] = useState([]);
   const [isFlipped, setIsFlipped] = useState(false);
   const { dataState, unitCode } = useSocketStore();
+
   const [loading, setLoading] = useState(true);
   const [play, setPlay] = useState(false);
-
   const currentGameData = dataState[`${title}`]?.[`${unitCode}`];
 
   useEffect(() => {
@@ -28,6 +29,26 @@ const Card = ({ className, title, units, divider, item }) => {
     setLoading(false);
   }, [units]);
 
+  useEffect(() => {
+    if (
+      currentGameData?.isLastGame &&
+      currentGameData?.result_status === "OFFICIAL"
+    ) {
+      setTimeout(() => {
+        loadAllGameForToday();
+      }, 40000);
+    }
+  }, [currentGameData]);
+
+  const loadAllGameForToday = async () => {
+    try {
+      const res = await getTodaysMatches(title);
+      const games = res.data;
+      setData(games.units);
+    } catch (err) {
+      console.log("Error while load all game for today", err);
+    }
+  };
   useEffect(() => {
     if (isFlipped) {
       setPlay(true);
@@ -62,7 +83,7 @@ const Card = ({ className, title, units, divider, item }) => {
     }
   };
 
-  const renderUnit = (unit, loading) => {
+  const renderUnit = (unit, loading, hasStartList, title) => {
     const listData = getListData(unit);
 
     const isTeam = Boolean(
@@ -85,22 +106,22 @@ const Card = ({ className, title, units, divider, item }) => {
           {isTeam ? (
             // თიმების თამაშები თუ ქვემოთაა, თამაში რომ დაიწყება ზემოთ არ ადის
 
-            // <MarqueeEffect shouldAnimate={listData?.length > 7}>
-            <TeamGrid
-              result_status={unit.result_status}
-              details={false}
-              columns={returnSportTeamColumn(title)}
-              data={listData}
-              className={styles.cardGrid}
-              isTeam={isTeam}
-              vsTeam={vsTeam}
-              unit_code={unit.unit_code}
-              sportKey={title}
-              item_name={unit.item_name}
-            />
+            <MarqueeEffect shouldAnimate={listData?.length > 7 && hasStartList}>
+              <TeamGrid
+                result_status={unit.result_status}
+                details={false}
+                columns={returnSportTeamColumn(title)}
+                data={listData}
+                className={styles.cardGrid}
+                isTeam={isTeam}
+                vsTeam={vsTeam}
+                unit_code={unit.unit_code}
+                sportKey={title}
+                item_name={unit.item_name}
+              />
+            </MarqueeEffect>
           ) : (
-            // </MarqueeEffect>
-            <MarqueeEffect shouldAnimate={listData?.length > 7}>
+            <MarqueeEffect shouldAnimate={listData?.length > 7 && hasStartList}>
               <Grid
                 result_status={unit.result_status}
                 details={false}
@@ -122,19 +143,19 @@ const Card = ({ className, title, units, divider, item }) => {
           <UnitHeader item={unit} loading={loading} />
 
           {isTeam ? (
-            // <MarqueeEffect shouldAnimate={listData?.length > 7}>
-            <TeamGrid
-              result_status={unit.result_status}
-              details={false}
-              columns={returnSportTeamColumn(title)}
-              data={listData}
-              unit_code={unit.unit_code}
-              className={styles.cardGrid}
-              sportKey={title}
-              item_name={unit.item_name}
-            />
+            <MarqueeEffect shouldAnimate={listData?.length > 7}>
+              <TeamGrid
+                result_status={unit.result_status}
+                details={false}
+                columns={returnSportTeamColumn(title)}
+                data={listData}
+                unit_code={unit.unit_code}
+                className={styles.cardGrid}
+                sportKey={title}
+                item_name={unit.item_name}
+              />
+            </MarqueeEffect>
           ) : (
-            // </MarqueeEffect>
             <MarqueeEffect shouldAnimate={listData?.length > 7}>
               <Grid
                 result_status={unit.result_status}
@@ -168,7 +189,9 @@ const Card = ({ className, title, units, divider, item }) => {
         loading={loading}
         play={play}
         setPlay={setPlay}
+        hasStartList={hasStartList}
       />
+
       <BackCard
         commonStyles={commonStyles}
         isFlipped={isFlipped}
@@ -190,7 +213,9 @@ const UnitHeader = ({ item }) => {
           <div className={styles.subtitle}>
             {item.item_name}{" "}
             <span className={styles.startDateContainer}>
-              {FormatData.formatUTCTime(item.start_date)}
+              {item.start_list?.length > 0
+                ? FormatData.formatUTCTime(item.start_date)
+                : FormatData.formatDateTime(item.start_date)}
             </span>
           </div>
           <div className={styles.dashedLine} />
@@ -213,6 +238,7 @@ const FrontCard = ({
   className,
   setPlay,
   play,
+  hasStartList,
 }) => {
   const { srtData } = useSocketStore();
 
@@ -240,8 +266,22 @@ const FrontCard = ({
 
         <div className={styles.innerContainer}>
           {data?.length > 0 ? (
-            (console.log("DDATA", data),
-            (<>{data.map((unit) => renderUnit(unit, loading))}</>))
+            <>
+              {!hasStartList && (
+                <div className={styles.mascotContainer}>
+                  <img
+                    src={`/assets/placeholders/2.png`}
+                    className={styles.mascot}
+                  />
+                </div>
+              )}
+
+              <MarqueeEffect shouldAnimate={!hasStartList && data.length > 4}>
+                {data.map((unit) =>
+                  renderUnit(unit, loading, hasStartList, title)
+                )}
+              </MarqueeEffect>
+            </>
           ) : (
             <>
               {loading === false && (

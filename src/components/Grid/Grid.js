@@ -105,8 +105,6 @@ function Grid({
     }
   }, [dataState, data, unitCode, result_status, unit_code, details, item_name]);
 
-  console.log("***", sportKey, data);
-
   return (
     <>
       {data.length > 0 && (

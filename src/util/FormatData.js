@@ -12,6 +12,21 @@ export default class FormatData {
       .replace(/\//g, ".");
   };
 
+  static formatDateTime(val) {
+    if (val) {
+      return new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "numeric",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        separator: ".",
+        timeZone: "UTC",
+      }).format(new Date(val));
+    }
+    return "";
+  }
+
   static formatTime = (props) => {
     const date = new Date(props);
     const hours = date.getHours().toString().padStart(2, "0");

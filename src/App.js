@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import useSocketStore from "./store/socketStore";
 
 function App() {
-  const { setData, setStatus, setUnitCode, setSrtData, srtData } =
+  const { setData, setStatus, setUnitCode, setSrtData, setNextDayData } =
     useSocketStore();
 
   useEffect(() => {
@@ -37,6 +37,10 @@ function App() {
         disciplineCode: newData.disciplineCode,
         streamUrl: false,
       });
+    });
+
+    socket.on("dailyScheduleUpdate", (newData) => {
+      setNextDayData(newData);
     });
 
     // Handle server connection error

@@ -10,6 +10,7 @@ const useSocketStore = create((set) => ({
   srtData: {},
   unitCode: null,
   status: "Disconnected",
+  nextDayData: {},
   setData: (newData) => {
     const { sport_id, game_id, data } = newData;
     if (!sport_id || !game_id) return;
@@ -21,13 +22,14 @@ const useSocketStore = create((set) => ({
             previous: state.dataState[sport_id]?.[game_id]?.current,
             current: data.results,
             item_name: data.item_name,
+            isLastGame: data.isLastGame,
             result_status: data.result_status,
           },
         },
       },
     }));
   },
-
+  setNextDayData: (nextDayData) => set({ nextDayData }),
   setSrtData: (newData) => {
     const { disciplineCode, streamUrl } = newData;
     if (!disciplineCode) return;

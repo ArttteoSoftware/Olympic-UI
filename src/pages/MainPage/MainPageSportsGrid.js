@@ -7,11 +7,13 @@ import { motion } from "framer-motion";
 import { getDividerColor } from "../../enum/Divider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useSocketStore from "../../store/socketStore";
 
 function MainPageSportsGrid() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
+  const { nextDayData } = useSocketStore();
 
   // Initialize with current UTC date but 2022 year
   const [selectedDate, setSelectedDate] = useState(() => {
@@ -41,6 +43,7 @@ function MainPageSportsGrid() {
         )
       );
       const { data } = await getAllMatches(utcDate);
+
       if (data) {
         setData(data.units);
       }
@@ -52,8 +55,12 @@ function MainPageSportsGrid() {
   }, [selectedDate]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    if (nextDayData.units && nextDayData.units.length > 0) {
+      setData(nextDayData.units);
+    } else {
+      loadData();
+    }
+  }, [loadData, nextDayData]);
 
   const handleDateChange = (date) => {
     // Convert the selected date to UTC
@@ -71,23 +78,24 @@ function MainPageSportsGrid() {
 
   return (
     <div className={styles.container}>
-      {data.map(
-        (item) => (
-          console.log("item", item),
-          (
-            <motion.div key={item._id} onClick={() => navigate(`/${item._id}`)}>
-              <Card
-                divider={getDividerColor(item._id)}
-                key={item._id}
-                title={item._id}
-                units={item.units}
-                item={item}
-                loader={loader}
-              />
-            </motion.div>
-          )
-        )
-      )}
+      {data &&
+        data.map((item) => (
+          <motion.div
+            key={item._id}
+            onClick={() => {
+              item.hasStartList && navigate(`/${item._id}`);
+            }}
+          >
+            <Card
+              divider={getDividerColor(item._id)}
+              key={item._id}
+              title={item._id}
+              units={item.units}
+              hasStartList={item.hasStartList}
+              loader={loader}
+            />
+          </motion.div>
+        ))}
       <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
